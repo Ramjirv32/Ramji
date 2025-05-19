@@ -5,7 +5,9 @@ import "./App.css"
 import "./styles/globals.css"
 import Skills from './components/skills';
 import About from './components/About';
-import Projects from './components/Projects';
+// import Projects from './components/Projects';
+import Page from "./components/Project-page"
+
 const App = () => {
   return (
     <main className="min-h-screen w-full bg-[#030014] overflow-x-hidden">
@@ -13,7 +15,7 @@ const App = () => {
       <StarsCanvas />
       <HeroContent />
       <Skills/>
-      <Projects/>
+      <Page/>
       <About/>
     </main>
   )
