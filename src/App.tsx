@@ -1,60 +1,80 @@
 import StarsCanvas from './components/Animations/Star';
 import HeroContent from './components/Hero';
 import Navbar from './components/Navbar';
-import "./App.css"
-import "./styles/globals.css"
+import "./App.css";
+import "./styles/globals.css";
 import Skills from './components/skills';
 import About from './components/About';
-import Page from "./components/Project-page"
-import Certificate from "./components/Project"
-import { useEffect, useState, useRef } from 'react';
-import Contact from "./components/Contact"
-import Pro1 from "./components/compoPages/Projects/Pro1"
+import Project from "./components/Project";
+import { useState, useEffect, useRef } from 'react';
+import Contact from "./components/Contact";
+
+// Import all project detail components
+import Pro1 from "./components/compoPages/Projects/Pro1";
+import Pro2 from "./components/compoPages/Projects/Pro2";
+import Pro3 from "./components/compoPages/Projects/Pro3";
+import Pro4 from "./components/compoPages/Projects/Pro4";
+import Pro5 from "./components/compoPages/Projects/Pro5";
+
 const App = () => {
-  // Track active section to avoid unnecessary clicks
+  // Track active section for navigation
   const [activeSection, setActiveSection] = useState<string>('home');
   const isScrollingProgrammatically = useRef(false);
+  
+  // Add state for project detail viewing
+  const [activeProject, setActiveProject] = useState<number | null>(null);
 
-  // Effect to handle active section based on scroll position
+  // Set up the global navigation function
   useEffect(() => {
-    const handleScroll = () => {
-      // Skip if we're programmatically scrolling to avoid loops
-      if (isScrollingProgrammatically.current) return;
-
-      const sections = document.querySelectorAll('section[id]');
-      const scrollPosition = window.scrollY + 150; // Adding offset for navbar
-
-      sections.forEach((section) => {
-        const sectionTop = (section as HTMLElement).offsetTop;
-        const sectionHeight = section.clientHeight;
-        const sectionId = section.getAttribute('id') || '';
-        
-        if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
-          // Only update if this is a different section
-          if (activeSection !== sectionId) {
-            setActiveSection(sectionId);
-            
-            // Update navbar visually without triggering scroll
-            const navItems = document.querySelectorAll('nav button');
-            navItems.forEach(item => {
-              // Get the data-section attribute value
-              const itemSection = (item as HTMLElement).dataset.section;
-              if (itemSection === sectionId) {
-                // Update visual state without clicking
-                item.classList.add('active-nav-item');
-              } else {
-                item.classList.remove('active-nav-item');
-              }
-            });
-          }
-        }
-      });
+    // Add the global function with proper typing
+    window.openProjectDetails = (index: number) => {
+      console.log("🚀 App.tsx - Opening project:", index); // For debugging
+      setActiveProject(index);
+      
+      // Scroll to top when showing project details
+      window.scrollTo(0, 0);
+      
+      // Force a re-render by touching state slightly
+      setTimeout(() => {
+        setActiveProject(prev => {
+          console.log("Re-confirming active project:", prev);
+          return prev;
+        });
+      }, 100);
+    };
+    
+    // Make the close function available globally
+    window.closeProjectDetails = () => {
+      console.log("🔙 App.tsx - Closing project details"); // For debugging
+      setActiveProject(null);
     };
 
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, [activeSection]);
+    // Clean up the global functions when component unmounts
+    return () => {
+      delete window.openProjectDetails;
+      delete window.closeProjectDetails;
+    };
+  }, []);
 
+  // If a project is active, show only that project
+  if (activeProject !== null) {
+    switch(activeProject) {
+      case 0:
+        return <Pro1 />;
+      case 1:
+        return <Pro2 />;
+      case 2:
+        return <Pro3 />;
+      case 3:
+        return <Pro4 />;
+      case 4:
+        return <Pro5 />;
+      default:
+        return null;
+    }
+  }
+
+  // Normal layout when no project is selected
   return (
     <main className="min-h-screen w-full bg-[#030014] overflow-x-hidden pt-20"> 
       <Navbar 
@@ -64,49 +84,37 @@ const App = () => {
       />
       <StarsCanvas />
       
-      {/* Home section */}
       <section id="home" className="min-h-screen">
         <HeroContent />
       </section>
       
-      {/* Skills section - moved to correct position */}
       <section id="skills" className="min-h-screen">
         <Skills/>
       </section>
     
-      {/* Projects section */}
       <section id="projects" className="min-h-screen">
-        <Page/>
+        <Project />
       </section>
       
-      {/* About section */}
       <section id="about" className="min-h-screen">
         <About/>
       </section>
       
-      {/* Contact section */}
-      <section id="contact" className="min-h-screen">
-        <Certificate/>
-      </section>
-
-      <section id="book-call" className="h-1000px">
-        {/* Add your booking component here when ready */}
-        <div className="flex items-center justify-center h-1/2">
-       
-        </div>
-      </section>
+      {/* Add other sections */}
       
       <section id="contact" className="min-h-screen">
         <Contact/>
       </section>
-      <Pro1/>
-
-      
-      {/* Book a Call section */}
-    
-      
     </main>
   )
 }
 
-export default App
+// Add type definitions for the global window object
+declare global {
+  interface Window {
+    openProjectDetails?: (index: number) => void;
+    closeProjectDetails?: () => void;
+  }
+}
+
+export default App;

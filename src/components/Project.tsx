@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import  { useEffect } from 'react';
 import { FaExternalLinkAlt, FaGithub } from "react-icons/fa";
 import { motion } from "framer-motion"; // Adding framer motion for animations
 
@@ -78,7 +78,7 @@ const projects: Project[] = [
       "Developing scalable backend architecture",
       "Optimizing performance and user experience"
     ],
-    image: "/assets/ai.png", // Corrected path
+    image: "/assets/ai.png", 
     liveLink: "https://ai-intergrated-application-qwuv.vercel.app/",
     githubLink: "https://github.com/Ramjirv32/AI-Intergrated-Application",
     technologies: ["React", "AI APIs", "Node.js", "PostgreSQL"]
@@ -94,9 +94,23 @@ const getProjectIcon = (technologies: string[]): string => {
   return "📱";
 };
 
-// Fix project card layout - adjust the relevant sections
+// Add navigation function to the ProjectCard component
 const ProjectCard: React.FC<{ project: Project; index: number }> = ({ project, index }) => {
   const isEven = index % 2 === 0;
+  
+  // Function to navigate to the detailed project page
+  const navigateToProject = () => {
+    // Added a more visible console log
+    console.log("🔥 Clicked project:", index, "Title:", project.title);
+    
+    // Directly call the function with explicit check
+    if (window.openProjectDetails) {
+      console.log("📣 Calling openProjectDetails");
+      window.openProjectDetails(index);
+    } else {
+      console.error("❌ openProjectDetails function not found on window object");
+    }
+  };
   
   return (
     <motion.div 
@@ -106,10 +120,10 @@ const ProjectCard: React.FC<{ project: Project; index: number }> = ({ project, i
       viewport={{ once: false, amount: 0.1 }}
       transition={{ duration: 0.5, delay: index * 0.1 }}
     >
-      {/* Timeline line - only show on medium screens and up */}
+      {/* Timeline line */}
       <div className="absolute left-1/2 transform -translate-x-1/2 w-0.5 h-full bg-gradient-to-b from-purple-500 to-transparent hidden md:block"></div>
       
-      {/* Timeline circle - make it smaller on mobile */}
+      {/* Timeline circle */}
       <motion.div 
         className="absolute left-1/2 transform -translate-x-1/2 w-12 h-12 md:w-16 md:h-16 bg-gray-800 border-4 border-purple-600 rounded-full flex items-center justify-center z-10 shadow-[0_0_15px_rgba(147,51,234,0.5)]"
         initial={{ scale: 0 }}
@@ -120,14 +134,24 @@ const ProjectCard: React.FC<{ project: Project; index: number }> = ({ project, i
         <span className="text-xl md:text-2xl">{getProjectIcon(project.technologies)}</span>
       </motion.div>
       
-      {/* Project card - make it full width on small screens */}
-      <div className={`w-full md:w-5/12 ${isEven ? 'md:mr-auto md:pr-8' : 'md:ml-auto md:pl-8'} mt-8 md:mt-0`}>
+      {/* Project card - make it clickable with improved z-index */}
+      <div 
+        className={`w-full md:w-5/12 ${isEven ? 'md:mr-auto md:pr-8' : 'md:ml-auto md:pl-8'} mt-8 md:mt-0 relative z-20`}
+      >
         <motion.div 
-          className="bg-[#151030]/80 backdrop-blur-sm p-4 md:p-6 rounded-lg border border-purple-500/20 shadow-xl hover:border-purple-500/50 transition-all duration-300 hover:transform hover:scale-105"
+          onClick={navigateToProject}
+          className="bg-[#151030]/80 backdrop-blur-sm p-4 md:p-6 rounded-lg border border-purple-500/20 shadow-xl hover:border-purple-500/50 transition-all duration-300 hover:scale-105 cursor-pointer"
           whileHover={{ y: -5 }}
         >
+          {/* Add a transparent overlay to ensure clicks register */}
+          <div 
+            className="absolute inset-0 z-10" 
+            onClick={navigateToProject}
+            style={{ cursor: 'pointer' }}
+          ></div>
+          
           {/* Project image */}
-          <div className="mb-4 overflow-hidden rounded-lg">
+          <div className="mb-4 overflow-hidden rounded-lg relative z-0">
             <img 
               src={project.image} 
               alt={project.title} 
@@ -135,9 +159,10 @@ const ProjectCard: React.FC<{ project: Project; index: number }> = ({ project, i
             />
           </div>
 
-          <h3 className="text-white font-bold text-xl mb-2">{project.title}</h3>
+          <h3 className="text-white font-bold text-xl mb-2 relative z-0">{project.title}</h3>
           
-          <ul className="text-gray-400 text-sm space-y-2 mb-4">
+          {/* Rest of content with z-index adjustments */}
+          <ul className="text-gray-400 text-sm space-y-2 mb-4 relative z-0">
             {project.description.map((item, idx) => (
               <li key={idx} className="flex items-start">
                 <span className="text-purple-400 mr-2 mt-1">•</span>
@@ -146,7 +171,7 @@ const ProjectCard: React.FC<{ project: Project; index: number }> = ({ project, i
             ))}
           </ul>
           
-          <div className="flex flex-wrap gap-2 mb-4">
+          <div className="flex flex-wrap gap-2 mb-4 relative z-0">
             {project.technologies.map((tech, idx) => (
               <span
                 key={idx}
@@ -157,14 +182,15 @@ const ProjectCard: React.FC<{ project: Project; index: number }> = ({ project, i
             ))}
           </div>
 
-          {/* Project links */}
-          <div className="flex gap-3 mt-4">
+          {/* Project links with higher z-index to ensure they're clickable */}
+          <div className="flex gap-3 mt-4 relative z-30">
             {project.githubLink && (
               <a 
                 href={project.githubLink} 
                 target="_blank" 
                 rel="noopener noreferrer" 
                 className="flex items-center px-4 py-2 bg-gray-800 hover:bg-gray-700 text-white rounded-full text-sm transition-colors duration-300"
+                onClick={(e) => e.stopPropagation()} 
               >
                 <FaGithub className="mr-2" /> GitHub
               </a>
@@ -176,6 +202,7 @@ const ProjectCard: React.FC<{ project: Project; index: number }> = ({ project, i
                 target="_blank" 
                 rel="noopener noreferrer" 
                 className="flex items-center px-4 py-2 bg-purple-700 hover:bg-purple-600 text-white rounded-full text-sm transition-colors duration-300"
+                onClick={(e) => e.stopPropagation()} 
               >
                 <FaExternalLinkAlt className="mr-2" /> Live Demo
               </a>
@@ -184,7 +211,7 @@ const ProjectCard: React.FC<{ project: Project; index: number }> = ({ project, i
         </motion.div>
       </div>
       
-      {/* Period indicator - show above card on mobile */}
+      {/* Period indicator */}
       <motion.div 
         className={`w-full md:w-5/12 md:absolute md:top-0 ${isEven ? 'md:right-0 md:pr-4' : 'md:left-0 md:pl-4'} mb-4 md:mb-0`}
         initial={{ opacity: 0, y: 20 }}
