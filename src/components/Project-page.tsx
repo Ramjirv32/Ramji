@@ -1,6 +1,6 @@
 "use client"
 
-import Projects from "./Projects"
+import Projects from "./certificate"
 import CosmicBackground from "./cosmic"
 
 export default function Page() {

@@ -15,18 +15,18 @@ import {
 } from "react-icons/fa";
 import { 
   SiTypescript, 
-  SiNextdotjs, 
+
   SiTailwindcss, 
-  SiFramer, 
+
   SiExpress, 
   SiMongodb, 
-  SiMysql, 
+
   SiPostgresql, 
-  SiPrisma, 
+ 
   SiVercel, 
   SiPostman, 
-  SiPnpm,
-  SiZod 
+  
+  
 } from "react-icons/si";
 import { TbBrandFramerMotion } from "react-icons/tb";
 import { RxShadowNone } from "react-icons/rx";
@@ -141,7 +141,7 @@ const Skills = () => {
           <span className="group-hover:text-[#61DAFB]">ReactJS</span>
         </motion.div>
         
-        <motion.div 
+        {/* <motion.div 
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           transition={{ duration: 0.5, delay: 0.6 }}
@@ -152,7 +152,7 @@ const Skills = () => {
         >
           <span className="text-white group-hover:animate-bounce"><SiNextdotjs size={20} /></span>
           <span className="group-hover:text-white">NextJS</span>
-        </motion.div>
+        </motion.div> */}
         
         {/* Continue with the same pattern for all remaining technologies */}
         {/* Row 2 */}
@@ -235,7 +235,7 @@ const Skills = () => {
           <span className="group-hover:text-[#47A248]">MongoDB</span>
         </motion.div>
         
-        <motion.div 
+        {/* <motion.div 
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           transition={{ duration: 0.5, delay: 1.3 }}
@@ -247,7 +247,7 @@ const Skills = () => {
           <span className="text-[#4479A1] group-hover:animate-bounce"><SiMysql size={20} /></span>
           <span className="group-hover:text-[#4479A1]">MySQL</span>
         </motion.div>
-        
+         */}
         <motion.div 
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
@@ -261,7 +261,7 @@ const Skills = () => {
           <span className="group-hover:text-[#336791]">PostgreSQL</span>
         </motion.div>
         
-        <motion.div 
+        {/* <motion.div 
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           transition={{ duration: 0.5, delay: 1.5 }}
@@ -272,9 +272,9 @@ const Skills = () => {
         >
           <span className="text-[#5A67D8] group-hover:animate-bounce"><SiPrisma size={20} /></span>
           <span className="group-hover:text-[#5A67D8]">Prisma</span>
-        </motion.div>
+        </motion.div> */}
         
-        <motion.div 
+        {/* <motion.div 
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           transition={{ duration: 0.5, delay: 1.6 }}
@@ -285,8 +285,8 @@ const Skills = () => {
         >
           <span className="text-[#FF5A5F] group-hover:animate-bounce"><PiCubeFocus size={20} /></span>
           <span className="group-hover:text-[#FF5A5F]">Zustand</span>
-        </motion.div>
-        
+        </motion.div> */}
+{/*         
         <motion.div 
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
@@ -298,7 +298,7 @@ const Skills = () => {
         >
           <span className="text-[#3068B7] group-hover:animate-bounce"><SiZod size={20} /></span>
           <span className="group-hover:text-[#3068B7]">Zod</span>
-        </motion.div>
+        </motion.div> */}
         
         <motion.div 
           initial={{ opacity: 0 }}
@@ -378,7 +378,7 @@ const Skills = () => {
           <span className="text-[#FCC624] group-hover:animate-bounce"><FaLinux size={20} /></span>
           <span className="group-hover:text-[#FCC624]">Linux</span>
         </motion.div>
-        
+{/*         
         <motion.div 
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
@@ -390,7 +390,7 @@ const Skills = () => {
         >
           <span className="text-[#F69220] group-hover:animate-bounce"><SiPnpm size={20} /></span>
           <span className="group-hover:text-[#F69220]">pnpm</span>
-        </motion.div>
+        </motion.div> */}
       </div>
     </div>
   );
