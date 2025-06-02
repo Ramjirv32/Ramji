@@ -8,7 +8,7 @@ import About from './components/About';
 import Project from "./components/Project";
 import { useState, useEffect, useRef } from 'react';
 import Contact from "./components/Contact";
-
+import Certificate from './components/certificate';
 // Import all project detail components
 import Pro1 from "./components/compoPages/Projects/Pro1";
 import Pro2 from "./components/compoPages/Projects/Pro2";
@@ -88,23 +88,34 @@ const App = () => {
         <HeroContent />
       </section>
       
-      <section id="skills" className="min-h-screen">
-        <Skills/>
-      </section>
     
-      <section id="projects" className="min-h-screen">
-        <Project />
-      </section>
+    
+     
       
       <section id="about" className="min-h-screen">
         <About/>
       </section>
+
+      <section id="projects" className="min-h-screen">
+        <Project />
+      </section>
+      
+
+      <section id="skills" className="min-h-screen">
+        <Skills/>
+      </section>
       
       {/* Add other sections */}
+
+      <section id="certificate" className="min-h-screen">
+        <Certificate/>
+      </section>
+
       
       <section id="contact" className="min-h-screen">
         <Contact/>
       </section>
+     
     </main>
   )
 }

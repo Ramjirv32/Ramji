@@ -1,4 +1,4 @@
-import  { useEffect } from 'react';
+// import  { useEffect } from 'react';
 import { FaExternalLinkAlt, FaGithub } from "react-icons/fa";
 import { motion } from "framer-motion"; // Adding framer motion for animations
 
@@ -70,7 +70,7 @@ const projects: Project[] = [
     technologies: ["Node.js", "Hugging Face API", "React", "Express"]
   },
   {
-    title: "AI-Integrated Application",
+    title: "NebulX",
     date: "October 2023 - Present",
     description: [
       "Building advanced AI features and integrations",
@@ -78,10 +78,10 @@ const projects: Project[] = [
       "Developing scalable backend architecture",
       "Optimizing performance and user experience"
     ],
-    image: "/assets/ai.png", 
-    liveLink: "https://ai-intergrated-application-qwuv.vercel.app/",
-    githubLink: "https://github.com/Ramjirv32/AI-Intergrated-Application",
-    technologies: ["React", "AI APIs", "Node.js", "PostgreSQL"]
+    image: "/assets/nebulx.png", 
+    liveLink: "https://nebulx.vercel.app/",
+    githubLink: "https://github.com/Ramjirv32/nebulx",
+    technologies: ["React", "AI APIs", "Node.js", "Express", "Tailwind CSS"]
   }
 ];
 

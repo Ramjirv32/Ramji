@@ -1,6 +1,6 @@
 "use client"
 
-import type React from "react"
+
 
 import { useEffect, useState, useRef } from "react"
 import { motion, AnimatePresence, useMotionValue, useTransform } from "framer-motion"
@@ -159,37 +159,36 @@ const About = () => {
               <h3 className="text-2xl md:text-3xl font-semibold text-white mb-6" data-aos="fade-up">
                 Full Stack Developer & Cloud Enthusiast
               </h3>
-
               <p className="text-gray-300 text-sm md:text-base leading-relaxed" data-aos="fade-up">
-                My name is Ramji, and I am a Full Stack Developer currently studying in II CSE B at KPRIET. There has
-                always been a burning passion for creating new things and a constant urge to learn, which has driven me
-                into the technology industry.
-              </p>
+  My name is Ramji, and I am a Full Stack Developer currently pursuing B.E. CSE at KPRIET, set to graduate in 2027. There has
+  always been a burning passion for creating new things and a constant urge to learn, which has driven me
+  into the technology industry.
+</p>
 
-              <p className="text-gray-300 text-sm md:text-base leading-relaxed mt-2 md:mt-4" data-aos="fade-up">
-                I have experience in both frontend and backend development, and I am looking for more new opportunities.
-                Recently, I have been working on integrating cloud technologies into applications because I believe they
-                are essential for building strong applications in the modern world.
-              </p>
+<p className="text-gray-300 text-sm md:text-base leading-relaxed mt-2 md:mt-4" data-aos="fade-up">
+  I have experience in both frontend and backend development, and I am looking for more new opportunities.
+</p>
 
-              <p className="text-gray-300 text-sm md:text-base leading-relaxed mt-2 md:mt-4" data-aos="fade-up">
-                If I am not working on code, I love browsing for new tech, working on open-source projects, or thinking
-                about my next move. I am always ready for collaboration and new opportunities in web development and
-                cloud technologies.
-              </p>
+<p className="text-gray-300 text-sm md:text-base leading-relaxed mt-2 md:mt-4" data-aos="fade-up">
+  I love browsing for new tech or thinking about my next move. I am always ready for collaboration and new opportunities in web development and cloud technologies.
+</p>
+
 
               <div className="flex flex-wrap gap-4 mt-8" data-aos="fade-up">
+                {/* Fixed Get In Touch button with proper z-index */}
                 <motion.a
                   href="#contact"
                   whileHover={{ scale: 1.05 }}
-                  className="bg-gradient-to-r from-purple-500 to-blue-500 text-white px-6 py-2.5 rounded-lg font-medium shadow-lg hover:shadow-purple-500/25 transition duration-300"
+                  className="bg-gradient-to-r from-purple-500 to-blue-500 text-white px-6 py-2.5 rounded-lg font-medium shadow-lg hover:shadow-purple-500/25 transition duration-300 relative z-20 pointer-events-auto"
                 >
                   Get In Touch
                 </motion.a>
+                
+                {/* Fixed View My Work button - removed negative z-index and added positive z-index */}
                 <motion.a
                   href="#projects"
                   whileHover={{ scale: 1.05 }}
-                  className="border border-purple-500 text-purple-500 px-6 py-2.5 rounded-lg font-medium hover:bg-purple-500/10 transition duration-300"
+                  className="border border-purple-500 text-purple-500 px-6 py-2.5 rounded-lg font-medium hover:bg-purple-500/10 transition duration-300 relative z-20 pointer-events-auto"
                 >
                   View My Work
                 </motion.a>

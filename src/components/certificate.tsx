@@ -5,7 +5,7 @@ import type React from "react"
 import { useState, useEffect, useRef } from "react"
 import { Tilt } from "react-tilt"
 import { motion } from "framer-motion"
-import { FaGithub } from "react-icons/fa"
+// import { FaGithub } from "react-icons/fa"
 import { HiExternalLink } from "react-icons/hi"
 
 // Animation variants
@@ -118,34 +118,32 @@ const projects = [
     ],
     image: "/assets/MONGO.png",
     source_code_link: "/assets/MONGO.pdf",
-    live_demo_link: "https://university.mongodb.com/certification",
+    live_demo_link: "/assets/github.pdf", 
     issuer: "MongoDB",
     date: "Jan 2025",
   },
   {
-    name: "Coming Soon",
+    name: "GitHub Foundations",
     description:
-      "Future certification to further validate my expertise in cutting-edge technologies and methodologies. Stay tuned for updates on my continuous learning journey.",
+      "Planned certification aimed at strengthening my skills in version control, collaborative development, and open-source contribution using GitHub. Part of my ongoing commitment to continuous learning and technical growth.",
     tags: [
+     
       {
-        name: "future",
-        color: "text-purple-400",
-      },
-      {
-        name: "learning",
+        name: "version-control",
         color: "text-pink-400",
       },
       {
-        name: "growth",
+        name: "Github",
         color: "text-blue-400",
       },
     ],
-    image: "/placeholder.svg",
+    image: "/assets/github.png",
     source_code_link: "#",
-    issuer: "Future Certification",
+    issuer: "GitHub (Future Certification)",
     date: "2025",
     isPlaceholder: true,
-  },
+  }
+  
 ]
 
 // Modified ProjectCard component to show certificates instead of projects
