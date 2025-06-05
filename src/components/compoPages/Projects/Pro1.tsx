@@ -1,4 +1,4 @@
-import React from 'react';
+// import React from 'react';
 import { FaArrowLeft, FaGithub } from 'react-icons/fa';
 import Navbar from "../../Navbar";
 import Footer from "../../Footer";

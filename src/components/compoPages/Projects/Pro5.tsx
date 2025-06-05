@@ -1,5 +1,5 @@
-import React from 'react';
-import { FaArrowLeft, FaGithub, FaExternalLinkAlt } from 'react-icons/fa';
+// import React from 'react';
+import { FaGithub, FaExternalLinkAlt } from 'react-icons/fa';
 import Navbar from "../../Navbar";
 import Footer from "../../Footer";
 
