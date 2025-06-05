@@ -24,7 +24,7 @@ const About = () => {
 
   // Transform mouse position to rotation values for tilt effect
   const tiltX = useTransform(mouseY, [-300, 300], [15, -15])
-  const tiltY = useTransform(mouseX, [-300, 300], [-15, 15])
+  // const tiltY = useTransform(mouseX, [-300, 300], [-15, 15])
 
   useEffect(() => {
     AOS.init({

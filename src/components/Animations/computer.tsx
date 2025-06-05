@@ -35,7 +35,7 @@ const Computers = ({ isMobile }: { isMobile: boolean }) => {
   );
 };
 
-const ComputersCanvas = () => {
+export const ComputersCanvas = () => {
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {

@@ -5,6 +5,7 @@ import Footer from "../../Footer";
 
 const Index = () => {
   
+  // Add a back button that uses this function
   const goBack = () => {
     if (typeof window.closeProjectDetails === 'function') {
       window.closeProjectDetails();
@@ -57,15 +58,22 @@ const Index = () => {
   return (
     <>
       <Navbar />
-      <div className="min-h-screen bg-gradient-to-b from-indigo-900 to-black text-white overflow-hidden">
-        {/* Header */}
-       
-          
-      
-      
+      {/* Header */}
+      <div className="p-4">
+        <button 
+          onClick={goBack}
+          className="flex items-center text-indigo-300 hover:text-white transition-colors"
+        >
+          <span>←</span>
+          <span className="ml-2">Back to projects</span>
+        </button>
+      </div>
+        
+    
+    
 
-        {/* Main Content */}
-        <main className="relative z-10 px-6 md:px-8">
+      {/* Main Content */}
+      <main className="relative z-10 px-6 md:px-8">
           {/* Hero Section */}
           <section className="max-w-6xl mx-auto text-center py-16 md:py-24">
             <div className="mb-8">
@@ -180,10 +188,9 @@ const Index = () => {
             <p>&copy; 2023 Ramji. Built with React and AI technologies.</p>
           </footer>
         </main>
-      </div>
       <Footer />
     </>
   );
-};
-
+}
+ 
 export default Index;
