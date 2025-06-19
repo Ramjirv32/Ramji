@@ -2,7 +2,7 @@
 
 import type React from "react"
 
-import { useState, useEffect, useRef } from "react"
+import { useState, useEffect, useRef, useCallback } from "react"
 import { motion } from "framer-motion"
 // import { FaGithub } from "react-icons/fa"
 import { HiExternalLink } from "react-icons/hi"
@@ -457,10 +457,11 @@ const Works = () => {
   const connectionsContainerRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
+    // Only set isLoaded once when component mounts
     setIsLoaded(true)
-  }, [])
+  }, []) // Empty dependency array ensures it runs only once
 
-  const setCardRef = (
+  const setCardRef = useCallback((
     index: number,
     cardRef: HTMLDivElement,
     leftNodeRef?: HTMLDivElement | null,
@@ -475,7 +476,7 @@ const Works = () => {
       }
       return newRefs
     })
-  }
+  }, []) // Empty dependency array makes this function stable
 
   return (
     <>
@@ -500,7 +501,7 @@ const Works = () => {
       </div>
 
       <div ref={connectionsContainerRef} className="mt-20 relative">
-        {/* Top row with first 3 cards */}
+      
         <div className="flex flex-wrap gap-7 justify-center mb-20">
           {projects.slice(0, 3).map((project, index) => (
             <ProjectCard
@@ -513,15 +514,14 @@ const Works = () => {
           ))}
         </div>
 
-        {/* Bottom row with 4th card */}
         <div className="flex justify-center">
           <ProjectCard key="certificate-3" index={3} {...projects[3]} setCardRef={setCardRef} isFourthCard={true} />
         </div>
 
-        {/* Energy connections - keep exactly the same */}
+      
         {isLoaded && cardRefs.every((ref) => ref.card !== null) && (
           <>
-            {/* Connections between cards 1-2-3 */}
+           
             {[0, 1].map((index) => (
               <EnergyConnection
                 key={`connection-${index}`}
@@ -533,7 +533,7 @@ const Works = () => {
               />
             ))}
 
-            {/* Connection from card 3 to card 4 (below) */}
+         
             <EnergyConnection
               key="connection-3-to-4"
               startRef={cardRefs[2].card}
@@ -543,7 +543,7 @@ const Works = () => {
               isFourthConnection={true}
             />
 
-            {/* Connection from left side of card 1 to card 4 */}
+            
             <EnergyConnection
               key="connection-left-1-to-4"
               startRef={cardRefs[0].leftNode}

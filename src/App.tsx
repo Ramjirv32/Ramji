@@ -15,6 +15,8 @@ import Pro2 from "./components/compoPages/Projects/Pro2";
 import Pro3 from "./components/compoPages/Projects/Pro3";
 import Pro4 from "./components/compoPages/Projects/Pro4";
 import Pro5 from "./components/compoPages/Projects/Pro5";
+// Import the new Works component
+import Works from './components/Works';
 
 const App = () => {
   // Track active section for navigation
@@ -100,6 +102,10 @@ const App = () => {
         <Project />
       </section>
       
+      {/* Add Works section after Projects */}
+      <section id="works" className="min-h-screen">
+        <Works />
+      </section>
 
       <section id="skills" className="min-h-screen">
         <Skills/>
@@ -129,3 +135,13 @@ declare global {
 }
 
 export default App;
+
+// In your Navbar.tsx file, update the navItems array
+const navItems = [
+  { name: "Home", id: "home" },
+  { name: "Projects", id: "projects" },
+  { name: "Works", id: "works" },  // Add this new item
+  { name: "Skills", id: "skills" },
+  { name: "Certifications", id: "certificate" },
+  { name: "Contact", id: "contact" },
+];
