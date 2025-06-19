@@ -67,8 +67,7 @@ const HeroContent = () => {
               </div>
             ))}
           </div>
-          
-          {/* Video at center - LARGER SIZE */}
+
           <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-32 h-32 md:w-64 md:h-64 rounded-full overflow-hidden flex items-center justify-center">
             <video 
               src="/b.webm" 
