@@ -137,11 +137,11 @@ declare global {
 export default App;
 
 // In your Navbar.tsx file, update the navItems array
-const navItems = [
-  { name: "Home", id: "home" },
-  { name: "Projects", id: "projects" },
-  { name: "Works", id: "works" },  // Add this new item
-  { name: "Skills", id: "skills" },
-  { name: "Certifications", id: "certificate" },
-  { name: "Contact", id: "contact" },
-];
+// const navItems = [
+//   { name: "Home", id: "home" },
+//   { name: "Projects", id: "projects" },
+//   { name: "Works", id: "works" },  // Add this new item
+//   { name: "Skills", id: "skills" },
+//   { name: "Certifications", id: "certificate" },
+//   { name: "Contact", id: "contact" },
+// ];

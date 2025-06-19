@@ -1,7 +1,7 @@
 "use client"
 
 import type React from "react"
-import { useState, useEffect, useRef } from "react"
+import { useState, useEffect } from "react"
 import { motion } from "framer-motion"
 import { FaExternalLinkAlt, FaCode, FaBuilding, FaPatreon } from "react-icons/fa"
 
