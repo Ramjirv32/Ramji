@@ -11,14 +11,13 @@ import Work from './components/Works';
 import Certificate from './components/certificate';
 import Contact from './components/Contact';
 
-// Project Pages
+
 import Pro1 from './components/compoPages/Projects/Pro1';
 import Pro2 from './components/compoPages/Projects/Pro2';
 import Pro3 from './components/compoPages/Projects/Pro3';
 import Pro4 from './components/compoPages/Projects/Pro4';
 import Pro5 from './components/compoPages/Projects/Pro5';
 
-// Internship Pages
 import Oodser from './components/compoPages/internships/Oodser';
 import Menagalme from './components/compoPages/internships/Society';
 import LuxorHoliday from './components/compoPages/internships/LuxorHoliday';
@@ -107,7 +106,7 @@ const Home = () => {
   );
 };
 
-// Wrap components with ScrollReset
+
 const ScrollResetPro1 = withScrollReset(Pro1);
 const ScrollResetPro2 = withScrollReset(Pro2);
 const ScrollResetPro3 = withScrollReset(Pro3);
