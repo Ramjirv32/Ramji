@@ -20,7 +20,7 @@ import Pro5 from './components/compoPages/Projects/Pro5';
 
 // Internship Pages
 import Oodser from './components/compoPages/internships/Oodser';
-import Menagalme from './components/compoPages/internships/Menagalme';
+import Menagalme from './components/compoPages/internships/Society';
 import LuxorHoliday from './components/compoPages/internships/LuxorHoliday';
 import Society from './components/compoPages/internships/Society'; // Create this component
 import withScrollReset from './components/hoc/withScrollReset';

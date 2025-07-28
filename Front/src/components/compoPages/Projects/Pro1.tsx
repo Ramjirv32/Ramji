@@ -1,20 +1,25 @@
-// import React from 'react';
 import { FaArrowLeft, FaGithub } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 import Footer from "../../Footer";
 import { useEffect } from 'react';
+import AOS from 'aos';
+import 'aos/dist/aos.css';
 
 const Index = () => {
   const navigate = useNavigate();
-
+  
   useEffect(() => {
     window.scrollTo(0, 0);
+    AOS.init({
+      duration: 1000,
+      once: true,
+      offset: 100,
+    });
   }, []);
 
   // Navigate to projects section on home page
   const goBack = () => {
     navigate('/', { state: { scrollTo: 'projects' } });
-    
     // Use setTimeout to ensure navigation completes before scrolling
     setTimeout(() => {
       const projectsSection = document.getElementById('projects');
@@ -23,7 +28,7 @@ const Index = () => {
       }
     }, 100);
   };
-  
+
   const features = [
     {
       icon: "💻",
@@ -105,7 +110,7 @@ const Index = () => {
         </div>
 
         {/* Back Button with glow */}
-        <div className="fixed top-6 left-6 z-50">
+        <div className="fixed top-6 left-6 z-50" data-aos="fade-down">
           <button 
             onClick={goBack} 
             className="flex items-center space-x-2 bg-white/10 hover:bg-white/20 backdrop-blur-md px-4 py-2 rounded-full transition-all duration-300 border border-[#00BFFF]/40"
@@ -119,7 +124,7 @@ const Index = () => {
         </div>
 
         {/* Header with glow */}
-        <header className="relative z-10 flex justify-center items-center p-6 md:p-8 pt-20 bg-black/50 backdrop-blur-md border-b border-[#00BFFF]/30">
+        <header className="relative z-10 flex justify-center items-center p-6 md:p-8 pt-20 bg-black/50 backdrop-blur-md border-b border-[#00BFFF]/30" data-aos="fade-down" data-aos-delay="200">
           <div className="flex items-center space-x-2">
             <div 
               className="w-8 h-8 bg-gradient-to-r from-[#00BFFF] to-[#1E90FF] rounded-lg flex items-center justify-center"
@@ -137,7 +142,7 @@ const Index = () => {
         <main className="px-6 md:px-8 relative z-10">
           {/* Hero Section */}
           <section className="max-w-6xl mx-auto text-center py-16 md:py-24">
-            <div className="mb-8">
+            <div className="mb-8" data-aos="fade-up">
               <span 
                 className="bg-[#00BFFF]/20 border border-[#00BFFF]/40 px-4 py-2 rounded-full text-sm font-medium"
                 style={{
@@ -147,24 +152,23 @@ const Index = () => {
                 October 2023
               </span>
             </div>
-            
-            <h1 className="text-4xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-white via-[#00BFFF] to-white bg-clip-text text-transparent">
+            <h1 className="text-4xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-white via-[#00BFFF] to-white bg-clip-text text-transparent" data-aos="fade-up" data-aos-delay="200">
               Vehicle Rental System
             </h1>
-            
-            <p className="text-lg md:text-xl text-gray-300 mb-8 max-w-4xl mx-auto leading-relaxed">
-              A comprehensive vehicle rental management system developed in C that handles user authentication, 
+            <p className="text-lg md:text-xl text-gray-300 mb-8 max-w-4xl mx-auto leading-relaxed" data-aos="fade-up" data-aos-delay="400">
+              A comprehensive vehicle rental management system developed in C that handles user authentication,
               booking management, and vehicle inventory tracking with efficient data structures and memory management.
             </p>
-
-            <div className="flex flex-wrap gap-3 justify-center mb-12">
-              {["C", "Data Structures", "File I/O", "Memory Management"].map((tech) => (
+            <div className="flex flex-wrap gap-3 justify-center mb-12" data-aos="fade-up" data-aos-delay="600">
+              {["C", "Data Structures", "File I/O", "Memory Management"].map((tech, index) => (
                 <span 
                   key={tech} 
                   className="bg-white/10 border border-[#00BFFF]/30 px-4 py-2 rounded-full text-sm"
                   style={{
                     boxShadow: "0 0 8px rgba(0, 191, 255, 0.2)"
                   }}
+                  data-aos="zoom-in"
+                  data-aos-delay={600 + index * 100}
                 >
                   {tech}
                 </span>
@@ -172,7 +176,7 @@ const Index = () => {
             </div>
 
             {/* Project image with glow */}
-            <div className="mb-16">
+            <div className="mb-16" data-aos="zoom-in" data-aos-delay="800">
               <img 
                 src="/assets/grs.jpg"
                 alt="Vehicle Rental System"
@@ -184,7 +188,7 @@ const Index = () => {
             </div>
 
             {/* GitHub link with glow */}
-            <div className="mb-16">
+            <div className="mb-16" data-aos="fade-up" data-aos-delay="1000">
               <a 
                 href="https://github.com/Ramjirv32/Vehicle-Rental-System" 
                 target="_blank" 
@@ -210,6 +214,8 @@ const Index = () => {
                   style={{
                     boxShadow: "0 0 15px rgba(0, 191, 255, 0.1)"
                   }}
+                  data-aos="fade-up"
+                  data-aos-delay={index * 100}
                 >
                   <div className="text-3xl mb-4">{feature.icon}</div>
                   <h3 className="text-xl font-semibold mb-3">{feature.title}</h3>
@@ -221,11 +227,15 @@ const Index = () => {
 
           {/* Technologies Section */}
           <section className="max-w-6xl mx-auto py-16">
-            <h2 className="text-2xl md:text-3xl font-bold mb-8">Technologies Used</h2>
-            
+            <h2 className="text-2xl md:text-3xl font-bold mb-8" data-aos="fade-up">Technologies Used</h2>
             <div className="space-y-4">
               {technologies.map((tech, index) => (
-                <div key={index} className="flex items-center space-x-4">
+                <div 
+                  key={index} 
+                  className="flex items-center space-x-4"
+                  data-aos="fade-right"
+                  data-aos-delay={index * 100}
+                >
                   <div 
                     className="w-2 h-2 bg-[#00BFFF] rounded-full"
                     style={{

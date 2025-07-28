@@ -2,17 +2,23 @@ import { FaArrowLeft, FaExternalLinkAlt, FaCalendarAlt, FaServer } from 'react-i
 import { useNavigate } from 'react-router-dom';
 import Footer from "../../Footer";
 import { useEffect } from 'react';
+import AOS from 'aos';
+import 'aos/dist/aos.css';
 
 const LuxorHoliday = () => {
   const navigate = useNavigate();
-
+  
   useEffect(() => {
     window.scrollTo(0, 0);
+    AOS.init({
+      duration: 1000,
+      once: true,
+      offset: 100,
+    });
   }, []);
 
   const goBack = () => {
     navigate('/', { state: { scrollTo: 'works' } });
-    
     setTimeout(() => {
       const worksSection = document.getElementById('works');
       if (worksSection) {
@@ -20,7 +26,7 @@ const LuxorHoliday = () => {
       }
     }, 100);
   };
-  
+
   const achievements = [
     {
       icon: "🏡",
@@ -111,7 +117,7 @@ const LuxorHoliday = () => {
         </div>
 
         {/* Navigation */}
-        <div className="relative z-10">
+        <div className="relative z-10" data-aos="fade-down">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
             <button
               onClick={goBack}
@@ -125,11 +131,14 @@ const LuxorHoliday = () => {
 
         {/* Hero Section */}
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-          <div className="text-center mb-12">
-            <h1 className="text-4xl md:text-6xl font-bold mb-4">Luxor Holiday Homestay</h1>
-            <p className="text-xl text-gray-300 max-w-3xl mx-auto">A full-stack homestay booking platform with secure payments and real-time availability</p>
-            
-            <div className="flex flex-wrap justify-center gap-4 mt-6">
+          <div className="text-center mb-12" data-aos="fade-up">
+            <h1 className="text-4xl md:text-6xl font-bold mb-4" data-aos="fade-up" data-aos-delay="100">
+              Luxor Holiday Homestay
+            </h1>
+            <p className="text-xl text-gray-300 max-w-3xl mx-auto" data-aos="fade-up" data-aos-delay="200">
+              A full-stack homestay booking platform with secure payments and real-time availability
+            </p>
+            <div className="flex flex-wrap justify-center gap-4 mt-6" data-aos="fade-up" data-aos-delay="300">
               <div className="flex items-center text-sm bg-gray-800/50 px-4 py-2 rounded-full">
                 <FaCalendarAlt className="mr-2 text-[#00BFFF]" />
                 <span>2024 - Present</span>
@@ -143,10 +152,9 @@ const LuxorHoliday = () => {
                 <span>Secure Payments</span>
               </div>
             </div>
-
-            <div className="mt-8 flex justify-center gap-4">
+            <div className="mt-8 flex justify-center gap-4" data-aos="fade-up" data-aos-delay="400">
               <a
-                href="https://luxorholidayhomestay.com"
+                href="https://luxorholidayhomestays.com"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center px-6 py-3 bg-[#00BFFF] hover:bg-[#0095FF] text-white rounded-lg font-medium transition-colors"
@@ -161,16 +169,16 @@ const LuxorHoliday = () => {
         {/* Project Details */}
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-20">
           {/* Overview */}
-          <div className="bg-gray-900/50 backdrop-blur-sm rounded-2xl p-8 mb-12 border border-gray-800">
+          <div className="bg-gray-900/50 backdrop-blur-sm rounded-2xl p-8 mb-12 border border-gray-800" data-aos="fade-up">
             <h2 className="text-3xl font-bold mb-6 text-[#00BFFF]">Project Overview</h2>
             <div className="prose prose-invert max-w-none">
               <p className="text-lg">
-                Luxor Holiday Homestay is a comprehensive booking platform that connects travelers with unique homestay experiences. 
-                As a co-founder and lead developer, I was responsible for architecting and implementing the entire technology stack, 
+                Luxor Holiday Homestay is a comprehensive booking platform that connects travelers with unique homestay experiences.
+                As a co-founder and lead developer, I was responsible for architecting and implementing the entire technology stack,
                 from the responsive frontend to the secure backend infrastructure.
               </p>
               <p className="mt-4">
-                The platform features real-time availability, secure online payments, and an intuitive admin dashboard for property management. 
+                The platform features real-time availability, secure online payments, and an intuitive admin dashboard for property management.
                 We've prioritized security and performance, implementing Cloudflare protection, SSL encryption, and optimized asset delivery.
               </p>
             </div>
@@ -178,12 +186,16 @@ const LuxorHoliday = () => {
 
           {/* Key Achievements */}
           <div className="mb-16">
-            <h2 className="text-3xl font-bold mb-8 text-center">Key <span className="text-[#00BFFF]">Achievements</span></h2>
+            <h2 className="text-3xl font-bold mb-8 text-center" data-aos="fade-up">
+              Key <span className="text-[#00BFFF]">Achievements</span>
+            </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {achievements.map((achievement, index) => (
-                <div 
+                <div
                   key={index}
                   className="bg-gray-900/50 backdrop-blur-sm p-6 rounded-xl border border-gray-800 hover:border-[#00BFFF]/30 transition-all hover:-translate-y-1"
+                  data-aos="fade-up"
+                  data-aos-delay={index * 100}
                 >
                   <div className="text-4xl mb-4">{achievement.icon}</div>
                   <h3 className="text-xl font-semibold mb-2">{achievement.title}</h3>
@@ -195,12 +207,16 @@ const LuxorHoliday = () => {
 
           {/* Technologies Used */}
           <div className="mb-16">
-            <h2 className="text-3xl font-bold mb-8 text-center">Technologies <span className="text-[#00BFFF]">Used</span></h2>
+            <h2 className="text-3xl font-bold mb-8 text-center" data-aos="fade-up">
+              Technologies <span className="text-[#00BFFF]">Used</span>
+            </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
               {technologies.map((tech, index) => (
-                <div 
+                <div
                   key={index}
                   className="bg-gray-900/50 backdrop-blur-sm p-4 rounded-lg border border-gray-800 hover:border-[#00BFFF]/30 transition-colors"
+                  data-aos="fade-up"
+                  data-aos-delay={index * 50}
                 >
                   <h4 className="font-medium text-[#00BFFF]">{tech.name}</h4>
                   <p className="text-sm text-gray-300">{tech.description}</p>
@@ -211,18 +227,23 @@ const LuxorHoliday = () => {
 
           {/* Project Timeline */}
           <div className="mb-16">
-            <h2 className="text-3xl font-bold mb-8 text-center">Project <span className="text-[#00BFFF]">Timeline</span></h2>
+            <h2 className="text-3xl font-bold mb-8 text-center" data-aos="fade-up">
+              Project <span className="text-[#00BFFF]">Timeline</span>
+            </h2>
             <div className="relative">
               <div className="absolute left-1/2 w-1 h-full bg-gray-800 transform -translate-x-1/2"></div>
               {projectPhases.map((phase, index) => (
-                <div 
+                <div
                   key={index}
                   className={`relative mb-8 ${index % 2 === 0 ? 'pr-8 text-right' : 'pl-8'}`}
                   style={{ marginLeft: index % 2 === 0 ? '0' : '50%' }}
+                  data-aos={index % 2 === 0 ? "fade-right" : "fade-left"}
+                  data-aos-delay={index * 200}
                 >
-                  <div className="absolute top-0 w-4 h-4 bg-[#00BFFF] rounded-full transform -translate-y-1/2" 
-                       style={{ [index % 2 === 0 ? 'right' : 'left']: '-2px' }}>
-                  </div>
+                  <div
+                    className="absolute top-0 w-4 h-4 bg-[#00BFFF] rounded-full transform -translate-y-1/2"
+                    style={{ [index % 2 === 0 ? 'right' : 'left']: '-2px' }}
+                  ></div>
                   <div className={`bg-gray-900/50 backdrop-blur-sm p-6 rounded-xl border border-gray-800 max-w-lg ${index % 2 === 0 ? 'ml-auto' : 'mr-auto'}`}>
                     <div className="text-amber-400 font-medium mb-1">{phase.date}</div>
                     <h3 className="text-xl font-semibold mb-2">{phase.title}</h3>
@@ -235,12 +256,16 @@ const LuxorHoliday = () => {
 
           {/* Project Gallery */}
           <div>
-            <h2 className="text-3xl font-bold mb-8 text-center">Project <span className="text-[#00BFFF]">Gallery</span></h2>
+            <h2 className="text-3xl font-bold mb-8 text-center" data-aos="fade-up">
+              Project <span className="text-[#00BFFF]">Gallery</span>
+            </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {[1, 2, 3, 4].map((item) => (
-                <div 
+                <div
                   key={item}
                   className="bg-gray-900/50 rounded-xl overflow-hidden border border-gray-800 hover:border-[#00BFFF]/30 transition-colors"
+                  data-aos="zoom-in"
+                  data-aos-delay={item * 100}
                 >
                   <div className="aspect-video bg-gray-800/50 flex items-center justify-center">
                     <span className="text-gray-500">Screenshot {item}</span>

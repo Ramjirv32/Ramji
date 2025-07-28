@@ -1,7 +1,9 @@
 "use client"
-
 import type React from "react"
+import { useEffect } from "react"
 import { HiExternalLink } from "react-icons/hi"
+import AOS from 'aos'
+import 'aos/dist/aos.css'
 
 // Certificates data
 const projects = [
@@ -97,7 +99,7 @@ const projects = [
     ],
     image: "/assets/MONGO.png",
     source_code_link: "/assets/MONGO.pdf",
-    live_demo_link: "/assets/github.pdf", 
+    live_demo_link: "/assets/github.pdf",
     issuer: "MongoDB",
     date: "Jan 2025",
   },
@@ -123,7 +125,7 @@ const projects = [
   }
 ]
 
-// Simple ProjectCard component without animations
+// ProjectCard component with AOS animations
 const ProjectCard = ({
   name,
   description,
@@ -136,15 +138,20 @@ const ProjectCard = ({
   isPlaceholder,
 }: any) => {
   return (
-    <div className="bg-[#151030]/80 p-4 rounded-2xl sm:w-[260px] w-full h-full backdrop-blur-sm border border-[#00BFFF]/30 shadow-[0_0_10px_#00BFFF] hover:shadow-[0_0_20px_#00BFFF] hover:border-[#00BFFF]/60 transition-all duration-300 group relative overflow-hidden">
+    <div 
+      className="bg-[#151030]/80 p-4 rounded-2xl sm:w-[260px] w-full h-full backdrop-blur-sm border border-[#00BFFF]/30 shadow-[0_0_10px_#00BFFF] hover:shadow-[0_0_20px_#00BFFF] hover:border-[#00BFFF]/60 transition-all duration-300 group relative overflow-hidden"
+      data-aos="fade-up"
+      data-aos-duration="1000"
+      data-aos-delay="100"
+    >
       <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+      
       <div className="relative w-full h-[120px]">
         <img
           src={image || "/placeholder.svg"}
           alt={`${name} certificate thumbnail`}
           className="w-full h-full object-cover rounded-2xl"
         />
-
         <div className="absolute inset-0 flex justify-end m-3 card-img_hover gap-2 z-30">
           {!isPlaceholder && (
             <>
@@ -190,7 +197,7 @@ const ProjectCard = ({
       </div>
 
       <div className="mt-4 flex flex-wrap gap-2">
-        {tags.map((tag:any) => (
+        {tags.map((tag: any) => (
           <p key={`${name}-${tag.name}`} className={`text-[12px] ${tag.color}`}>
             #{tag.name}
           </p>
@@ -200,9 +207,18 @@ const ProjectCard = ({
   )
 }
 
-// SectionWrapper HOC (simplified version)
+// SectionWrapper HOC with AOS initialization
 const SectionWrapper = (Component: React.FC, idName: string) =>
   function HOC() {
+    useEffect(() => {
+      AOS.init({
+        duration: 1000,
+        easing: 'ease-in-out',
+        once: false,
+        mirror: true,
+      })
+    }, [])
+
     return (
       <section id={idName} className="max-w-7xl mx-auto relative z-0 px-4 sm:px-6 lg:px-8 py-20">
         <span className="hash-span" id={idName}>
@@ -213,32 +229,33 @@ const SectionWrapper = (Component: React.FC, idName: string) =>
     )
   }
 
-// Main Component - Simple certificate display
+// Main Component with AOS animations
 const Certificate = () => {
   return (
     <>
-      <div>
+      <div data-aos="fade-right" data-aos-duration="1000">
         <p className="text-[#00BFFF] font-medium lg:text-[18px] sm:text-[16px] xs:text-[14px] text-[12px] uppercase tracking-wider">
           My achievements
         </p>
-        <h2 className="text-white font-black md:text-[60px] sm:text-[50px] xs:text-[40px] text-[30px]">Certificates</h2>
+        <h2 className="text-white font-black md:text-[60px] sm:text-[50px] xs:text-[40px] text-[30px]">
+          Certificates
+        </h2>
       </div>
 
-      <div className="w-full flex">
+      <div className="w-full flex" data-aos="fade-left" data-aos-duration="1000" data-aos-delay="200">
         <p className="mt-3 text-gray-300 text-[17px] max-w-3xl leading-[30px]">
-          The following certifications validate my skills and expertise in various technologies and methodologies. 
-          Each certificate represents my commitment to continuous learning and professional growth in the rapidly evolving 
+          The following certifications validate my skills and expertise in various technologies and methodologies.
+          Each certificate represents my commitment to continuous learning and professional growth in the rapidly evolving
           tech industry.
         </p>
       </div>
 
-      <div className="mt-20">
+      <div className="mt-20" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="400">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-7 justify-items-center">
           {projects.map((project, index) => (
-            <ProjectCard
-              key={`certificate-${index}`}
-              {...project}
-            />
+            <div key={`certificate-${index}`} data-aos="zoom-in" data-aos-duration="1000" data-aos-delay={index * 100}>
+              <ProjectCard {...project} />
+            </div>
           ))}
         </div>
       </div>

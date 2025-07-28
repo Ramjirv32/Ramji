@@ -1,9 +1,12 @@
-import { useState, useEffect } from 'react';
-import AOS from 'aos';
-import 'aos/dist/aos.css';
-import { FaExternalLinkAlt, FaGithub, FaPlus } from "react-icons/fa";
-import { motion } from "framer-motion";
-import { useNavigate } from "react-router-dom";
+"use client"
+
+import React from "react"
+
+import { useState, useEffect } from "react"
+import { FaExternalLinkAlt, FaGithub, FaPlus } from "react-icons/fa"
+import { useNavigate } from "react-router-dom"
+import AOS from "aos"
+import "aos/dist/aos.css"
 
 interface Project {
   id: number;
@@ -24,14 +27,10 @@ const Projects: React.FC = () => {
   const [projects, setProjects] = useState<Project[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
-  
-  // New state variables for the add project feature
   const [showAddForm, setShowAddForm] = useState<boolean>(false);
   const [submitting, setSubmitting] = useState<boolean>(false);
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
   const [adminMode, setAdminMode] = useState<boolean>(false);
-  
-  // New project form state
   const [newProject, setNewProject] = useState({
     title: "",
     p1: "",
@@ -47,25 +46,17 @@ const Projects: React.FC = () => {
   useEffect(() => {
     AOS.init({
       duration: 1000,
-      easing: 'ease-in-out',
-      once: false,
+      once: true,
+      offset: 100,
     });
-    
-    // Toggle admin mode with Ctrl+Shift+P
+
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.ctrlKey && e.shiftKey && e.key === 'P') {
         setAdminMode(prev => !prev);
       }
     };
-    
     window.addEventListener('keydown', handleKeyDown);
-    return () => {
-      window.removeEventListener('keydown', handleKeyDown);
-    };
-  }, []);
 
-  // Existing fetch projects function...
-  useEffect(() => {
     const fetchProjects = async () => {
       try {
         const response = await fetch('http://localhost:9000/demo');
@@ -73,32 +64,35 @@ const Projects: React.FC = () => {
           throw new Error('Network response was not ok');
         }
         const data = await response.json();
-        
-        // Map the data to include image paths based on title
         const projectsWithImages = data.map((project: Project) => {
-          // Add default image paths based on project title or ID
-          let imagePath = '/assets/default-project.png';
-          
-          // Map project titles to image paths
+          let imagePath = '/personal/focus.png'; // Default
+          let livedemoUrl = project.livedemo; // Keep original livedemo URL
+
           if (project.title === "Vehicle Rental System") {
             imagePath = "/assets/grs.jpg";
-          } else if (project.title === "Weather API Integration") {
-            imagePath = "/assets/api.png";
           } else if (project.title === "Smart Parking System") {
             imagePath = "/assets/aadhya.png";
-          } else if (project.title === "AI Image Generator") {
-            imagePath = "/assets/Hug.png";
           } else if (project.title === "NebulX") {
             imagePath = "/assets/nebulx.png";
+          } else if (project.title === "AI Image Generator") { // This is the old title for Wistravel
+            imagePath = "/assets/wistravel.png"; // New image for Wistravel
+            livedemoUrl = "#"; // Set to # as per user request
+            project.title = "Wistravel"; // Update title in the mapped object
+          } else if (project.title === "FocusAI – Productive Assistant") {
+            imagePath = "/assets/focusai-dashboard.png";
+            livedemoUrl = "#"; // Set to # as per user request
+          } else if (project.title === "Weather API Integration") {
+            imagePath = "/assets/api.png";
           }
-          
+
           return {
             ...project,
+            title: project.title, // Ensure title is updated if it was "AI Image Generator"
             image: imagePath,
+            livedemo: livedemoUrl, // Use the potentially updated livedemoUrl
             description: [project.p1, project.p2, project.p3, project.p4]
           };
         });
-        
         setProjects(projectsWithImages);
       } catch (error) {
         setError('Failed to fetch projects');
@@ -109,18 +103,20 @@ const Projects: React.FC = () => {
     };
 
     fetchProjects();
+
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+    };
   }, []);
 
-  // Handle form input changes
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | React.ChangeEvent<HTMLTextAreaElement>>) => {
     const { name, value } = e.target;
     setNewProject(prev => ({
       ...prev,
       [name]: value
     }));
   };
-  
-  // Handle tech stack input changes (array of strings)
+
   const handleTechChange = (e: React.ChangeEvent<HTMLInputElement>, index: number) => {
     const newTech = [...newProject.Tech];
     newTech[index] = e.target.value;
@@ -129,16 +125,14 @@ const Projects: React.FC = () => {
       Tech: newTech
     }));
   };
-  
-  // Add new tech input field
+
   const addTechField = () => {
     setNewProject(prev => ({
       ...prev,
       Tech: [...prev.Tech, ""]
     }));
   };
-  
-  // Remove tech input field
+
   const removeTechField = (index: number) => {
     const newTech = [...newProject.Tech];
     newTech.splice(index, 1);
@@ -148,19 +142,13 @@ const Projects: React.FC = () => {
     }));
   };
 
-  // Submit the new project
   const submitProject = async (e: React.FormEvent) => {
     e.preventDefault();
-    
     try {
       setSubmitting(true);
-      
-      // Filter out empty tech values
       const techStack = newProject.Tech.filter(tech => tech.trim() !== "");
-      
-      // Create the project object with image
       const projectData = {
-        id: projects.length + 1,  // Generate a new ID
+        id: projects.length + 1,
         created_at: new Date().toISOString(),
         title: newProject.title,
         p1: newProject.p1,
@@ -170,10 +158,9 @@ const Projects: React.FC = () => {
         Tech: techStack,
         github: newProject.github,
         livedemo: newProject.livedemo,
-        image: newProject.image || '/assets/default-project.png' // Use provided image or default
+        image: newProject.image || '/assets/default-project.png'
       };
-      
-      // Send the project to the API
+
       const response = await fetch('http://localhost:9000/demo', {
         method: 'POST',
         headers: {
@@ -181,15 +168,12 @@ const Projects: React.FC = () => {
         },
         body: JSON.stringify(projectData),
       });
-      
+
       if (!response.ok) {
         throw new Error('Failed to add new project');
       }
-      
-      // Add the new project to the local state with image
+
       setProjects(prev => [...prev, projectData]);
-      
-      // Reset the form
       setNewProject({
         title: "",
         p1: "",
@@ -201,11 +185,8 @@ const Projects: React.FC = () => {
         livedemo: "",
         image: ""
       });
-      
       setShowAddForm(false);
       setSuccessMessage('Project added successfully! It will be visible after approval.');
-      
-      // Hide success message after 3 seconds
       setTimeout(() => {
         setSuccessMessage(null);
       }, 3000);
@@ -216,28 +197,24 @@ const Projects: React.FC = () => {
       setSubmitting(false);
     }
   };
-  
-  // Existing getProjectIcon function...
+
   const getProjectIcon = (technologies: string[]): string => {
     if (technologies.includes("C")) return "💻";
     if (technologies.includes("AI APIs") || technologies.includes("Hugging Face API")) return "🤖";
     if (technologies.includes("IoT")) return "🚗";
     if (technologies.includes("API")) return "🌤️";
-    return "🚀"; // Default icon
+    return "🚀";
   };
 
-  // Add image preview section if an image URL is provided
   const [imagePreview, setImagePreview] = useState<boolean>(false);
   const [imageError, setImageError] = useState<boolean>(false);
-  
-  // Check if image URL is valid
+
   const validateImageUrl = (url: string) => {
     if (!url) {
       setImagePreview(false);
       setImageError(false);
       return;
     }
-    
     const img = new Image();
     img.onload = () => {
       setImagePreview(true);
@@ -250,69 +227,46 @@ const Projects: React.FC = () => {
     img.src = url;
   };
 
-  // Validate image URL on input change
   useEffect(() => {
-    if (newProject.image) {
-      validateImageUrl(newProject.image);
-    }
+    validateImageUrl(newProject.image);
   }, [newProject.image]);
 
   return (
     <div className="min-h-screen py-20 px-4 bg-gradient-to-b from-[#030014] to-[#080324] overflow-hidden">
       <div className="max-w-6xl mx-auto">
-        {/* Header */}
-        <motion.div 
-          className="text-center mb-20"
-          initial={{ opacity: 0, y: -50 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: false }}
-          transition={{ duration: 0.7 }}
-        >
-          <p className="text-[#00BFFF] text-sm uppercase tracking-wider mb-4">
+        <div className="text-center mb-20" data-aos="fade-down">
+          <p className="text-[#00BFFF] text-sm uppercase tracking-wider mb-4" data-aos="fade-down" data-aos-delay="100">
             WHAT I HAVE BUILT SO FAR
           </p>
-          <h1 className="text-white text-5xl md:text-6xl font-bold">
+          <h1 className="text-white text-5xl md:text-6xl font-bold" data-aos="fade-down" data-aos-delay="200">
             Projects<span className="text-[#00BFFF]">.</span>
           </h1>
-          
-          {/* Add Project Button (visible when adminMode is true or showAddForm is false) */}
           {(adminMode || !showAddForm) && (
-            <motion.button
+            <button
               onClick={() => setShowAddForm(true)}
               className="mt-6 px-6 py-3 bg-gradient-to-r from-blue-600/30 to-purple-600/30 rounded-full text-white border border-blue-500/50 hover:border-blue-400 hover:shadow-[0_0_15px_rgba(59,130,246,0.5)] transition-all duration-300"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.98 }}
+              data-aos="fade-up"
+              data-aos-delay="300"
             >
               <span className="flex items-center gap-2">
                 <FaPlus />
                 {adminMode ? "Add New Project (Admin)" : "Suggest a Project"}
               </span>
-            </motion.button>
+            </button>
           )}
-        </motion.div>
-        
-        {/* Success Message */}
+        </div>
+
         {successMessage && (
           <div className="fixed top-20 right-4 bg-green-500/90 text-white px-6 py-3 rounded-lg shadow-lg z-50 animate-fade-in-out">
             {successMessage}
           </div>
         )}
-        
-        {/* Add Project Form */}
+
         {showAddForm && (
-          <motion.div
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            className="mb-16 bg-gradient-to-r from-blue-900/40 to-purple-900/40 backdrop-blur-md border border-blue-700/50 rounded-lg p-6 max-w-2xl mx-auto"
-          >
-            <h3 className="text-xl font-bold text-white mb-4">
-              {adminMode ? "Add New Project" : "Suggest a Project"}
-            </h3>
-            
+          <div className="mb-16 bg-gradient-to-r from-blue-900/40 to-purple-900/40 backdrop-blur-md border border-blue-700/50 rounded-lg p-6 max-w-2xl mx-auto" data-aos="fade-up">
+            <h3 className="text-xl font-bold text-white mb-4">{adminMode ? "Add New Project" : "Suggest a Project"}</h3>
             <form onSubmit={submitProject}>
               <div className="space-y-4">
-                {/* Project Title */}
                 <div>
                   <label htmlFor="title" className="block text-gray-300 mb-1">
                     Project Title *
@@ -328,8 +282,6 @@ const Projects: React.FC = () => {
                     placeholder="e.g., Weather Dashboard App"
                   />
                 </div>
-                
-                {/* Project Image URL - NEW FIELD */}
                 <div>
                   <label htmlFor="image" className="block text-gray-300 mb-1">
                     Project Image URL
@@ -344,8 +296,7 @@ const Projects: React.FC = () => {
                       validateImageUrl(e.target.value);
                     }}
                     className={`w-full bg-gray-900/80 border ${
-                      imageError ? 'border-red-500' : 'border-blue-700/30'
-                    } text-white px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500`}
+                      imageError ? 'border-red-500' : 'border-blue-700/30'} text-white px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500`}
                     placeholder="https://example.com/your-image.jpg"
                   />
                   {imageError && (
@@ -355,11 +306,7 @@ const Projects: React.FC = () => {
                   )}
                   {imagePreview && newProject.image && (
                     <div className="mt-2 relative w-full h-40 overflow-hidden rounded-lg border border-blue-700/30">
-                      <img 
-                        src={newProject.image} 
-                        alt="Preview" 
-                        className="object-cover w-full h-full"
-                      />
+                      <img src={newProject.image || "/placeholder.svg"} alt="Preview" className="object-cover w-full h-full"/>
                       <div className="absolute inset-0 flex items-center justify-center bg-black/50 opacity-0 hover:opacity-100 transition-opacity">
                         <p className="text-white text-sm">Image Preview</p>
                       </div>
@@ -369,8 +316,6 @@ const Projects: React.FC = () => {
                     Leave blank to use a default image. For best results, use a 16:9 aspect ratio.
                   </p>
                 </div>
-                
-                {/* Project Description Points */}
                 <div>
                   <label htmlFor="p1" className="block text-gray-300 mb-1">
                     Key Point 1 *
@@ -386,7 +331,6 @@ const Projects: React.FC = () => {
                     placeholder="e.g., Built a responsive weather application using React"
                   />
                 </div>
-                
                 <div>
                   <label htmlFor="p2" className="block text-gray-300 mb-1">
                     Key Point 2 *
@@ -402,7 +346,6 @@ const Projects: React.FC = () => {
                     placeholder="e.g., Implemented OpenWeatherMap API integration"
                   />
                 </div>
-                
                 <div>
                   <label htmlFor="p3" className="block text-gray-300 mb-1">
                     Key Point 3 *
@@ -418,7 +361,6 @@ const Projects: React.FC = () => {
                     placeholder="e.g., Created custom UI components and animations"
                   />
                 </div>
-                
                 <div>
                   <label htmlFor="p4" className="block text-gray-300 mb-1">
                     Key Point 4 *
@@ -434,8 +376,6 @@ const Projects: React.FC = () => {
                     placeholder="e.g., Added location search and favorites functionality"
                   />
                 </div>
-                
-                {/* Technologies Used */}
                 <div>
                   <label className="block text-gray-300 mb-1">
                     Technologies Used *
@@ -462,7 +402,6 @@ const Projects: React.FC = () => {
                         )}
                       </div>
                     ))}
-                    
                     {newProject.Tech.length < 5 && (
                       <button
                         type="button"
@@ -474,8 +413,6 @@ const Projects: React.FC = () => {
                     )}
                   </div>
                 </div>
-                
-                {/* GitHub & Live Demo Links */}
                 <div>
                   <label htmlFor="github" className="block text-gray-300 mb-1">
                     GitHub Repository URL
@@ -490,7 +427,6 @@ const Projects: React.FC = () => {
                     placeholder="https://github.com/yourusername/project"
                   />
                 </div>
-                
                 <div>
                   <label htmlFor="livedemo" className="block text-gray-300 mb-1">
                     Live Demo URL
@@ -505,8 +441,6 @@ const Projects: React.FC = () => {
                     placeholder="https://yourproject.vercel.app"
                   />
                 </div>
-                
-                {/* Form Actions */}
                 <div className="flex justify-end gap-3 mt-6">
                   <button
                     type="button"
@@ -520,8 +454,7 @@ const Projects: React.FC = () => {
                     type="submit"
                     disabled={submitting || !newProject.title || !newProject.p1}
                     className={`px-5 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors flex items-center gap-2 ${
-                      submitting || !newProject.title || !newProject.p1 ? 'opacity-50 cursor-not-allowed' : ''
-                    }`}
+                      submitting || !newProject.title || !newProject.p1 ? 'opacity-50 cursor-not-allowed' : ''}`}
                   >
                     {submitting ? (
                       <>
@@ -538,321 +471,152 @@ const Projects: React.FC = () => {
                 </div>
               </div>
             </form>
-          </motion.div>
+          </div>
         )}
 
-        {/* Loading, Error States, and Projects Timeline */}
         {loading ? (
-          <div className="flex justify-center items-center h-64">
+          <div className="flex justify-center items-center h-64" data-aos="fade-in">
             <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-[#00BFFF]"></div>
           </div>
         ) : error ? (
-          <div className="text-red-500 text-center py-10">
+          <div className="text-red-500 text-center py-10" data-aos="fade-in">
             {error}
             <p className="mt-2">Please check your API connection</p>
           </div>
         ) : (
-          // Projects Timeline - The existing projects timeline code remains unchanged
           <div className="relative">
-            {/* Existing projects timeline code... */}
             {projects.map((project, index) => (
-              <motion.div 
-                key={project.id} 
-                data-aos="fade-up"
-                data-aos-delay={index * 100}
-                className="relative group mb-20 px-4"
-                initial={{ opacity: 0, y: 50 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: false, amount: 0.1 }}
-                // transition={{ duration: 0.5, delay: index * 0.1 }}
-              >
-                {/* The rest of your existing project rendering code... */}
-                {/* Timeline line, glowing orbs, project cards, etc. */}
-                {/* Keep all the existing markup for the timeline */}
-                
-                {/* Enhanced Timeline line with glow effects */}
-                <div className="absolute left-1/2 transform -translate-x-1/2 w-0.5 h-full hidden md:block">
-                  {/* Main timeline line with glow */}
-                  <div 
-                    className="w-full h-full bg-gradient-to-b from-[#00BFFF] to-transparent"
-                    style={{
+              <div key={project.id} className="relative group mb-20 px-4" data-aos="fade-up" data-aos-delay={`${index * 100}`}>
+                {/* Glowing lines and circles */}
+                <div className="absolute left-1/2 transform -translate-x-1/2 w-0.5 h-full hidden md:block" data-aos="fade-in" data-aos-delay={`${index * 100 + 100}`}>
+                  <div className="w-full h-full bg-gradient-to-b from-[#00BFFF] to-transparent" style={{
                       boxShadow: "0 0 10px rgba(0, 191, 255, 0.6), 0 0 20px rgba(0, 191, 255, 0.4), 0 0 30px rgba(0, 191, 255, 0.2)"
-                    }}
-                  />
-                  {/* Additional glow layers */}
-                  <div 
-                    className="absolute inset-0 w-1 -translate-x-1/4 h-full bg-gradient-to-b from-[#00BFFF]/50 to-transparent blur-sm"
-                  />
-                  <div 
-                    className="absolute inset-0 w-2 -translate-x-1/2 h-full bg-gradient-to-b from-[#00BFFF]/30 to-transparent blur-md"
-                  />
+                    }}/>
+                  <div className="absolute inset-0 w-1 -translate-x-1/4 h-full bg-gradient-to-b from-[#00BFFF]/50 to-transparent blur-sm"/>
+                  <div className="absolute inset-0 w-2 -translate-x-1/2 h-full bg-gradient-to-b from-[#00BFFF]/30 to-transparent blur-md"/>
                 </div>
-
-                {/* Side Glowing Orbs - Alternating Left/Right */}
-                {/* Left side glow (for even index projects - when content is on right) */}
                 {index % 2 === 0 && (
-                  <div className="absolute left-[5%] top-1/2 transform -translate-y-1/2 w-20 h-20 md:w-32 md:h-32 hidden md:block">
-                    <div
-                      className="w-full h-full rounded-full blur-3xl animate-pulse"
-                      style={{
-                        background: "radial-gradient(circle, rgba(0, 191, 255, 0.6) 0%, rgba(0, 191, 255, 0.3) 30%, rgba(0, 191, 255, 0.1) 70%, transparent 100%)",
-                        boxShadow: "0 0 80px rgba(0, 191, 255, 0.6), 0 0 160px rgba(0, 191, 255, 0.3)",
-                        animationDuration: "3s",
-                        animationDelay: `${index * 0.5}s`
-                      }}
-                    />
-                    <div
-                      className="absolute inset-2 w-[calc(100%-16px)] h-[calc(100%-16px)] rounded-full blur-2xl animate-pulse"
-                      style={{
-                        background: "rgba(30, 144, 255, 0.4)",
-                        animationDelay: `${index * 0.5 + 1}s`,
-                        animationDuration: "2.5s"
-                      }}
-                    />
-                    <div
-                      className="absolute inset-4 w-[calc(100%-32px)] h-[calc(100%-32px)] rounded-full blur-xl animate-pulse"
-                      style={{
-                        background: "rgba(0, 191, 255, 0.3)",
-                        animationDelay: `${index * 0.5 + 0.5}s`,
-                        animationDuration: "2s"
-                      }}
-                    />
-                  </div>
+                  <>
+                    <div className="absolute left-[5%] top-1/2 transform -translate-y-1/2 w-20 h-20 md:w-32 md:h-32 hidden md:block" data-aos="zoom-in" data-aos-delay={`${index * 100 + 200}`}>
+                      <div className="w-full h-full rounded-full" style={{
+                          background: "radial-gradient(circle, rgba(0, 191, 255, 0.6) 0%, rgba(0, 191, 255, 0.3) 30%, rgba(0, 191, 255, 0.1) 70%, transparent 100%)",
+                          boxShadow: "0 0 80px rgba(0, 191, 255, 0.6), 0 0 160px rgba(0, 191, 255, 0.3)",
+                        }}/>
+                      <div className="absolute inset-2 w-[calc(100%-16px)] h-[calc(100%-16px)] rounded-full" style={{
+                          background: "rgba(30, 144, 255, 0.4)",
+                        }}/>
+                      <div className="absolute inset-4 w-[calc(100%-32px)] h-[calc(100%-32px)] rounded-full" style={{
+                          background: "rgba(0, 191, 255, 0.3)",
+                        }}/>
+                    </div>
+                    <div className="absolute left-[8%] top-[30%] w-12 h-12 md:w-20 md:h-20 rounded-full hidden md:block" style={{
+                        background: "radial-gradient(circle, rgba(0, 191, 255, 0.3) 0%, transparent 70%)",
+                        filter: "blur(15px)",
+                      }} data-aos="fade-in" data-aos-delay={`${index * 100 + 300}`}/>
+                    <div className="absolute left-[12%] top-[70%] w-8 h-8 md:w-16 md:h-16 rounded-full hidden md:block" style={{
+                        background: "radial-gradient(circle, rgba(30, 144, 255, 0.3) 0%, transparent 70%)",
+                        filter: "blur(12px)",
+                      }} data-aos="fade-in" data-aos-delay={`${index * 100 + 350}`}/>
+                  </>
                 )}
-
-                {/* Right side glow (for odd index projects - when content is on left) */}
                 {index % 2 !== 0 && (
-                  <div className="absolute right-[5%] top-1/2 transform -translate-y-1/2 w-20 h-20 md:w-32 md:h-32 hidden md:block">
-                    <div
-                      className="w-full h-full rounded-full blur-3xl animate-pulse"
-                      style={{
-                        background: "radial-gradient(circle, rgba(30, 144, 255, 0.6) 0%, rgba(30, 144, 255, 0.3) 30%, rgba(30, 144, 255, 0.1) 70%, transparent 100%)",
-                        boxShadow: "0 0 80px rgba(30, 144, 255, 0.6), 0 0 160px rgba(30, 144, 255, 0.3)",
-                        animationDuration: "2.5s",
-                        animationDelay: `${index * 0.5 + 1}s`
-                      }}
-                    />
-                    <div
-                      className="absolute inset-2 w-[calc(100%-16px)] h-[calc(100%-16px)] rounded-full blur-2xl animate-pulse"
-                      style={{
-                        background: "rgba(0, 191, 255, 0.4)",
-                        animationDelay: `${index * 0.5 + 0.5}s`,
-                        animationDuration: "3s"
-                      }}
-                    />
-                    <div
-                      className="absolute inset-4 w-[calc(100%-32px)] h-[calc(100%-32px)] rounded-full blur-xl animate-pulse"
-                      style={{
-                        background: "rgba(30, 144, 255, 0.3)",
-                        animationDelay: `${index * 0.5 + 1.5}s`,
-                        animationDuration: "2.5s"
-                      }}
-                    />
-                  </div>
+                  <>
+                    <div className="absolute right-[5%] top-1/2 transform -translate-y-1/2 w-20 h-20 md:w-32 md:h-32 hidden md:block" data-aos="zoom-in" data-aos-delay={`${index * 100 + 200}`}>
+                      <div className="w-full h-full rounded-full" style={{
+                          background: "radial-gradient(circle, rgba(30, 144, 255, 0.6) 0%, rgba(30, 144, 255, 0.3) 30%, rgba(30, 144, 255, 0.1) 70%, transparent 100%)",
+                          boxShadow: "0 0 80px rgba(30, 144, 255, 0.6), 0 0 160px rgba(30, 144, 255, 0.3)",
+                        }}/>
+                      <div className="absolute inset-2 w-[calc(100%-16px)] h-[calc(100%-16px)] rounded-full" style={{
+                          background: "rgba(0, 191, 255, 0.4)",
+                        }}/>
+                      <div className="absolute inset-4 w-[calc(100%-32px)] h-[calc(100%-32px)] rounded-full" style={{
+                          background: "rgba(30, 144, 255, 0.3)",
+                        }}/>
+                    </div>
+                    <div className="absolute right-[8%] top-[30%] w-12 h-12 md:w-20 md:h-20 rounded-full hidden md:block" style={{
+                        background: "radial-gradient(circle, rgba(30, 144, 255, 0.3) 0%, transparent 70%)",
+                        filter: "blur(15px)",
+                      }} data-aos="fade-in" data-aos-delay={`${index * 100 + 300}`}/>
+                    <div className="absolute right-[12%] top-[70%] w-8 h-8 md:w-16 md:h-16 rounded-full hidden md:block" style={{
+                        background: "radial-gradient(circle, rgba(0, 191, 255, 0.3) 0%, transparent 70%)",
+                        filter: "blur(12px)",
+                      }} data-aos="fade-in" data-aos-delay={`${index * 100 + 350}`}/>
+                  </>
                 )}
 
-                {/* Additional floating ambient glows on empty sides */}
-                {index % 2 === 0 && (
-                <>
-                  {/* Small floating glows on left side */}
-                  <div 
-                    className="absolute left-[8%] top-[30%] w-12 h-12 md:w-20 md:h-20 rounded-full animate-pulse hidden md:block"
-                    style={{
-                      background: "radial-gradient(circle, rgba(0, 191, 255, 0.3) 0%, transparent 70%)",
-                      filter: "blur(15px)",
-                      animationDuration: "4s",
-                      animationDelay: `${index * 0.3}s`
-                    }}
-                  />
-                  <div 
-                    className="absolute left-[12%] top-[70%] w-8 h-8 md:w-16 md:h-16 rounded-full animate-pulse hidden md:block"
-                    style={{
-                      background: "radial-gradient(circle, rgba(30, 144, 255, 0.3) 0%, transparent 70%)",
-                      filter: "blur(12px)",
-                      animationDuration: "3.5s",
-                      animationDelay: `${index * 0.3 + 1}s`
-                    }}
-                  />
-                </>
-                )}
-
-                {index % 2 !== 0 && (
-                <>
-                  {/* Small floating glows on right side */}
-                  <div 
-                    className="absolute right-[8%] top-[30%] w-12 h-12 md:w-20 md:h-20 rounded-full animate-pulse hidden md:block"
-                    style={{
-                      background: "radial-gradient(circle, rgba(30, 144, 255, 0.3) 0%, transparent 70%)",
-                      filter: "blur(15px)",
-                      animationDuration: "4s",
-                      animationDelay: `${index * 0.3 + 0.5}s`
-                    }}
-                  />
-                  <div 
-                    className="absolute right-[12%] top-[70%] w-8 h-8 md:w-16 md:h-16 rounded-full animate-pulse hidden md:block"
-                    style={{
-                      background: "radial-gradient(circle, rgba(0, 191, 255, 0.3) 0%, transparent 70%)",
-                      filter: "blur(12px)",
-                      animationDuration: "3.5s",
-                      animationDelay: `${index * 0.3 + 1.5}s`
-                    }}
-                  />
-                </>
-                )}
-                
-                {/* Enhanced Timeline circle with glow */}
-                <motion.div 
-                  className="absolute left-1/2 transform -translate-x-1/2 w-12 h-12 md:w-16 md:h-16 bg-gray-800 border-4 border-[#00BFFF] rounded-full flex items-center justify-center z-10"
-                  style={{
+                <div className="absolute left-1/2 transform -translate-x-1/2 w-12 h-12 md:w-16 md:h-16 bg-gray-800 border-4 border-[#00BFFF] rounded-full flex items-center justify-center z-10" style={{
                     boxShadow: `
                       0 0 20px rgba(0, 191, 255, 0.8),
                       0 0 40px rgba(0, 191, 255, 0.4),
                       inset 0 0 15px rgba(0, 191, 255, 0.2)
                     `
-                  }}
-                  initial={{ scale: 0 }}
-                  whileInView={{ scale: 1 }}
-                  viewport={{ once: false }}
-                  transition={{ type: "spring", stiffness: 100, delay: index * 0.1 + 0.2 }}
-                >
+                  }} data-aos="zoom-in" data-aos-delay={`${index * 100 + 400}`}>
                   <span className="text-xl md:text-2xl">{getProjectIcon(project.Tech)}</span>
-                  {/* Additional glow ring around circle */}
-                  <div 
-                    className="absolute inset-[-4px] rounded-full border border-[#00BFFF]/30 blur-sm"
-                    style={{
+                  <div className="absolute inset-[-4px] rounded-full border border-[#00BFFF]/30 blur-sm" style={{
                       boxShadow: "0 0 15px rgba(0, 191, 255, 0.5)"
-                    }}
-                  />
-                </motion.div>
-                
-                {/* Project card - make it clickable with improved z-index */}
-                <div 
-                  className={`w-full md:w-4/12 ${index % 2 === 0 ? 'md:mr-auto md:pr-8' : 'md:ml-auto md:pl-8'} mt-8 md:mt-0 relative z-20`}
-                >
-                  <motion.div 
-                    onClick={() => navigate(`/project/${index + 1}`)}
-                    className="bg-[#151030]/80 backdrop-blur-sm p-4 md:p-6 rounded-lg border border-[#00BFFF]/20 shadow-xl hover:border-[#00BFFF]/50 transition-all duration-300 hover:scale-105 cursor-pointer"
-                    // Removed whileHover animation
-                  >
-                    {/* Project image */}
-                    <div className="mb-4 overflow-hidden rounded-lg relative z-0">
-                      <img 
-                        src={project.image} 
-                        alt={project.title} 
-                        className="w-full h-32 md:h-40 object-cover object-center rounded-lg transition-transform duration-500 hover:scale-110" 
-                      />
-                    </div>
+                    }}/>
+                </div>
 
-                    <h3 className="text-white font-bold text-xl mb-2 relative z-0">{project.title}</h3>
-                    
+                <div className={`w-full md:w-4/12 ${index % 2 === 0 ? 'md:mr-auto md:pr-8' : 'md:ml-auto md:pl-8'} mt-8 md:mt-0 relative z-20`} data-aos="fade-up" data-aos-delay={`${index * 100 + 500}`}>
+                  <div onClick={() => navigate(`/project/${index + 1}`)} className="bg-[#151030]/80 backdrop-blur-sm p-4 md:p-6 rounded-lg border border-[#00BFFF]/20 shadow-xl hover:border-[#00BFFF]/50 transition-all duration-300 hover:scale-105 cursor-pointer">
+                    <div className="mb-4 overflow-hidden rounded-lg relative z-0" data-aos="zoom-in" data-aos-delay={`${index * 100 + 600}`}>
+                      <img src={project.image || "/placeholder.svg"} alt={project.title} className="w-full h-32 md:h-40 object-cover object-center rounded-lg transition-transform duration-500 hover:scale-110" />
+                    </div>
+                    <h3 className="text-white font-bold text-xl mb-2 relative z-0" data-aos="fade-up" data-aos-delay={`${index * 100 + 700}`}>{project.title}</h3>
                     <ul className="text-gray-400 text-sm space-y-2 mb-4 relative z-0">
                       {[project.p1, project.p2, project.p3, project.p4].map((item, idx) => (
-                        <li key={idx} className="flex items-start">
-                          <span className="text-[#00BFFF] mr-2 mt-1">•</span>
-                          <span>{item}</span>
+                        <li key={idx} className="flex items-start" data-aos="fade-up" data-aos-delay={`${index * 100 + 800 + idx * 50}`}>
+                          <span className="text-[#00BFFF] mr-2 mt-1">•</span><span>{item}</span>
                         </li>
                       ))}
                     </ul>
-                    
-                    <div className="flex flex-wrap gap-2 mb-4 relative z-0">
+                    <div className="flex flex-wrap gap-2 mb-4 relative z-0" data-aos="fade-up" data-aos-delay={`${index * 100 + 1000}`}>
                       {project.Tech.map((tech, idx) => (
-                        <span
-                          key={idx}
-                          className="px-3 py-1 bg-[#00BFFF]/20 text-[#00BFFF] text-xs rounded-full border border-[#00BFFF]/30"
-                        >
-                          {tech}
-                        </span>
+                        <span key={idx} className="px-3 py-1 bg-[#00BFFF]/20 text-[#00BFFF] text-xs rounded-full border border-[#00BFFF]/30" data-aos="zoom-in" data-aos-delay={`${index * 100 + 1000 + idx * 50}`}>{tech}</span>
                       ))}
                     </div>
-
-                    <div className="flex gap-3 mt-4 relative z-30">
+                    <div className="flex gap-3 mt-4 relative z-30" data-aos="fade-up" data-aos-delay={`${index * 100 + 1200}`}>
                       {project.github && (
-                        <a 
-                          href={project.github} 
-                          target="_blank" 
-                          rel="noopener noreferrer" 
-                          className="flex items-center px-4 py-2 bg-gray-800 hover:bg-gray-700 text-white rounded-full text-sm transition-colors duration-300"
-                          onClick={(e) => e.stopPropagation()} 
-                        >
+                        <a href={project.github} target="_blank" rel="noopener noreferrer" className="flex items-center px-4 py-2 bg-gray-800 hover:bg-gray-700 text-white rounded-full text-sm transition-colors duration-300" onClick={(e) => e.stopPropagation()} >
                           <FaGithub className="mr-2" /> GitHub
                         </a>
                       )}
-                      
-                      {project.livedemo && project.livedemo !== "#" && (
-                        <a 
-                          href={project.livedemo} 
-                          target="_blank" 
-                          rel="noopener noreferrer" 
-                          className="flex items-center px-4 py-2 bg-[#00BFFF] hover:bg-[#1E90FF] text-white rounded-full text-sm transition-colors duration-300"
-                          onClick={(e) => e.stopPropagation()} 
-                        >
+                      {project.livedemo && (
+                        <a href={project.livedemo} target="_blank" rel="noopener noreferrer" className="flex items-center px-4 py-2 bg-[#00BFFF] hover:bg-[#1E90FF] text-white rounded-full text-sm transition-colors duration-300" onClick={(e) => e.stopPropagation()} >
                           <FaExternalLinkAlt className="mr-2" /> Live Demo
                         </a>
                       )}
                     </div>
-                  </motion.div>
-                </div>
-                
-                {/* Period indicator */}
-                <motion.div 
-                  className={`w-full md:w-5/12 md:absolute md:top-0 ${index % 2 === 0 ? 'md:right-0 md:pr-4' : 'md:left-0 md:pl-4'} mb-4 md:mb-0`}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: false }}
-                  transition={{ duration: 0.5, delay: index * 0.1 + 0.3 }}
-                >
-                  <div className={`text-center md:${index % 2 === 0 ? 'text-right' : 'text-left'}`}>
-                    <span className="text-gray-200 text-sm font-medium bg-[#00BFFF]/20 px-4 py-1.5 rounded-full border border-[#00BFFF]/30 shadow-lg">
-                      {project.created_at.split('T')[0]}
-                    </span>
                   </div>
-                </motion.div>
-              </motion.div>
+                </div>
+
+                <div className={`w-full md:w-5/12 md:absolute md:top-0 ${index % 2 === 0 ? 'md:right-0 md:pr-4' : 'md:left-0 md:pl-4'} mb-4 md:mb-0`} data-aos="fade-in" data-aos-delay={`${index * 100 + 1300}`}>
+                  <div className={`text-center md:${index % 2 === 0 ? 'text-right' : 'text-left'}`}>
+                    <span className="text-gray-200 text-sm font-medium bg-[#00BFFF]/20 px-4 py-1.5 rounded-full border border-[#00BFFF]/30 shadow-lg">{project.created_at.split('T')[0]}</span>
+                  </div>
+                </div>
+              </div>
             ))}
-            
-            {/* Timeline end with glow */}
-            <motion.div 
-              className="absolute left-1/2 transform -translate-x-1/2 w-1 h-10 bottom-0 hidden md:block"
-              initial={{ scaleY: 0, opacity: 0 }}
-              whileInView={{ scaleY: 1, opacity: 1 }}
-              viewport={{ once: false }}
-              transition={{ duration: 0.7, delay: 0.5 }}
-            >
-              {/* Main end line with glow */}
-              <div 
-                className="w-full h-full bg-gradient-to-b from-[#00BFFF] to-transparent"
-                style={{
+            <div className="absolute left-1/2 transform -translate-x-1/2 w-1 h-10 bottom-0 hidden md:block" data-aos="fade-in" data-aos-delay={`${projects.length * 100 + 100}`}>
+              <div className="w-full h-full bg-gradient-to-b from-[#00BFFF] to-transparent" style={{
                   boxShadow: "0 0 10px rgba(0, 191, 255, 0.6), 0 0 20px rgba(0, 191, 255, 0.4)"
-                }}
-              />
-              {/* Additional glow layers for end */}
-              <div 
-                className="absolute inset-0 w-2 -translate-x-1/4 h-full bg-gradient-to-b from-[#00BFFF]/50 to-transparent blur-sm"
-              />
-              <div 
-                className="absolute inset-0 w-3 -translate-x-1/3 h-full bg-gradient-to-b from-[#00BFFF]/30 to-transparent blur-md"
-              />
-            </motion.div>
+                }}/>
+              <div className="absolute inset-0 w-2 -translate-x-1/4 h-full bg-gradient-to-b from-[#00BFFF]/50 to-transparent blur-sm"/>
+              <div className="absolute inset-0 w-3 -translate-x-1/3 h-full bg-gradient-to-b from-[#00BFFF]/30 to-transparent blur-md"/>
+            </div>
           </div>
         )}
-        
-        {/* Footer text - Existing code remains unchanged */}
-        <motion.div 
-          className="text-center mt-16"
-          initial={{ opacity: 0, y: 50 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: false }}
-          transition={{ duration: 0.7 }}
-        >
+
+        <div className="text-center mt-16" data-aos="fade-up" data-aos-delay={`${projects.length * 100 + 200}`}>
           <p className="text-gray-300 text-lg max-w-3xl mx-auto leading-relaxed">
-            These projects showcase my skills and experience through real-world examples of my work. 
-            Each project represents a unique challenge that I've tackled successfully, 
+            These projects showcase my skills and experience through real-world examples of my work.
+            Each project represents a unique challenge that I've tackled successfully,
             demonstrating my ability to solve complex problems and deliver robust solutions.
           </p>
-        </motion.div>
+        </div>
       </div>
     </div>
   );
 };
 
-export default Projects;
+export default Projects

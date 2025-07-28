@@ -1,13 +1,23 @@
 import { FaArrowLeft, FaGithub, FaExternalLinkAlt, FaCalendarAlt, FaMapMarkerAlt } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 import Footer from "../../Footer";
+import { useEffect } from 'react';
+import AOS from 'aos';
+import 'aos/dist/aos.css';
 
 const Index = () => {
   const navigate = useNavigate();
+  
+  useEffect(() => {
+    AOS.init({
+      duration: 1000,
+      once: true,
+      offset: 100,
+    });
+  }, []);
 
   const goBack = () => {
     navigate('/', { state: { scrollTo: 'works' } });
-    
     setTimeout(() => {
       const worksSection = document.getElementById('works');
       if (worksSection) {
@@ -15,7 +25,7 @@ const Index = () => {
       }
     }, 100);
   };
-  
+
   const achievements = [
     {
       icon: "🚀",
@@ -122,9 +132,9 @@ const Index = () => {
         </div>
 
         {/* Back Button */}
-        <div className="fixed top-6 left-6 z-50">
-          <button 
-            onClick={goBack} 
+        <div className="fixed top-6 left-6 z-50" data-aos="fade-down">
+          <button
+            onClick={goBack}
             className="flex items-center space-x-2 bg-white/10 hover:bg-white/20 backdrop-blur-md px-4 py-2 rounded-full transition-all duration-300 border border-[#00BFFF]/40"
             style={{
               boxShadow: "0 0 15px rgba(0, 191, 255, 0.3)"
@@ -136,9 +146,9 @@ const Index = () => {
         </div>
 
         {/* Header */}
-        <header className="relative z-10 flex justify-center items-center p-6 md:p-8 pt-20 bg-black/50 backdrop-blur-md border-b border-[#00BFFF]/30">
+        <header className="relative z-10 flex justify-center items-center p-6 md:p-8 pt-20 bg-black/50 backdrop-blur-md border-b border-[#00BFFF]/30" data-aos="fade-down" data-aos-delay="200">
           <div className="flex items-center space-x-2">
-            <div 
+            <div
               className="w-8 h-8 bg-gradient-to-r from-[#00BFFF] to-[#1E90FF] rounded-lg flex items-center justify-center"
               style={{
                 boxShadow: "0 0 20px rgba(0, 191, 255, 0.6)"
@@ -154,8 +164,8 @@ const Index = () => {
         <main className="relative z-10 px-6 md:px-8">
           {/* Hero Section */}
           <section className="max-w-6xl mx-auto text-center py-16 md:py-24">
-            <div className="mb-8">
-              <span 
+            <div className="mb-8" data-aos="fade-up">
+              <span
                 className="bg-[#00BFFF]/20 border border-[#00BFFF]/40 px-4 py-2 rounded-full text-sm font-medium"
                 style={{
                   boxShadow: "0 0 10px rgba(0, 191, 255, 0.3)"
@@ -164,12 +174,10 @@ const Index = () => {
                 January 20 - April 2025
               </span>
             </div>
-            
-            <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-6 bg-gradient-to-r from-white via-[#00BFFF] to-white bg-clip-text text-transparent">
+            <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-6 bg-gradient-to-r from-white via-[#00BFFF] to-white bg-clip-text text-transparent" data-aos="fade-up" data-aos-delay="100">
               🚀 My Full-Stack Internship Journey
             </h1>
-            
-            <div className="flex items-center justify-center space-x-6 mb-8">
+            <div className="flex items-center justify-center space-x-6 mb-8" data-aos="fade-up" data-aos-delay="200">
               <div className="flex items-center space-x-2 text-gray-300">
                 <FaMapMarkerAlt className="text-[#00BFFF]" />
                 <span>Remote</span>
@@ -179,21 +187,21 @@ const Index = () => {
                 <span>3+ Months</span>
               </div>
             </div>
-            
-            <p className="text-lg md:text-xl text-gray-300 mb-8 max-w-4xl mx-auto leading-relaxed">
-              An incredible journey as a Full-Stack Developer Intern at Oodser, working on an innovative AI-integrated platform 
-              similar to LinkedIn that automates job-related tasks. This ambitious project taught me enterprise-level development 
+            <p className="text-lg md:text-xl text-gray-300 mb-8 max-w-4xl mx-auto leading-relaxed" data-aos="fade-up" data-aos-delay="300">
+              An incredible journey as a Full-Stack Developer Intern at Oodser, working on an innovative AI-integrated platform
+              similar to LinkedIn that automates job-related tasks. This ambitious project taught me enterprise-level development
               and real-world problem-solving.
             </p>
-
-            <div className="flex flex-wrap gap-3 justify-center mb-12">
-              {["React (JSX & TSX)", "TypeScript", "Node.js", "Supabase", "REST APIs", "Security"].map((tech) => (
-                <span 
-                  key={tech} 
+            <div className="flex flex-wrap gap-3 justify-center mb-12" data-aos="fade-up" data-aos-delay="400">
+              {["React (JSX & TSX)", "TypeScript", "Node.js", "Supabase", "REST APIs", "Security"].map((tech, index) => (
+                <span
+                  key={tech}
                   className="bg-white/10 backdrop-blur-sm border border-[#00BFFF]/30 px-4 py-2 rounded-full text-sm"
                   style={{
                     boxShadow: "0 0 8px rgba(0, 191, 255, 0.2)"
                   }}
+                  data-aos="zoom-in"
+                  data-aos-delay={400 + index * 50}
                 >
                   {tech}
                 </span>
@@ -201,19 +209,21 @@ const Index = () => {
             </div>
 
             {/* Highlight Card */}
-            <div 
+            <div
               className="bg-[#00BFFF]/10 backdrop-blur-sm border border-[#00BFFF]/30 rounded-2xl p-6 mb-16 max-w-4xl mx-auto"
               style={{
                 boxShadow: "0 0 20px rgba(0, 191, 255, 0.2)"
               }}
+              data-aos="fade-up"
+              data-aos-delay="500"
             >
               <div className="flex items-start space-x-4">
                 <div className="text-2xl">🌟</div>
                 <div className="text-left">
                   <h3 className="text-xl font-semibold mb-2">🧠 Key Outcome</h3>
                   <p className="text-gray-300">
-                    This internship gave me a solid foundation in full-stack development, improved my problem-solving ability, 
-                    and introduced me to how real-world teams work in sync. I now feel confident working on both the frontend 
+                    This internship gave me a solid foundation in full-stack development, improved my problem-solving ability,
+                    and introduced me to how real-world teams work in sync. I now feel confident working on both the frontend
                     and backend of scalable applications with enterprise-level architecture.
                   </p>
                 </div>
@@ -221,10 +231,10 @@ const Index = () => {
             </div>
 
             {/* Company Links */}
-            <div className="flex flex-wrap gap-4 justify-center mb-12">
-              <a 
-                href="https://oodser.com" 
-                target="_blank" 
+            <div className="flex flex-wrap gap-4 justify-center mb-12" data-aos="fade-up" data-aos-delay="600">
+              <a
+                href="https://oodser.com"
+                target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center space-x-2 bg-gradient-to-r from-[#00BFFF] to-[#1E90FF] px-6 py-3 rounded-full hover:from-[#1E90FF] hover:to-[#00BFFF] transition-all duration-300"
                 style={{
@@ -237,8 +247,8 @@ const Index = () => {
             </div>
 
             {/* Company Image */}
-            <div className="mb-16">
-              <div 
+            <div className="mb-16" data-aos="zoom-in" data-aos-delay="700">
+              <div
                 className="w-full max-h-[400px] bg-gradient-to-r from-[#00BFFF]/20 to-[#1E90FF]/20 rounded-xl border border-[#00BFFF]/40 overflow-hidden"
                 style={{
                   boxShadow: "0 0 30px rgba(0, 191, 255, 0.3)"
@@ -259,18 +269,20 @@ const Index = () => {
 
           {/* Project Timeline */}
           <section className="max-w-6xl mx-auto py-16">
-            <h2 className="text-2xl md:text-3xl font-bold mb-8 text-center">🌐 Project Timeline</h2>
+            <h2 className="text-2xl md:text-3xl font-bold mb-8 text-center" data-aos="fade-up">🌐 Project Timeline</h2>
             <div className="space-y-6">
               {projectPhases.map((phase, index) => (
-                <div 
+                <div
                   key={index}
                   className="bg-white/5 backdrop-blur-sm border border-[#00BFFF]/20 rounded-2xl p-6 hover:bg-white/10 transition-all duration-300"
                   style={{
                     boxShadow: "0 0 15px rgba(0, 191, 255, 0.1)"
                   }}
+                  data-aos="fade-up"
+                  data-aos-delay={index * 100}
                 >
                   <div className="flex items-start space-x-4">
-                    <div 
+                    <div
                       className="bg-[#00BFFF] text-white px-3 py-1 rounded-full text-sm font-semibold"
                       style={{
                         boxShadow: "0 0 10px rgba(0, 191, 255, 0.5)"
@@ -290,15 +302,17 @@ const Index = () => {
 
           {/* Achievements Grid */}
           <section className="max-w-6xl mx-auto py-16">
-            <h2 className="text-2xl md:text-3xl font-bold mb-8 text-center">Key Achievements & Learning</h2>
+            <h2 className="text-2xl md:text-3xl font-bold mb-8 text-center" data-aos="fade-up">Key Achievements & Learning</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {achievements.map((achievement, index) => (
-                <div 
+                <div
                   key={index}
                   className="bg-white/5 backdrop-blur-sm border border-[#00BFFF]/20 rounded-2xl p-6 hover:bg-white/10 transition-all duration-300 transform hover:scale-105"
                   style={{
                     boxShadow: "0 0 15px rgba(0, 191, 255, 0.1)"
                   }}
+                  data-aos="fade-up"
+                  data-aos-delay={index * 100}
                 >
                   <div className="text-3xl mb-4">{achievement.icon}</div>
                   <h3 className="text-xl font-semibold mb-3">{achievement.title}</h3>
@@ -310,21 +324,25 @@ const Index = () => {
 
           {/* Backend Architecture Section */}
           <section className="max-w-6xl mx-auto py-16">
-            <h2 className="text-2xl md:text-3xl font-bold mb-8 text-center">⚙️ Backend Architecture Mastery</h2>
-            <div 
+            <h2 className="text-2xl md:text-3xl font-bold mb-8 text-center" data-aos="fade-up">⚙️ Backend Architecture Mastery</h2>
+            <div
               className="bg-[#00BFFF]/10 backdrop-blur-sm border border-[#00BFFF]/30 rounded-2xl p-8 mb-8"
               style={{
                 boxShadow: "0 0 20px rgba(0, 191, 255, 0.2)"
               }}
+              data-aos="fade-up"
+              data-aos-delay="200"
             >
               <p className="text-gray-300 mb-6 text-center">
                 The backend was built using Node.js with a modular company-grade architecture:
               </p>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 {["controllers/", "routes/", "middlewares/", "models/", "server/"].map((component, index) => (
-                  <div 
+                  <div
                     key={index}
                     className="bg-black/30 border border-[#00BFFF]/20 rounded-lg p-4 text-center"
+                    data-aos="zoom-in"
+                    data-aos-delay={300 + index * 50}
                   >
                     <span className="text-[#00BFFF] font-mono font-semibold">{component}</span>
                   </div>
@@ -338,15 +356,19 @@ const Index = () => {
 
           {/* Technologies Section */}
           <section className="max-w-6xl mx-auto py-16">
-            <div className="flex items-center space-x-3 mb-8">
+            <div className="flex items-center space-x-3 mb-8" data-aos="fade-up">
               <div className="text-2xl">🔧</div>
               <h2 className="text-2xl md:text-3xl font-bold">Technologies & Skills Gained</h2>
             </div>
-            
             <div className="space-y-4">
               {technologies.map((tech, index) => (
-                <div key={index} className="flex items-center space-x-4">
-                  <div 
+                <div
+                  key={index}
+                  className="flex items-center space-x-4"
+                  data-aos="fade-right"
+                  data-aos-delay={index * 100}
+                >
+                  <div
                     className="w-2 h-2 bg-[#00BFFF] rounded-full"
                     style={{
                       boxShadow: "0 0 8px rgba(0, 191, 255, 0.6)"
@@ -362,21 +384,21 @@ const Index = () => {
 
           {/* Mentors & Leadership Section */}
           <section className="max-w-6xl mx-auto py-16">
-            <h2 className="text-2xl md:text-3xl font-bold mb-8 text-center">Mentorship & Leadership</h2>
+            <h2 className="text-2xl md:text-3xl font-bold mb-8 text-center" data-aos="fade-up">Mentorship & Leadership</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {/* Mentors */}
-              <div 
+              <div
                 className="bg-[#00BFFF]/10 backdrop-blur-sm border border-[#00BFFF]/30 rounded-2xl p-8"
                 style={{
                   boxShadow: "0 0 20px rgba(0, 191, 255, 0.2)"
                 }}
+                data-aos="fade-right"
               >
                 <div className="text-center">
                   <div className="text-4xl mb-4">👨‍💻</div>
                   <h3 className="text-xl font-semibold mb-4">Technical Mentors</h3>
                   <p className="text-gray-300 mb-4">
-                    Heartfelt gratitude to my mentors <span className="text-[#00BFFF] font-semibold">Harsha Magapu</span> and 
-                    <span className="text-[#00BFFF] font-semibold"> Shashank Aluru</span> who explained concepts clearly and 
+                    Heartfelt gratitude to my mentors <span className="text-[#00BFFF] font-semibold">Harsha Magapu</span> and <span className="text-[#00BFFF] font-semibold"> Shashank Aluru</span> who explained concepts clearly and
                     provided effective solutions to any problems I faced.
                   </p>
                   <p className="text-gray-300">
@@ -386,21 +408,22 @@ const Index = () => {
               </div>
 
               {/* CEO Leadership */}
-              <div 
+              <div
                 className="bg-[#00BFFF]/10 backdrop-blur-sm border border-[#00BFFF]/30 rounded-2xl p-8"
                 style={{
                   boxShadow: "0 0 20px rgba(0, 191, 255, 0.2)"
                 }}
+                data-aos="fade-left"
               >
                 <div className="text-center">
                   <div className="text-4xl mb-4">🎯</div>
                   <h3 className="text-xl font-semibold mb-4">Leadership Guidance</h3>
                   <p className="text-gray-300 mb-4">
-                    Special thanks to <span className="text-[#00BFFF] font-semibold">Ramu</span>, the CEO of Oodser, 
+                    Special thanks to <span className="text-[#00BFFF] font-semibold">Ramu</span>, the CEO of Oodser,
                     who constantly motivated me and personally guided me through each task.
                   </p>
                   <p className="text-gray-300">
-                    His support helped me understand not just coding but the value of organized development, 
+                    His support helped me understand not just coding but the value of organized development,
                     teamwork, and real-world problem-solving.
                   </p>
                 </div>
