@@ -233,7 +233,7 @@ const About = () => {
             {/* 3D effect container with mouse tracking */}
             <motion.div
               ref={containerRef}
-              className="relative w-[350px] h-[350px] md:w-[600px] md:h-[600px] cursor-grab active:cursor-grabbing"
+              className="relative w-[300px] h-[300px] md:w-[450px] md:h-[450px] cursor-grab active:cursor-grabbing"
               onMouseMove={handleMouseMove}
               onTouchMove={handleTouchMove}
               onMouseEnter={() => setHovering(true)}
@@ -261,24 +261,76 @@ const About = () => {
               >
                 {/* Image with enhanced shadow effect */}
                 <motion.div className="w-full h-full relative">
-                  <motion.img
-                    src="/3.png"
-                    alt="Computer Workstation"
-                    className="w-full h-full object-contain  transition-all duration-300"
-                    animate={
-                      !hovering && !isDragging
-                        ? {
-                            y: [0, -15, 0],
-                            rotateZ: [0, 2, 0, -2, 0],
+                  {/* Circular frame with image */}
+                  <div className="relative w-full h-full max-w-[450px] max-h-[450px] mx-auto">
+                    {/* Enhanced outer glow and shadow effect */}
+                    <div 
+                      className="absolute -inset-4 rounded-full blur-xl -z-10"
+                      style={{
+                        background: "radial-gradient(circle, rgba(0,191,255,0.4) 0%, rgba(0,100,255,0.1) 60%, transparent 80%)",
+                        boxShadow: "0 0 40px rgba(0,191,255,0.3)",
+                      }}
+                    ></div>
+                    
+                    {/* Deeper shadow for 3D effect */}
+                    <div 
+                      className="absolute -inset-2 rounded-full blur-2xl -z-20"
+                      style={{
+                        background: "radial-gradient(circle, rgba(0,30,60,0.6) 0%, transparent 70%)",
+                        transform: "translateY(10px)",
+                      }}
+                    ></div>
+
+                    {/* Black background circle */}
+                    <div className="absolute inset-0 rounded-full bg-black"></div>
+                    
+                    {/* Glowing border */}
+                    <div 
+                      className="absolute inset-0 rounded-full -z-5"
+                      style={{
+                        border: "3px solid rgba(0,191,255,0.5)",
+                        boxShadow: "inset 0 0 20px rgba(0,191,255,0.5), 0 0 15px rgba(0,191,255,0.5)",
+                        filter: "brightness(1.2)"
+                      }}
+                    ></div>
+                    
+                    {/* Image container with reduced padding to fill more of the circle */}
+                    <div className="absolute inset-[12px] overflow-hidden rounded-full border-[4px] border-black">
+                      {/* Position the image to ensure it covers the entire circular area */}
+                      <div className="w-full h-full relative">
+                        <motion.img
+                          src="/personal/r3.png"
+                          alt="Ramji" 
+                          className="w-full h-full object-cover absolute inset-0"
+                          style={{
+                            objectPosition: "center", // Center the image
+                          }}
+                          animate={
+                            !hovering && !isDragging
+                              ? {
+                                  scale: [1, 1.03, 1],
+                                }
+                              : { scale: 1 }
                           }
-                        : { y: 0, rotateZ: 0 }
-                    }
-                    transition={{
-                      repeat: !hovering && !isDragging ? Number.POSITIVE_INFINITY : 0,
-                      duration: 5,
-                      ease: "easeInOut",
-                    }}
-                  />
+                          transition={{
+                            repeat: !hovering && !isDragging ? Number.POSITIVE_INFINITY : 0,
+                            duration: 5,
+                            ease: "easeInOut",
+                          }}
+                        />
+                      </div>
+                    </div>
+                    
+                    {/* Blue glowing ring effect */}
+                    <div 
+                      className="absolute -inset-1 rounded-full z-5 opacity-75"
+                      style={{
+                        border: "2px solid rgba(0,191,255,0.7)",
+                        filter: "blur(3px)",
+                        animation: "pulseGlow 3s infinite"
+                      }}
+                    ></div>
+                  </div>
 
                   {/* 3D effect elements - IMPROVED DEPTH */}
                   <div
@@ -298,14 +350,14 @@ const About = () => {
                   className="absolute inset-0 rounded-full blur-3xl -z-10 transition-all duration-300"
                   style={{
                     background: isDragging 
-                      ? "rgba(0, 191, 255, 0.3)" 
+                      ? "rgba(0, 191, 255, 0.25)" // Slightly reduced opacity
                       : hovering 
-                        ? "rgba(0, 191, 255, 0.3)" 
-                        : "rgba(0, 191, 255, 0.2)",
+                        ? "rgba(0, 191, 255, 0.2)" // Reduced opacity
+                        : "rgba(0, 191, 255, 0.15)", // Reduced base opacity
                     transform: isDragging 
-                      ? "scale(1.5)" 
+                      ? "scale(1.3)" // Reduced scale to better frame personal photo
                       : hovering 
-                        ? "scale(1.25)" 
+                        ? "scale(1.2)" // Reduced scale
                         : "scale(1)"
                   }}
                 />

@@ -10,7 +10,7 @@ const Index = () => {
   
   useEffect(() => {
     AOS.init({
-      duration: 1000,
+      duration: 200,
       once: true,
       offset: 100,
     });

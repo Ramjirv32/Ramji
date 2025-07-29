@@ -49,11 +49,12 @@ import {
   SiKubernetes,
   SiTerraform,
   SiDjango,
+  SiCloudflare,
   SiNextdotjs,
   SiNestjs,
   SiSpring,
   SiDotnet,
-  SiNuxtdotjs,
+  // SiNuxtdotjs,
   SiSvelte,
   SiJest,
   SiCypress,
@@ -62,7 +63,7 @@ import {
   SiSupabase,
   SiRedux,
   SiWebgl,
-  // SiThreejs
+  SiFastapi // Add FastAPI import here
 } from "react-icons/si";
 import { TbBrandFramerMotion } from "react-icons/tb";
 import { RxShadowNone } from "react-icons/rx";
@@ -86,8 +87,13 @@ const skillIconsMap: Record<string, { icon: JSX.Element; color: string }> = {
   "CSS": { icon: <FaCss3Alt size={20} />, color: "#1572B6" },
   "JavaScript": { icon: <FaJs size={20} />, color: "#F7DF1E" },
   "TypeScript": { icon: <SiTypescript size={18} />, color: "#3178C6" },
+  "Cloudflare": { icon: <SiCloudflare size={20} />, color: "#F38020" },
   "ReactJS": { icon: <FaReact size={20} />, color: "#61DAFB" },
   "React": { icon: <FaReact size={20} />, color: "#61DAFB" },
+  "fastapi":{icon: <SiFastapi size={20} />, color: "#009688" },
+  "Framer Motion": { icon: <TbBrandFramerMotion size={20} />, color: "#0055FF" },
+  "Shadcn": { icon: <RxShadowNone size={20} />, color: "#FFFFFF" },
+  "Next.js": { icon: <SiNextdotjs size={20} />, color: "#000000" },
   "Angular": { icon: <FaAngular size={20} />, color: "#DD0031" },
   "Vue.js": { icon: <FaVuejs size={20} />, color: "#4FC08D" },
   "Svelte": { icon: <SiSvelte size={20} />, color: "#FF3E00" },
@@ -98,8 +104,8 @@ const skillIconsMap: Record<string, { icon: JSX.Element; color: string }> = {
   "Sass": { icon: <FaSass size={20} />, color: "#CC6699" },
   "Framer Motion": { icon: <TbBrandFramerMotion size={20} />, color: "#0055FF" },
   "Shadcn": { icon: <RxShadowNone size={20} />, color: "#FFFFFF" },
-  "Next.js": { icon: <SiNextdotjs size={20} />, color: "#000000" },
-  "Nuxt.js": { icon: <SiNuxtdotjs size={20} />, color: "#00C58E" },
+  "NextJs": { icon: <SiNestjs size={20} />, color: "#000000" },
+  // "Nuxt.js": { icon: <SiNuxtdotjs size={20} />, color: "#00C58E" },
   "Redux": { icon: <SiRedux size={20} />, color: "#764ABC" },
   "WebGL": { icon: <SiWebgl size={20} />, color: "#990000" },
   // "Three.js": { icon: <SiThreejs size={20} />, color: "#000000" },

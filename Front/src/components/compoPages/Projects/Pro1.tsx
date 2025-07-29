@@ -11,9 +11,9 @@ const Index = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
     AOS.init({
-      duration: 1000,
+      duration: 200,
       once: true,
-      offset: 100,
+    
     });
   }, []);
 

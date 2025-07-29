@@ -5,8 +5,6 @@ import React from "react"
 import { useState, useEffect } from "react"
 import { FaExternalLinkAlt, FaGithub, FaPlus } from "react-icons/fa"
 import { useNavigate } from "react-router-dom"
-import AOS from "aos"
-import "aos/dist/aos.css"
 
 interface Project {
   id: number;
@@ -44,12 +42,6 @@ const Projects: React.FC = () => {
   });
 
   useEffect(() => {
-    AOS.init({
-      duration: 1000,
-      once: true,
-      offset: 100,
-    });
-
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.ctrlKey && e.shiftKey && e.key === 'P') {
         setAdminMode(prev => !prev);
@@ -198,13 +190,53 @@ const Projects: React.FC = () => {
     }
   };
 
-  const getProjectIcon = (technologies: string[]): string => {
+  const getProjectIcon = (technologies: string[], title: string): string => {
+    // Alternative approach using more basic Unicode characters
+    if (title === "wistravel") return "🧳"; // Luggage/suitcase icon
+    if (title === "FocusAI Productive Assistant") return "🎯"; // Target icon
+    
+
+    if (title === "Vehicle Rental System") return "🚗"; // Car icon
+    if (title === "Smart Parking System") return "🅿️"; // Parking icon
+    if (title === "NebulX") return "⚡"; // Lightning icon
+    if (title === "Weather API Integration") return "🌤️"; // Weather icon
+    
+    // Original logic with fallback that isn't a rocket
     if (technologies.includes("C")) return "💻";
     if (technologies.includes("AI APIs") || technologies.includes("Hugging Face API")) return "🤖";
-    if (technologies.includes("IoT")) return "🚗";
-    if (technologies.includes("API")) return "🌤️";
-    return "🚀";
+    if (technologies.includes("IoT")) return "📱";
+    if (technologies.includes("API")) return "🔌";
+    return "💼";  // Changed from rocket to briefcase
   };
+
+  const getProjectColor = (technologies: string[], title: string): string => {
+    // Unique colors for specific projects
+    if (title === "Wistravel") return "#FF6B6B"; // Coral
+    if (title === "FocusAI – Productive Assistant") return "#4ECDC4"; // Turquoise
+    if (title === "Vehicle Rental System") return "#FFA500"; // Orange
+    if (title === "Smart Parking System") return "#00BFFF"; // Default blue
+    if (title === "NebulX") return "#8A2BE2"; // Purple
+    if (title === "Weather API Integration") return "#9FE2BF"; // Mint
+    
+    // Colors based on technologies
+    if (technologies.includes("AI APIs") || technologies.includes("Hugging Face API")) 
+      return "#FF69B4"; // Hot Pink
+    if (technologies.includes("IoT")) 
+      return "#6495ED"; // Cornflower Blue
+    if (technologies.includes("React")) 
+      return "#61DBFB"; // React Blue
+    if (technologies.includes("Node.js")) 
+      return "#3C873A"; // Node Green
+    if (technologies.includes("MongoDB")) 
+      return "#4DB33D"; // MongoDB Green
+    if (technologies.includes("TypeScript")) 
+      return "#007ACC"; // TypeScript Blue
+    if (technologies.includes("C")) 
+      return "#A8B9CC"; // C Language Gray-Blue
+  
+    // Default color
+    return "#00BFFF"; // Default Bright Blue
+  }
 
   const [imagePreview, setImagePreview] = useState<boolean>(false);
   const [imageError, setImageError] = useState<boolean>(false);
@@ -234,19 +266,17 @@ const Projects: React.FC = () => {
   return (
     <div className="min-h-screen py-20 px-4 bg-gradient-to-b from-[#030014] to-[#080324] overflow-hidden">
       <div className="max-w-6xl mx-auto">
-        <div className="text-center mb-20" data-aos="fade-down">
-          <p className="text-[#00BFFF] text-sm uppercase tracking-wider mb-4" data-aos="fade-down" data-aos-delay="100">
+        <div className="text-center mb-20">
+          <p className="text-[#00BFFF] text-sm uppercase tracking-wider mb-4">
             WHAT I HAVE BUILT SO FAR
           </p>
-          <h1 className="text-white text-5xl md:text-6xl font-bold" data-aos="fade-down" data-aos-delay="200">
+          <h1 className="text-white text-5xl md:text-6xl font-bold">
             Projects<span className="text-[#00BFFF]">.</span>
           </h1>
           {(adminMode || !showAddForm) && (
             <button
               onClick={() => setShowAddForm(true)}
               className="mt-6 px-6 py-3 bg-gradient-to-r from-blue-600/30 to-purple-600/30 rounded-full text-white border border-blue-500/50 hover:border-blue-400 hover:shadow-[0_0_15px_rgba(59,130,246,0.5)] transition-all duration-300"
-              data-aos="fade-up"
-              data-aos-delay="300"
             >
               <span className="flex items-center gap-2">
                 <FaPlus />
@@ -263,7 +293,7 @@ const Projects: React.FC = () => {
         )}
 
         {showAddForm && (
-          <div className="mb-16 bg-gradient-to-r from-blue-900/40 to-purple-900/40 backdrop-blur-md border border-blue-700/50 rounded-lg p-6 max-w-2xl mx-auto" data-aos="fade-up">
+          <div className="mb-16 bg-gradient-to-r from-blue-900/40 to-purple-900/40 backdrop-blur-md border border-blue-700/50 rounded-lg p-6 max-w-2xl mx-auto">
             <h3 className="text-xl font-bold text-white mb-4">{adminMode ? "Add New Project" : "Suggest a Project"}</h3>
             <form onSubmit={submitProject}>
               <div className="space-y-4">
@@ -475,20 +505,20 @@ const Projects: React.FC = () => {
         )}
 
         {loading ? (
-          <div className="flex justify-center items-center h-64" data-aos="fade-in">
+          <div className="flex justify-center items-center h-64">
             <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-[#00BFFF]"></div>
           </div>
         ) : error ? (
-          <div className="text-red-500 text-center py-10" data-aos="fade-in">
+          <div className="text-red-500 text-center py-10">
             {error}
             <p className="mt-2">Please check your API connection</p>
           </div>
         ) : (
           <div className="relative">
             {projects.map((project, index) => (
-              <div key={project.id} className="relative group mb-20 px-4" data-aos="fade-up" data-aos-delay={`${index * 100}`}>
+              <div key={project.id} className="relative group mb-20 px-4">
                 {/* Glowing lines and circles */}
-                <div className="absolute left-1/2 transform -translate-x-1/2 w-0.5 h-full hidden md:block" data-aos="fade-in" data-aos-delay={`${index * 100 + 100}`}>
+                <div className="absolute left-1/2 transform -translate-x-1/2 w-0.5 h-full hidden md:block">
                   <div className="w-full h-full bg-gradient-to-b from-[#00BFFF] to-transparent" style={{
                       boxShadow: "0 0 10px rgba(0, 191, 255, 0.6), 0 0 20px rgba(0, 191, 255, 0.4), 0 0 30px rgba(0, 191, 255, 0.2)"
                     }}/>
@@ -497,7 +527,7 @@ const Projects: React.FC = () => {
                 </div>
                 {index % 2 === 0 && (
                   <>
-                    <div className="absolute left-[5%] top-1/2 transform -translate-y-1/2 w-20 h-20 md:w-32 md:h-32 hidden md:block" data-aos="zoom-in" data-aos-delay={`${index * 100 + 200}`}>
+                    <div className="absolute left-[5%] top-1/2 transform -translate-y-1/2 w-20 h-20 md:w-32 md:h-32 hidden md:block">
                       <div className="w-full h-full rounded-full" style={{
                           background: "radial-gradient(circle, rgba(0, 191, 255, 0.6) 0%, rgba(0, 191, 255, 0.3) 30%, rgba(0, 191, 255, 0.1) 70%, transparent 100%)",
                           boxShadow: "0 0 80px rgba(0, 191, 255, 0.6), 0 0 160px rgba(0, 191, 255, 0.3)",
@@ -512,16 +542,16 @@ const Projects: React.FC = () => {
                     <div className="absolute left-[8%] top-[30%] w-12 h-12 md:w-20 md:h-20 rounded-full hidden md:block" style={{
                         background: "radial-gradient(circle, rgba(0, 191, 255, 0.3) 0%, transparent 70%)",
                         filter: "blur(15px)",
-                      }} data-aos="fade-in" data-aos-delay={`${index * 100 + 300}`}/>
+                      }}/>
                     <div className="absolute left-[12%] top-[70%] w-8 h-8 md:w-16 md:h-16 rounded-full hidden md:block" style={{
                         background: "radial-gradient(circle, rgba(30, 144, 255, 0.3) 0%, transparent 70%)",
                         filter: "blur(12px)",
-                      }} data-aos="fade-in" data-aos-delay={`${index * 100 + 350}`}/>
+                      }}/>
                   </>
                 )}
                 {index % 2 !== 0 && (
                   <>
-                    <div className="absolute right-[5%] top-1/2 transform -translate-y-1/2 w-20 h-20 md:w-32 md:h-32 hidden md:block" data-aos="zoom-in" data-aos-delay={`${index * 100 + 200}`}>
+                    <div className="absolute right-[5%] top-1/2 transform -translate-y-1/2 w-20 h-20 md:w-32 md:h-32 hidden md:block">
                       <div className="w-full h-full rounded-full" style={{
                           background: "radial-gradient(circle, rgba(30, 144, 255, 0.6) 0%, rgba(30, 144, 255, 0.3) 30%, rgba(30, 144, 255, 0.1) 70%, transparent 100%)",
                           boxShadow: "0 0 80px rgba(30, 144, 255, 0.6), 0 0 160px rgba(30, 144, 255, 0.3)",
@@ -536,11 +566,11 @@ const Projects: React.FC = () => {
                     <div className="absolute right-[8%] top-[30%] w-12 h-12 md:w-20 md:h-20 rounded-full hidden md:block" style={{
                         background: "radial-gradient(circle, rgba(30, 144, 255, 0.3) 0%, transparent 70%)",
                         filter: "blur(15px)",
-                      }} data-aos="fade-in" data-aos-delay={`${index * 100 + 300}`}/>
+                      }}/>
                     <div className="absolute right-[12%] top-[70%] w-8 h-8 md:w-16 md:h-16 rounded-full hidden md:block" style={{
                         background: "radial-gradient(circle, rgba(0, 191, 255, 0.3) 0%, transparent 70%)",
                         filter: "blur(12px)",
-                      }} data-aos="fade-in" data-aos-delay={`${index * 100 + 350}`}/>
+                      }}/>
                   </>
                 )}
 
@@ -550,54 +580,128 @@ const Projects: React.FC = () => {
                       0 0 40px rgba(0, 191, 255, 0.4),
                       inset 0 0 15px rgba(0, 191, 255, 0.2)
                     `
-                  }} data-aos="zoom-in" data-aos-delay={`${index * 100 + 400}`}>
-                  <span className="text-xl md:text-2xl">{getProjectIcon(project.Tech)}</span>
+                  }}>
+                  <span className="text-xl md:text-2xl">{getProjectIcon(project.Tech, project.title)}</span>
                   <div className="absolute inset-[-4px] rounded-full border border-[#00BFFF]/30 blur-sm" style={{
                       boxShadow: "0 0 15px rgba(0, 191, 255, 0.5)"
                     }}/>
                 </div>
 
-                <div className={`w-full md:w-4/12 ${index % 2 === 0 ? 'md:mr-auto md:pr-8' : 'md:ml-auto md:pl-8'} mt-8 md:mt-0 relative z-20`} data-aos="fade-up" data-aos-delay={`${index * 100 + 500}`}>
-                  <div onClick={() => navigate(`/project/${index + 1}`)} className="bg-[#151030]/80 backdrop-blur-sm p-4 md:p-6 rounded-lg border border-[#00BFFF]/20 shadow-xl hover:border-[#00BFFF]/50 transition-all duration-300 hover:scale-105 cursor-pointer">
-                    <div className="mb-4 overflow-hidden rounded-lg relative z-0" data-aos="zoom-in" data-aos-delay={`${index * 100 + 600}`}>
-                      <img src={project.image || "/placeholder.svg"} alt={project.title} className="w-full h-32 md:h-40 object-cover object-center rounded-lg transition-transform duration-500 hover:scale-110" />
+                <div className={`w-full md:w-4/12 ${index % 2 === 0 ? 'md:mr-auto md:pr-8' : 'md:ml-auto md:pl-8'} mt-8 md:mt-0 relative z-20`}>
+                  <div 
+                    onClick={() => {
+                      // Check for specific projects that need special routing
+                      if (project.title === "Wistravel") {
+                        navigate("/project/5");
+                      } else if (project.title === "FocusAI – Productive Assistant") {
+                        navigate("/project/4");
+                      } else {
+                        // Default navigation based on index
+                        navigate(`/project/${index + 1}`);
+                      }
+                    }} 
+                    className="bg-[#151030]/80 backdrop-blur-sm p-4 md:p-6 rounded-lg border border-[#00BFFF]/20 shadow-xl transition-all duration-300 book-card project-card"
+                    style={{
+                      '--card-color': getProjectColor(project.Tech, project.title),
+                      '--glow-x': '50%',
+                      '--glow-y': '50%',
+                      '--glow-opacity': '0',
+                      '--glow-blur': '15px',
+                    } as React.CSSProperties}
+                    onMouseMove={(e) => {
+                      if (window.innerWidth <= 768) return; // Skip on mobile
+                      
+                      const rect = e.currentTarget.getBoundingClientRect();
+                      const x = ((e.clientX - rect.left) / rect.width) * 100;
+                      const y = ((e.clientY - rect.top) / rect.height) * 100;
+                      
+                      e.currentTarget.style.setProperty('--glow-x', `${x}%`);
+                      e.currentTarget.style.setProperty('--glow-y', `${y}%`);
+                      e.currentTarget.style.setProperty('--glow-opacity', '0.3'); // Reduced from 1.0 to 0.3
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.setProperty('--glow-opacity', '0');
+                    }}
+                  >
+                    <div className="book-content relative z-10">
+                      <div className="mb-4 overflow-hidden rounded-lg relative z-0">
+                        <img 
+                          src={project.image || "/placeholder.svg"} 
+                          alt={project.title} 
+                          className="w-full h-32 md:h-40 object-cover object-center rounded-lg transition-transform duration-500 hover:scale-110" 
+                        />
+                      </div>
+                      <h3 className="text-white font-bold text-xl mb-2 relative z-0">{project.title}</h3>
+                      <ul className="text-gray-400 text-sm space-y-2 mb-4 relative z-0">
+                        {[project.p1, project.p2, project.p3].map((item, idx) => (
+                          <li key={idx} className="flex items-start">
+                            <span className="text-[var(--card-color)] mr-2 mt-1">•</span><span>{item}</span>
+                          </li>
+                        ))}
+                      </ul>
+                      <div className="flex flex-wrap gap-2 mb-4 relative z-0">
+                        {project.Tech.map((tech, idx) => (
+                          <span key={idx} className="px-3 py-1 bg-[var(--card-color)]/20 text-[var(--card-color)] text-xs rounded-full border border-[var(--card-color)]/30">{tech}</span>
+                        ))}
+                      </div>
+                      <div className="flex gap-3 mt-4 relative z-30">
+                        {project.title === "Wistravel" || project.title === "FocusAI – Productive Assistant" ? (
+                          <>
+                            <div className="flex items-center px-4 py-2 bg-gray-800 text-white/80 rounded-full text-sm cursor-not-allowed opacity-90">
+                              <FaGithub className="mr-2" /> Coming Soon
+                            </div>
+                            <div className="flex items-center px-4 py-2 bg-[var(--card-color)]/80 text-white/80 rounded-full text-sm cursor-not-allowed opacity-90">
+                              <FaExternalLinkAlt className="mr-2" /> Coming Soon
+                            </div>
+                          </>
+                        ) : (
+                          <>
+                            {project.github && (
+                              <a 
+                                href={project.github} 
+                                target="_blank" 
+                                rel="noopener noreferrer" 
+                                className="flex items-center px-4 py-2 bg-gray-800 hover:bg-gray-700 text-white rounded-full text-sm transition-colors duration-300" 
+                                onClick={(e) => e.stopPropagation()}
+                              >
+                                <FaGithub className="mr-2" /> GitHub
+                              </a>
+                            )}
+                            {project.livedemo && (
+                              <a 
+                                href={project.livedemo} 
+                                target="_blank" 
+                                rel="noopener noreferrer" 
+                                className="flex items-center px-4 py-2 bg-[var(--card-color)] hover:brightness-110 text-white rounded-full text-sm transition-colors duration-300" 
+                                onClick={(e) => e.stopPropagation()}
+                              >
+                                <FaExternalLinkAlt className="mr-2" /> Live Demo
+                              </a>
+                            )}
+                          </>
+                        )}
+                      </div>
                     </div>
-                    <h3 className="text-white font-bold text-xl mb-2 relative z-0" data-aos="fade-up" data-aos-delay={`${index * 100 + 700}`}>{project.title}</h3>
-                    <ul className="text-gray-400 text-sm space-y-2 mb-4 relative z-0">
-                      {[project.p1, project.p2, project.p3, project.p4].map((item, idx) => (
-                        <li key={idx} className="flex items-start" data-aos="fade-up" data-aos-delay={`${index * 100 + 800 + idx * 50}`}>
-                          <span className="text-[#00BFFF] mr-2 mt-1">•</span><span>{item}</span>
-                        </li>
-                      ))}
-                    </ul>
-                    <div className="flex flex-wrap gap-2 mb-4 relative z-0" data-aos="fade-up" data-aos-delay={`${index * 100 + 1000}`}>
-                      {project.Tech.map((tech, idx) => (
-                        <span key={idx} className="px-3 py-1 bg-[#00BFFF]/20 text-[#00BFFF] text-xs rounded-full border border-[#00BFFF]/30" data-aos="zoom-in" data-aos-delay={`${index * 100 + 1000 + idx * 50}`}>{tech}</span>
-                      ))}
-                    </div>
-                    <div className="flex gap-3 mt-4 relative z-30" data-aos="fade-up" data-aos-delay={`${index * 100 + 1200}`}>
-                      {project.github && (
-                        <a href={project.github} target="_blank" rel="noopener noreferrer" className="flex items-center px-4 py-2 bg-gray-800 hover:bg-gray-700 text-white rounded-full text-sm transition-colors duration-300" onClick={(e) => e.stopPropagation()} >
-                          <FaGithub className="mr-2" /> GitHub
-                        </a>
-                      )}
-                      {project.livedemo && (
-                        <a href={project.livedemo} target="_blank" rel="noopener noreferrer" className="flex items-center px-4 py-2 bg-[#00BFFF] hover:bg-[#1E90FF] text-white rounded-full text-sm transition-colors duration-300" onClick={(e) => e.stopPropagation()} >
-                          <FaExternalLinkAlt className="mr-2" /> Live Demo
-                        </a>
-                      )}
-                    </div>
+                    
+                    {/* Glow effect - position absolute to cover the card */}
+                    <div className="absolute inset-0 pointer-events-none rounded-lg z-0"
+                      style={{
+                        background: `radial-gradient(circle at var(--glow-x) var(--glow-y), var(--card-color, #00BFFF) 0%, transparent 85%)`, // Increased transparency (85% instead of 70%)
+                        opacity: 'var(--glow-opacity)',
+                        transition: 'opacity 0.3s ease',
+                      }}
+                    ></div>
                   </div>
                 </div>
 
-                <div className={`w-full md:w-5/12 md:absolute md:top-0 ${index % 2 === 0 ? 'md:right-0 md:pr-4' : 'md:left-0 md:pl-4'} mb-4 md:mb-0`} data-aos="fade-in" data-aos-delay={`${index * 100 + 1300}`}>
+                <div className={`w-full md:w-5/12 md:absolute md:top-0 ${index % 2 === 0 ? 'md:right-0 md:pr-4' : 'md:left-0 md:pl-4'} mb-4 md:mb-0`}>
                   <div className={`text-center md:${index % 2 === 0 ? 'text-right' : 'text-left'}`}>
                     <span className="text-gray-200 text-sm font-medium bg-[#00BFFF]/20 px-4 py-1.5 rounded-full border border-[#00BFFF]/30 shadow-lg">{project.created_at.split('T')[0]}</span>
                   </div>
                 </div>
               </div>
             ))}
-            <div className="absolute left-1/2 transform -translate-x-1/2 w-1 h-10 bottom-0 hidden md:block" data-aos="fade-in" data-aos-delay={`${projects.length * 100 + 100}`}>
+            <div className="absolute left-1/2 transform -translate-x-1/2 w-1 h-10 bottom-0 hidden md:block">
               <div className="w-full h-full bg-gradient-to-b from-[#00BFFF] to-transparent" style={{
                   boxShadow: "0 0 10px rgba(0, 191, 255, 0.6), 0 0 20px rgba(0, 191, 255, 0.4)"
                 }}/>
@@ -607,7 +711,7 @@ const Projects: React.FC = () => {
           </div>
         )}
 
-        <div className="text-center mt-16" data-aos="fade-up" data-aos-delay={`${projects.length * 100 + 200}`}>
+        <div className="text-center mt-16">
           <p className="text-gray-300 text-lg max-w-3xl mx-auto leading-relaxed">
             These projects showcase my skills and experience through real-world examples of my work.
             Each project represents a unique challenge that I've tackled successfully,
@@ -615,6 +719,49 @@ const Projects: React.FC = () => {
           </p>
         </div>
       </div>
+
+      <style jsx>{`
+        .project-card {
+          position: relative;
+          overflow: hidden;
+          transform: translateZ(0);
+          transition: all 0.3s ease;
+        }
+        
+        .project-card:hover {
+          transform: translateY(-3px); /* Reduced from -5px to -3px */
+          box-shadow: 
+            0 10px 20px -8px rgba(0, 0, 0, 0.3), /* Reduced shadow intensity */
+            0 0 8px rgba(var(--card-color-rgb, 0, 191, 255), 0.15), /* Reduced from 15px to 8px and 0.4 to 0.15 */
+            0 0 15px rgba(var(--card-color-rgb, 0, 191, 255), 0.1); /* Reduced from 30px to 15px and 0.2 to 0.1 */
+          border-color: rgba(var(--card-color-rgb, 0, 191, 255), 0.5); /* Added transparency */
+        }
+        
+        /* Glow border effect on hover */
+        .project-card::after {
+          content: '';
+          position: absolute;
+          inset: 0;
+          padding: 2px;
+          border-radius: 8px;
+          background: linear-gradient(
+            to bottom right,
+            var(--card-color, #00BFFF) 0%,
+            transparent 50%,
+            var(--card-color, #00BFFF) 100%
+          );
+          -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+          -webkit-mask-composite: xor;
+          mask-composite: exclude;
+          pointer-events: none;
+          opacity: 0.4; /* Reduced from 0.8 to 0.4 */
+          transition: opacity 0.3s ease;
+        }
+        
+        .project-card:hover::after {
+          opacity: 0.4; /* Reduced from 0.8 to 0.4 */
+        }
+      `}</style>
     </div>
   );
 };

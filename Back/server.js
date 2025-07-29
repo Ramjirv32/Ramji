@@ -2,12 +2,16 @@ import express from 'express';
 import cors from 'cors';
 import { createClient } from '@supabase/supabase-js';
 import dotenv from 'dotenv';
+import contactRoutes from './routes/contactRoutes.js';
 
 dotenv.config();
 
 const app = express();
 app.use(express.json());
-app.use(cors({ origin: 'http://localhost:5173' }));
+app.use(cors({ 
+  origin: ['http://localhost:5173', 'https://your-frontend-domain.com'],
+  credentials: true
+}));
 
 if (!process.env.SUPABASE_URL || !process.env.SUPABASE_KEY) {
   throw new Error("Missing Supabase environment variables");
@@ -19,6 +23,9 @@ const supabase = createClient(
 );
 
 console.log("✅ Supabase client created successfully");
+
+// Add contact routes
+app.use('/api/contact', contactRoutes);
 
 app.get("/", (req, res) => {
   res.send("Server is up and running!");
@@ -147,6 +154,9 @@ app.get("/test-supabase", async (req, res) => {
   }
 });
 
-app.listen(9000, () => {
-  console.log(`✅ Server is running at: http://localhost:9000`);
+// Use PORT from env or default to 9000
+const PORT =  9000;
+
+app.listen(PORT, () => {
+  console.log(`✅ Server is running at: http://localhost:${PORT}`);
 });

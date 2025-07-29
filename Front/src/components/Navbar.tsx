@@ -15,13 +15,14 @@ interface NavbarProps {
 
 // Define nav items with their corresponding section IDs or paths
 const navItems = [
-  { name: "Home", id: "home", path: "/" },
-  { name: "About", id: "about", path: "/#about" },
-  { name: "Projects", id: "projects", path: "/#projects" },
-  { name: "Internships", id: "works", path: "/#works" },
-  { name: "Skills", id: "skills", path: "/#skills" },
-  { name: "Certifications", id: "certificate", path: "/#certificate" },
-  { name: "Contact", id: "contact", path: "/#contact" },
+  { name: "Home", link: "/", id: "home" },
+  { name: "About", link: "/#about", id: "about" },
+  { name: "Skills", link: "/#skills", id: "skills" },
+  { name: "Projects", link: "/#projects", id: "projects" },
+  { name: "Works", link: "/#works", id: "works" },
+  { name: "Research", link: "/#research", id: "research" },
+  { name: "Certificates", link: "/#certificate", id: "certificate" },
+  { name: "Contact", link: "/#contact", id: "contact" },
 ];
 
 const Navbar = ({ 
@@ -47,73 +48,54 @@ const Navbar = ({
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const handleNavClick = (navItem: { name: string; id: string; path?: string }) => {
-    const { name, id, path } = navItem;
+  const handleNavClick = (navItem: { name: string; link: string; id?: string; path?: string }) => {
+    const { name, link, id, path } = navItem;
     setActive(name);
     setIsMenuOpen(false);
 
-    // If path is provided, use it for navigation
+    // If path is provided, use it for navigation (like for Research page)
     if (path) {
-      if (path.startsWith('/#')) {
-        // Handle hash-based navigation
-        if (window.location.pathname !== '/') {
-          // If not on home page, navigate to home with hash
-          navigate(`/${path.substring(1)}`);
-        } else {
-          // If already on home page, scroll to section
-          const sectionId = path.substring(2);
-          const element = document.getElementById(sectionId);
-          if (element) {
-            element.scrollIntoView({ behavior: 'smooth' });
-          }
-        }
-      } else {
-        // Handle regular path navigation
-        navigate(path);
-      }
+      navigate(path);
       return;
     }
 
-    // If no path but has ID, try to scroll to section
-    if (id) {
+    // For hash-based navigation like /#about
+    if (link.includes('#')) {
+      const sectionId = link.split('#')[1];
+      
       if (window.location.pathname !== '/') {
         // If not on home page, navigate to home with hash
-        navigate(`/#${id}`);
+        navigate(`/${link}`);
       } else {
         // If on home page, scroll to section
-        const element = document.getElementById(id);
+        const element = document.getElementById(sectionId);
         if (element) {
-          element.scrollIntoView({ behavior: 'smooth' });
+          // If we're programmatically scrolling, set the flag
+          if (isScrollingProgrammatically) {
+            isScrollingProgrammatically.current = true;
+          }
+          
+          // Offset for navbar height
+          const navbarHeight = 80; // Approximate navbar height
+          const elementPosition = element.getBoundingClientRect().top;
+          const offsetPosition = elementPosition + window.pageYOffset - navbarHeight;
+          
+          window.scrollTo({
+            top: offsetPosition,
+            behavior: "smooth"
+          });
+          
+          // Reset the flag after animation completes
+          if (isScrollingProgrammatically) {
+            setTimeout(() => {
+              isScrollingProgrammatically.current = false;
+            }, 1000);
+          }
         }
       }
-    }
-    
-    // If we're programmatically scrolling, set the flag
-    if (isScrollingProgrammatically) {
-      isScrollingProgrammatically.current = true;
-    }
-    
-    // Get the element by ID
-    const element = document.getElementById(id);
-    
-    // Scroll to the element if it exists
-    if (element) {
-      // Offset for navbar height
-      const navbarHeight = 80; // Approximate navbar height
-      const elementPosition = element.getBoundingClientRect().top;
-      const offsetPosition = elementPosition + window.pageYOffset - navbarHeight;
-      
-      window.scrollTo({
-        top: offsetPosition,
-        behavior: "smooth"
-      });
-      
-      // Reset the flag after animation completes
-      if (isScrollingProgrammatically) {
-        setTimeout(() => {
-          isScrollingProgrammatically.current = false;
-        }, 1000);
-      }
+    } else {
+      // For regular paths like /research
+      navigate(link);
     }
   };
 

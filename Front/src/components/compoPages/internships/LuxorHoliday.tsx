@@ -1,4 +1,4 @@
-import { FaArrowLeft, FaExternalLinkAlt, FaCalendarAlt, FaServer } from 'react-icons/fa';
+import { FaArrowLeft, FaExternalLinkAlt, FaCalendarAlt, FaServer, FaLock } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 import Footer from "../../Footer";
 import { useEffect } from 'react';
@@ -11,7 +11,7 @@ const LuxorHoliday = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
     AOS.init({
-      duration: 1000,
+      duration: 200,
       once: true,
       offset: 100,
     });
@@ -153,15 +153,12 @@ const LuxorHoliday = () => {
               </div>
             </div>
             <div className="mt-8 flex justify-center gap-4" data-aos="fade-up" data-aos-delay="400">
-              <a
-                href="https://luxorholidayhomestays.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center px-6 py-3 bg-[#00BFFF] hover:bg-[#0095FF] text-white rounded-lg font-medium transition-colors"
+              <div
+                className="flex items-center px-6 py-3 bg-gray-800 text-gray-300 rounded-lg font-medium cursor-default"
               >
-                <FaExternalLinkAlt className="mr-2" />
-                Visit Website
-              </a>
+                <FaLock className="mr-2" />
+                Website Coming Soon
+              </div>
             </div>
           </div>
         </div>
@@ -254,25 +251,44 @@ const LuxorHoliday = () => {
             </div>
           </div>
 
-          {/* Project Gallery */}
-          <div>
+          {/* Features Section (Instead of Gallery) */}
+          <div className="mb-16">
             <h2 className="text-3xl font-bold mb-8 text-center" data-aos="fade-up">
-              Project <span className="text-[#00BFFF]">Gallery</span>
+              Key <span className="text-[#00BFFF]">Features</span>
             </h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {[1, 2, 3, 4].map((item) => (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {[
+                { title: "Secure Booking System", description: "End-to-end encrypted booking flow with payment protection" },
+                { title: "Property Management", description: "Comprehensive dashboard for property owners to manage listings and bookings" },
+                { title: "User Profiles", description: "Personalized user accounts with booking history and preferences" },
+                { title: "Instant Confirmations", description: "Real-time availability updates and booking confirmations" },
+                { title: "Advanced Search", description: "Filter properties by location, amenities, price range, and availability" },
+                { title: "Review System", description: "Verified guest reviews to maintain quality and trust" }
+              ].map((feature, index) => (
                 <div
-                  key={item}
-                  className="bg-gray-900/50 rounded-xl overflow-hidden border border-gray-800 hover:border-[#00BFFF]/30 transition-colors"
-                  data-aos="zoom-in"
-                  data-aos-delay={item * 100}
+                  key={index}
+                  className="bg-gray-900/50 backdrop-blur-sm p-6 rounded-xl border border-gray-800 hover:border-[#00BFFF]/30 transition-all"
+                  data-aos="fade-up"
+                  data-aos-delay={index * 100}
                 >
-                  <div className="aspect-video bg-gray-800/50 flex items-center justify-center">
-                    <span className="text-gray-500">Screenshot {item}</span>
-                  </div>
+                  <h3 className="text-xl font-semibold mb-2 text-[#00BFFF]">{feature.title}</h3>
+                  <p className="text-gray-300">{feature.description}</p>
                 </div>
               ))}
             </div>
+          </div>
+          
+          {/* Project Status */}
+          <div className="bg-gray-900/50 backdrop-blur-sm rounded-2xl p-8 border border-gray-800" data-aos="fade-up">
+            <div className="flex items-center mb-4">
+              <div className="h-4 w-4 rounded-full bg-amber-400 animate-pulse mr-3"></div>
+              <h2 className="text-2xl font-bold">Project Status: In Development</h2>
+            </div>
+            <p className="text-gray-300">
+              The Luxor Holiday Homestay platform is currently in active development with core features implemented.
+              We're working on final testing, content population, and performance optimization before the official launch.
+              Stay tuned for the public release soon.
+            </p>
           </div>
         </div>
       </div>

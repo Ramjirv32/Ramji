@@ -27,34 +27,40 @@ const internships = [
     id: 1,
     title: "Full Stack Developer",
     company: "Society for Cyber Intelligent Systems",
-    duration: "Jan 2024 - Feb 2024",
+    duration: "Jan 2024 - Present", // This is correct, keeping as is
     description: "Developed societycis.org website with Mathan M for cyber intelligence systems. Built responsive web platform with modern security features and intelligent system integration.",
     image: "/personal/Society.png",
     skills: ["React", "Node.js", "Security", "AI Integration", "MongoDB"],
     route: "/internship/society",
-    bgColor: "from-blue-500/20 to-cyan-500/20"
+    bgColor: "from-blue-500/20 to-cyan-500/20",
+    current: true,
+    type: "internship"
   },
   {
     id: 2,
     title: "Full Stack Developer Intern",
     company: "Oodser Technologies",
-    duration: "June 2023 - Dec 2023",
+    duration: "Jan 2023 - April 2023", // Updated to 3 months (Jan-April)
     description: "Worked on LinkedIn-like platform and WTHBTWX app with enterprise architecture. Implemented full stack features using React, Node.js and MongoDB.",
     image: "/personal/OOdser.png",
     skills: ["React", "Node.js", "MongoDB", "TypeScript", "REST APIs"],
     route: "/internship/oodser",
-    bgColor: "from-blue-600/20 to-indigo-600/20"
+    bgColor: "from-blue-600/20 to-indigo-600/20",
+    current: false,
+    type: "internship"
   },
   {
     id: 3,
     title: "Full Stack Developer",
     company: "Luxor Holiday Homes",
-    duration: "Jan 2023 - Present",
+    duration: "July 2023 - Present", // Updated to July-Present
     description: "Developed complete homestay booking platform as freelancer. Built with WordPress, React frontend, Node.js backend, Razorpay integration, MongoDB, Cloudflare security and SSL.",
     image: "/personal/Luxor.png",
     skills: ["WordPress", "React", "Node.js", "MongoDB", "Razorpay", "Cloudflare"],
     route: "/internship/luxor-holiday",
-    bgColor: "from-yellow-500/20 to-amber-500/20"
+    bgColor: "from-yellow-500/20 to-amber-500/20",
+    current: true,
+    type: "freelance"
   }
 ];
 
@@ -94,7 +100,7 @@ const Works = () => {
 
       <div className="w-full max-w-7xl mx-auto px-4 mt-12">
         {/* First Row - Two Cards */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 px-8 mb-12">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 px-4 mb-16">
           {internships.slice(0, 2).map((internship, index) => (
             <div 
               key={internship.id} 
@@ -108,9 +114,9 @@ const Works = () => {
         </div>
 
         {/* Second Row - One Card Centered */}
-        <div className="flex justify-center px-8">
+        <div className="flex justify-center px-4">
           <div 
-            className="w-full max-w-md lg:max-w-lg"
+            className="w-full max-w-lg lg:max-w-xl" // Increased from max-w-md/max-w-lg to max-w-lg/max-w-xl
             data-aos="fade-up"
             data-aos-delay="400"
           >
