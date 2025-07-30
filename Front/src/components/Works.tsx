@@ -86,7 +86,7 @@ const Works = () => {
         data-aos="fade-up"
       >
         <h2 className="text-4xl font-bold text-white sm:text-5xl">
-          My <span className="text-[#00BFFF]">Work</span>
+          My <span className="text-[#00BFFF]">Experience & Freelance</span>
         </h2>
         <motion.p
           variants={textVariant(0.2)}

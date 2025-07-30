@@ -1,32 +1,32 @@
 import express from 'express';
 import cors from 'cors';
-import { createClient } from '@supabase/supabase-js';
 import dotenv from 'dotenv';
+import { createClient } from '@supabase/supabase-js';
 import contactRoutes from './routes/contactRoutes.js';
 
 dotenv.config();
-
 const app = express();
-app.use(express.json());
+// const PORT = process.env.PORT || 9000;
+
+// Update CORS configuration to allow requests from your frontend domain
 app.use(cors({ 
-  origin: ['http://localhost:5173', 'https://your-frontend-domain.com'],
-  credentials: true
+  origin: [
+    'http://localhost:5173',  // Local development frontend
+    'http://localhost:3000',  // Another common local development port
+    'https://your-frontend-domain.com', // Your production frontend domain
+    'https://ramji-portfolio.vercel.app', // Add your actual frontend domain
+    process.env.FRONTEND_URL // Optional: Configure this in your environment variables
+  ],
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  credentials: true,
+  allowedHeaders: ['Content-Type', 'Authorization']
 }));
 
-if (!process.env.SUPABASE_URL || !process.env.SUPABASE_KEY) {
-  throw new Error("Missing Supabase environment variables");
-}
+// Middleware
+app.use(express.json());
 
-const supabase = createClient(
-  process.env.SUPABASE_URL,
-  process.env.SUPABASE_KEY
-);
-
-console.log("✅ Supabase client created successfully");
-
-
+// Routes
 app.use('/api/contact', contactRoutes);
-
 app.get("/", (req, res) => {
   res.send("Server is up and running!");
 });
@@ -92,68 +92,29 @@ app.post("/demo", async (req, res) => {
   }
 });
 
-app.get("/skills", async (req, res) => {
+// Add a dedicated skills route
+app.get('/skills', async (req, res) => {
   try {
-    const { data, error } = await supabase.from("skills").select("*");
+    const { data, error } = await supabase.from("Skills").select("*");
     if (error) throw error;
     res.json(data);
   } catch (error) {
-    console.error("Error fetching data from Supabase:", error.message);
+    console.error("Error fetching skills from Supabase:", error.message);
     res.status(500).json({ error: error.message });
   }
 });
 
-
-app.post("/skills", async (req, res) => {
+// Also create an alias at /api/skills for consistency
+app.get('/api/skills', async (req, res) => {
   try {
-    const skillsData = req.body;
-    
- 
-    const { data: existingSkills } = await supabase
-      .from("skills")
-      .select("id")
-      .limit(1);
-    
-    let result;
-    
-    if (existingSkills && existingSkills.length > 0) {
-   
-      const { data, error } = await supabase
-        .from("skills")
-        .update({ s: skillsData.skills })
-        .eq("id", existingSkills[0].id)
-        .select();
-      
-      if (error) throw error;
-      result = data;
-    } else {
-      
-      const { data, error } = await supabase
-        .from("skills")
-        .insert({ s: skillsData.skills })
-        .select();
-      
-      if (error) throw error;
-      result = data;
-    }
-    
-    res.json({ success: true, data: result });
-  } catch (error) {
-    console.error("Error adding/updating skills in Supabase:", error.message);
-    res.status(500).json({ error: error.message });
-  }
-});
-
-app.get("/test-supabase", async (req, res) => {
-  try {
-    const { data, error } = await supabase.from("skills").select("*");
+    const { data, error } = await supabase.from("Skills").select("*");
     if (error) throw error;
     res.json(data);
   } catch (error) {
+    console.error("Error fetching skills from Supabase:", error.message);
     res.status(500).json({ error: error.message });
   }
 });
-
 
 const PORT =  9000;
 

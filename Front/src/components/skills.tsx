@@ -73,6 +73,7 @@ import { DiJqueryLogo } from "react-icons/di";
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 import React from 'react';
+import { useAuth } from '../context/AuthContext';
 
 // Interface for the skills data from the backend
 interface SkillsData {
@@ -177,7 +178,7 @@ const Skills = () => {
   const [skills, setSkills] = useState<string[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
-  const [adminMode, setAdminMode] = useState<boolean>(false);
+  const [isAdmin, setIsAdmin] = useState(false); // Local state instead of context
   const [newSkill, setNewSkill] = useState<string>("");
   
   // New states for public skill suggestion
@@ -187,6 +188,12 @@ const Skills = () => {
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
 
   useEffect(() => {
+    // Check if user is admin from session storage
+    const loginStatus = sessionStorage.getItem('isLoggedIn');
+    if (loginStatus === 'true') {
+      setIsAdmin(true);
+    }
+    
     AOS.init({
       duration: 1000,
       easing: 'ease-in-out',
@@ -196,9 +203,10 @@ const Skills = () => {
     // Fetch skills from the API
     const fetchSkills = async () => {
       try {
-        // Use environment variable for API URL
+        // Use environment variable for API URL with the correct endpoint
         const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:9000';
-        const response = await fetch(`${API_URL}/skills`);
+        const response = await fetch(`${API_URL}/skills`); // Make sure this matches your backend route
+        
         if (!response.ok) {
           throw new Error('Failed to fetch skills');
         }
@@ -221,7 +229,7 @@ const Skills = () => {
 
   // Function to add a new skill (admin mode)
   const addNewSkill = async () => {
-    if (!newSkill.trim()) return;
+    if (!newSkill.trim() || !isAdmin) return; // Check admin status
     
     // Check if skill already exists
     if (skills.includes(newSkill)) {
@@ -255,24 +263,19 @@ const Skills = () => {
     }
   };
 
-  // Function to suggest a new skill (public mode)
-  const suggestSkill = async () => {
-    if (!suggestedSkill.trim()) return;
-    
-    // Check if skill already exists
-    if (skills.includes(suggestedSkill)) {
-      alert("This skill already exists!");
-      return;
-    }
+  // Update or remove suggestSkill function since it's now admin-only
+  const addSkill = async () => {
+    if (!suggestedSkill.trim() || !isAdmin) return; // Check admin status
     
     try {
       setSubmitting(true);
       
-      // Add the new skill to the local state first for immediate feedback
+      // Add the new skill to the local state for immediate feedback
       const updatedSkills = [...skills, suggestedSkill];
       
       // Send the updated skills to the backend
-      const response = await fetch('http://localhost:9000/skills', {
+      const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:9000';
+      const response = await fetch(`${API_URL}/skills`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -284,39 +287,21 @@ const Skills = () => {
         throw new Error('Failed to add new skill');
       }
       
-      
       setSkills(updatedSkills);
-      
-  
       setSuggestedSkill('');
       setShowSuggestForm(false);
-      setSuccessMessage('Skill added successfully! It will be visible after approval.');
+      setSuccessMessage('Skill added successfully!');
       
-      // Hide success message after 3 seconds
       setTimeout(() => {
         setSuccessMessage(null);
       }, 3000);
     } catch (error) {
-      console.error('Error suggesting new skill:', error);
-      alert('Failed to suggest skill. Please try again.');
+      console.error('Error adding new skill:', error);
+      alert('Failed to add skill. Please try again.');
     } finally {
       setSubmitting(false);
     }
   };
-
-  // Toggle admin mode (secret key combination: Ctrl+Shift+A)
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.ctrlKey && e.shiftKey && e.key === 'A') {
-        setAdminMode(prev => !prev);
-      }
-    };
-    
-    window.addEventListener('keydown', handleKeyDown);
-    return () => {
-      window.removeEventListener('keydown', handleKeyDown);
-    };
-  }, []);
 
   return (
     <div className="w-full flex flex-col items-center justify-center gap-10 py-20" data-aos="fade-up">
@@ -356,8 +341,8 @@ const Skills = () => {
         </div>
       )}
       
-      {/* Admin mode UI (hidden by default) */}
-      {adminMode && (
+      {/* Admin mode UI (shown when logged in) */}
+      {/* {isAdmin && (
         <div className="bg-black/60 backdrop-blur-md border border-gray-700 rounded-lg p-4 mb-6 w-full max-w-md">
           <h3 className="text-lg font-semibold mb-3 text-white">Admin Mode: Add New Skill</h3>
           <div className="flex gap-2">
@@ -379,17 +364,17 @@ const Skills = () => {
             Note: Make sure the skill name matches exactly with the icon mapping.
           </p>
         </div>
-      )}
+      )} */}
       
-      {/* Public suggestion form (toggled by Suggest Skill button) */}
-      {showSuggestForm && (
+      {/* Public suggestion form (only shown to admins) */}
+      {isAdmin && showSuggestForm && (
         <motion.div 
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -20 }}
           className="bg-gradient-to-r from-blue-900/40 to-purple-900/40 backdrop-blur-md border border-blue-700/50 rounded-lg p-4 mb-6 w-full max-w-md"
         >
-          <h3 className="text-lg font-semibold mb-3 text-white">Suggest a New Skill</h3>
+          <h3 className="text-lg font-semibold mb-3 text-white">Add New Skill</h3>
           <div className="flex flex-col gap-3">
             <input
               type="text"
@@ -407,7 +392,7 @@ const Skills = () => {
                 Cancel
               </button>
               <button
-                onClick={suggestSkill}
+                onClick={addSkill}
                 disabled={submitting || !suggestedSkill.trim()}
                 className={`bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition-colors flex items-center ${
                   submitting || !suggestedSkill.trim() ? 'opacity-50 cursor-not-allowed' : ''
@@ -455,11 +440,11 @@ const Skills = () => {
                     whileInView={{ opacity: 1 }}
                     transition={{ duration: 0.5, delay: index * 0.1 }}
                     viewport={{ once: true }}
-                    drag={adminMode}
+                    drag={isAdmin}
                     dragConstraints={{ left: 0, right: 0, top: 0, bottom: 0 }}
                     dragElastic={0.1}
-                    whileHover={adminMode ? { scale: 1.05 } : { y: -5 }}
-                    whileTap={adminMode ? { scale: 0.95 } : {}}
+                    whileHover={isAdmin ? { scale: 1.05 } : { y: -5 }}
+                    whileTap={isAdmin ? { scale: 0.95 } : {}}
                     style={{ '--skill-color': skillInfo.color || '#FFFFFF' } as React.CSSProperties}
                     className="relative group flex items-center justify-center gap-2 px-4 py-2 rounded-full bg-black border border-zinc-800 text-white transition-all duration-300 hover:border-[var(--skill-color)] hover:shadow-[0_0_15px_var(--skill-color)]"
                   >
@@ -471,8 +456,8 @@ const Skills = () => {
                 );
               })}
               
-              {/* "Suggest Skill" button at the end */}
-              {!showSuggestForm && (
+              {/* "Add Skill" button only shown to admins */}
+              {isAdmin && !showSuggestForm && (
                 <motion.button
                   onClick={() => setShowSuggestForm(true)}
                   className="flex items-center justify-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-blue-600/30 to-purple-600/30 border border-blue-500/50 text-white hover:border-blue-400 hover:shadow-[0_0_15px_rgba(59,130,246,0.5)] transform transition-all duration-300 hover:scale-110"

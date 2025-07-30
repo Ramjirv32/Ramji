@@ -1,11 +1,13 @@
 import React, { useRef, useEffect, useState } from 'react';
 import { Routes, Route, useLocation } from 'react-router-dom';
 import { AnimatePresence } from 'framer-motion';
-import Skills from "./components/skills"
+import { AuthProvider } from './context/AuthContext';
+
 // Components
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import About from './components/About';
+import Skills from './components/skills';
 import Projects from './components/Project';
 import Work from './components/Works';
 import Certificate from './components/certificate';
@@ -41,6 +43,32 @@ const ScrollToTop = () => {
   return null;
 };
 
+const App = () => {
+  const location = useLocation();
+
+  return (
+    <AuthProvider>
+      <ScrollToTop />
+      <AnimatePresence mode="wait">
+        <Routes location={location} key={location.pathname}>
+          <Route path="/" element={<Home />} />
+          <Route path="/certifications" element={<Certificate />} />
+          <Route path="/project/1" element={<ScrollResetPro1 />} />
+          <Route path="/project/2" element={<ScrollResetPro2 />} />
+          <Route path="/project/3" element={<ScrollResetPro3 />} />
+          <Route path="/project/4" element={<ScrollResetPro4 />} />
+          <Route path="/project/5" element={<ScrollResetPro5 />} />
+          <Route path="/research" element={<ScrollResetResearch />} />
+          <Route path="/internship/society" element={<ScrollResetSociety />} />
+          <Route path="/internship/oodser" element={<ScrollResetOodser />} />
+          <Route path="/internship/luxor-holiday" element={<ScrollResetLuxorHoliday />} />
+        </Routes>
+      </AnimatePresence>
+    </AuthProvider>
+  );
+};
+
+// Update the Home component to ensure section IDs match with navigation
 const Home = () => {
   const isScrollingProgrammatically = useRef(false);
   const [currentSection, setCurrentSection] = useState<string>('home');
@@ -50,7 +78,7 @@ const Home = () => {
     const handleScroll = () => {
       if (isScrollingProgrammatically.current) return;
 
-      // Updated order of sections to match navbar
+      // Updated order of sections to match navbar - ensure these IDs match the DOM elements
       const sections = ["home", "about", "skills", "projects", "works", "research", "certificate", "contact"];
       const scrollPosition = window.scrollY + 100;
 
@@ -78,44 +106,22 @@ const Home = () => {
   }, []);
 
   return (
-    <>
-      <Navbar 
-        activeSection={currentSection} 
-        setActiveSection={(section) => setCurrentSection(section)} 
-        isScrollingProgrammatically={isScrollingProgrammatically} 
+    <div>
+      <Navbar
+        activeSection={currentSection}
+        setActiveSection={(section) => setCurrentSection(section)}
+        isScrollingProgrammatically={isScrollingProgrammatically}
       />
-      <section id="home" className="min-h-screen">
-        <Hero />
-      </section>
-
-      <section id="about" className="min-h-screen">
-        <About />
-      </section>
-      
-      <section id="skills" className="min-h-screen">
-        <Skills />
-      </section>
-
-      <section id="projects" className="min-h-screen">
-        <Projects />
-      </section>
-
-      <section id="works" className="min-h-screen">
-        <Work />
-      </section>
-
-      <section id="research" className="min-h-screen">
-        <ResearchPublications />
-      </section>
-
-      <section id="certificate" className="min-h-screen">
-        <Certificate />
-      </section>
-
-      <section id="contact" className="min-h-screen">
-        <Contact />
-      </section>
-    </>
+      {/* Make sure each section has the correct ID attribute */}
+      <div id="home"><Hero /></div>
+      <div id="about"><About /></div>
+      <div id="skills"><Skills /></div>
+      <div id="projects"><Projects /></div>
+      <div id="works"><Work /></div>
+      <div id="research"><ResearchPublications /></div>
+      <div id="certificate"><Certificate /></div>
+      <div id="contact"><Contact /></div>
+    </div>
   );
 };
 
@@ -129,30 +135,5 @@ const ScrollResetLuxorHoliday = withScrollReset(LuxorHoliday);
 const ScrollResetSociety = withScrollReset(Society);
 const ScrollResetOodser = withScrollReset(Oodser);
 const ScrollResetResearch = withScrollReset(ResearchPublications);
-
-const App = () => {
-  const location = useLocation();
-
-  return (
-    <>
-      <ScrollToTop />
-      <AnimatePresence mode="wait">
-        <Routes location={location} key={location.pathname}>
-          <Route path="/" element={<Home />} />
-          <Route path="/certifications" element={<Certificate />} />
-          <Route path="/project/1" element={<ScrollResetPro1 />} />
-          <Route path="/project/2" element={<ScrollResetPro2 />} />
-          <Route path="/project/3" element={<ScrollResetPro3 />} />
-          <Route path="/project/4" element={<ScrollResetPro4 />} />
-          <Route path="/project/5" element={<ScrollResetPro5 />} />
-          <Route path="/research" element={<ScrollResetResearch />} />
-          <Route path="/internship/society" element={<ScrollResetSociety />} />
-          <Route path="/internship/oodser" element={<ScrollResetOodser />} />
-          <Route path="/internship/luxor-holiday" element={<ScrollResetLuxorHoliday />} />
-        </Routes>
-      </AnimatePresence>
-    </>
-  );
-};
 
 export default App;
