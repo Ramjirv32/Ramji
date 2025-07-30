@@ -166,11 +166,11 @@ const About = () => {
 </p>
 
 <p className="text-gray-300 text-sm md:text-base leading-relaxed mt-2 md:mt-4" data-aos="fade-up">
-  I have experience in both frontend and backend development, and I am looking for more new opportunities.
+  I have experience in both frontend and backend development, with a growing expertise in DevOps and cloud technologies. As a Red Hat Linux Administrator, I'm proficient in managing Linux systems and building robust infrastructures.
 </p>
 
 <p className="text-gray-300 text-sm md:text-base leading-relaxed mt-2 md:mt-4" data-aos="fade-up">
-  I love browsing for new tech or thinking about my next move. I am always ready for collaboration and new opportunities in web development and cloud technologies.
+  I love working with cloud platforms, containerization, and automation tools. I'm always ready for collaboration and new opportunities in web development, cloud technologies, and DevOps practices.
 </p>
 
 
