@@ -23,7 +23,8 @@ import {
   FaBootstrap,
   FaFigma,
   FaJenkins,
-  FaStripe
+  FaStripe,
+  FaWordpress
 } from "react-icons/fa";
 import { 
   SiTypescript, 
@@ -49,11 +50,12 @@ import {
   SiKubernetes,
   SiTerraform,
   SiDjango,
+  SiCloudflare,
   SiNextdotjs,
   SiNestjs,
   SiSpring,
   SiDotnet,
-  SiNuxtdotjs,
+  // SiNuxtdotjs,
   SiSvelte,
   SiJest,
   SiCypress,
@@ -62,7 +64,7 @@ import {
   SiSupabase,
   SiRedux,
   SiWebgl,
-  // SiThreejs
+  SiFastapi // Add FastAPI import here
 } from "react-icons/si";
 import { TbBrandFramerMotion } from "react-icons/tb";
 import { RxShadowNone } from "react-icons/rx";
@@ -70,6 +72,7 @@ import { IoLogoJavascript } from "react-icons/io5";
 import { DiJqueryLogo } from "react-icons/di";
 import AOS from 'aos';
 import 'aos/dist/aos.css';
+import React from 'react';
 
 // Interface for the skills data from the backend
 interface SkillsData {
@@ -80,14 +83,20 @@ interface SkillsData {
 
 // Extended mapping for skill names to their icons and colors
 // This includes many common technologies developers might use
-const skillIconsMap: Record<string, { icon: JSX.Element; color: string }> = {
+const skillIconsMap: Record<string, { icon: React.ReactElement; color: string }> = {
   // Front-end
   "HTML": { icon: <FaHtml5 size={20} />, color: "#E44D26" },
   "CSS": { icon: <FaCss3Alt size={20} />, color: "#1572B6" },
   "JavaScript": { icon: <FaJs size={20} />, color: "#F7DF1E" },
   "TypeScript": { icon: <SiTypescript size={18} />, color: "#3178C6" },
+  "Cloudflare": { icon: <SiCloudflare size={20} />, color: "#F38020" },
   "ReactJS": { icon: <FaReact size={20} />, color: "#61DAFB" },
   "React": { icon: <FaReact size={20} />, color: "#61DAFB" },
+  "fastapi": { icon: <SiFastapi size={20} />, color: "#009688" },
+  "FastAPI": { icon: <SiFastapi size={20} />, color: "#009688" },
+  "Framer Motion": { icon: <TbBrandFramerMotion size={20} />, color: "#0055FF" },
+  "Shadcn": { icon: <RxShadowNone size={20} />, color: "#FFFFFF" },
+  "Next.js": { icon: <SiNextdotjs size={20} />, color: "#000000" },
   "Angular": { icon: <FaAngular size={20} />, color: "#DD0031" },
   "Vue.js": { icon: <FaVuejs size={20} />, color: "#4FC08D" },
   "Svelte": { icon: <SiSvelte size={20} />, color: "#FF3E00" },
@@ -96,13 +105,11 @@ const skillIconsMap: Record<string, { icon: JSX.Element; color: string }> = {
   "TailwindCSS": { icon: <SiTailwindcss size={20} />, color: "#38bdf8" },
   "Bootstrap": { icon: <FaBootstrap size={20} />, color: "#7952B3" },
   "Sass": { icon: <FaSass size={20} />, color: "#CC6699" },
-  "Framer Motion": { icon: <TbBrandFramerMotion size={20} />, color: "#0055FF" },
-  "Shadcn": { icon: <RxShadowNone size={20} />, color: "#FFFFFF" },
-  "Next.js": { icon: <SiNextdotjs size={20} />, color: "#000000" },
-  "Nuxt.js": { icon: <SiNuxtdotjs size={20} />, color: "#00C58E" },
+  "NextJs": { icon: <SiNextdotjs size={20} />, color: "#000000" }, // Fixed: should be SiNextdotjs, not SiNestjs
   "Redux": { icon: <SiRedux size={20} />, color: "#764ABC" },
   "WebGL": { icon: <SiWebgl size={20} />, color: "#990000" },
-  // "Three.js": { icon: <SiThreejs size={20} />, color: "#000000" },
+  "WordPress": { icon: <FaWordpress size={20} />, color: "#21759B" },
+  // Removed WooCommerce mapping because SiWoo is not imported and does not exist in react-icons
   
   // Back-end
   "NodeJS": { icon: <FaNodeJs size={20} />, color: "#339933" },
@@ -111,7 +118,6 @@ const skillIconsMap: Record<string, { icon: JSX.Element; color: string }> = {
   "ExpressJS": { icon: <SiExpress size={20} />, color: "#FFFFFF" },
   "PHP": { icon: <FaPhp size={20} />, color: "#777BB4" },
   "Django": { icon: <SiDjango size={20} />, color: "#092E20" },
-  // "Flask": { icon: <SiPython size={20} />, color: "#000000" },
   "NestJS": { icon: <SiNestjs size={20} />, color: "#E0234E" },
   "Spring": { icon: <SiSpring size={20} />, color: "#6DB33F" },
   ".NET": { icon: <SiDotnet size={20} />, color: "#512BD4" },
@@ -127,7 +133,7 @@ const skillIconsMap: Record<string, { icon: JSX.Element; color: string }> = {
   "Supabase": { icon: <SiSupabase size={20} />, color: "#3ECF8E" },
   "Firebase": { icon: <SiFirebase size={20} />, color: "#FFCA28" },
   
-  // Programming languages
+  // Programming Languages
   "C": { icon: <SiC size={20} />, color: "#A8B9CC" },
   "Java": { icon: <FaJava size={20} />, color: "#007396" },
   "Python": { icon: <FaPython size={20} />, color: "#3776AB" },
@@ -137,7 +143,7 @@ const skillIconsMap: Record<string, { icon: JSX.Element; color: string }> = {
   "Swift": { icon: <SiSwift size={20} />, color: "#FA7343" },
   "Dart": { icon: <SiDart size={20} />, color: "#0175C2" },
   
-  // DevOps/Tools
+  // DevOps & Tools
   "Git": { icon: <FaGit size={20} />, color: "#F05032" },
   "GitHub": { icon: <FaGithub size={20} />, color: "#FFFFFF" },
   "Docker": { icon: <FaDocker size={20} />, color: "#2496ED" },
@@ -150,22 +156,16 @@ const skillIconsMap: Record<string, { icon: JSX.Element; color: string }> = {
   "Linux": { icon: <FaLinux size={20} />, color: "#FCC624" },
   "Webpack": { icon: <SiWebpack size={20} />, color: "#8DD6F9" },
   "Vite": { icon: <SiVite size={20} />, color: "#646CFF" },
-  
-  // Testing
   "Jest": { icon: <SiJest size={20} />, color: "#C21325" },
   "Cypress": { icon: <SiCypress size={20} />, color: "#17202C" },
   
-  // Mobile
+  // Mobile & Design
   "Flutter": { icon: <SiFlutter size={20} />, color: "#02569B" },
   "React Native": { icon: <FaReact size={20} />, color: "#61DAFB" },
-  
-  // Design
   "Figma": { icon: <FaFigma size={20} />, color: "#F24E1E" },
   
-  // Payment
+  // Others
   "Stripe": { icon: <FaStripe size={20} />, color: "#008CDD" },
-  
-  // Default for any unrecognized skill
   "API": { icon: <SiPostman size={20} />, color: "#FF6C37" },
   "AI APIs": { icon: <IoLogoJavascript size={20} />, color: "#F7DF1E" },
   "Hugging Face API": { icon: <IoLogoJavascript size={20} />, color: "#F7DF1E" },
@@ -196,7 +196,9 @@ const Skills = () => {
     // Fetch skills from the API
     const fetchSkills = async () => {
       try {
-        const response = await fetch('http://localhost:9000/skills');
+        // Use environment variable for API URL
+        const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:9000';
+        const response = await fetch(`${API_URL}/skills`);
         if (!response.ok) {
           throw new Error('Failed to fetch skills');
         }

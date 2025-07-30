@@ -2,8 +2,13 @@ import { FaEnvelope, FaTwitter, FaLinkedin, FaGithub } from "react-icons/fa";
 import { useEffect, useState } from 'react';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
-import Swal from 'sweetalert2'; // Uncomment this import
+import Swal from 'sweetalert2';
 import * as THREE from 'three';
+
+// Use environment variables for API endpoints and email configuration
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:9000';
+const CONTACT_ENDPOINT = `${API_URL}/api/contact`;
+const EMAIL_TO = import.meta.env.VITE_EMAIL_TO || 'ramjib2311@gmail.com';
 
 const generateSpherePoints = () => {
   const points = [];
@@ -44,13 +49,65 @@ export default function ContactComponent() {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
 
+  // Add form validation state
+  const [formErrors, setFormErrors] = useState({
+    user_name: '',
+    user_email: '',
+    message: ''
+  });
+
+  // Enhanced input validation
+  const validateInput = (name: string, value: string) => {
+    let error = '';
+    
+    switch(name) {
+      case 'user_name':
+        if (value.trim().length < 2) {
+          error = 'Name must be at least 2 characters';
+        }
+        break;
+      case 'user_email':
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(value)) {
+          error = 'Please enter a valid email address';
+        }
+        break;
+      case 'message':
+        if (value.trim().length < 10) {
+          error = 'Message must be at least 10 characters';
+        }
+        break;
+      default:
+        break;
+    }
+    
+    setFormErrors(prev => ({
+      ...prev,
+      [name]: error
+    }));
+    
+    return !error;
+  };
+
   // Handle form input changes
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
+    
     setFormData({
       ...formData,
       [name]: value
     });
+    
+    // Validate on change after initial submission attempt
+    if (isSubmitting) {
+      validateInput(name, value);
+    }
+  };
+
+  // Enhanced blur handler for validation
+  const handleBlur = (e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    validateInput(name, value);
   };
 
   // Handle form submission
@@ -73,15 +130,8 @@ export default function ContactComponent() {
     setIsSubmitting(true);
     
     try {
-      // Log the data being sent for debugging
-      console.log('Sending data to API:', {
-        name: formData.user_name,
-        email: formData.user_email,
-        message: formData.message
-      });
-
-      // Send directly to the backend API
-      const response = await fetch('https://luxor-backend.vercel.app/api/port', {
+      // Send to your backend API using environment variables
+      const response = await fetch(CONTACT_ENDPOINT, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -89,12 +139,12 @@ export default function ContactComponent() {
         body: JSON.stringify({
           name: formData.user_name,
           email: formData.user_email,
-          message: formData.message
+          message: formData.message,
+          to: EMAIL_TO // Use environment variable
         }),
       });
       
-      // Even if the request returns an error status, try to parse the response
-      const data = await response.json().catch(() => ({ error: 'Failed to parse server response' }));
+      const data = await response.json();
       
       if (response.ok) {
         // Success message
@@ -114,20 +164,18 @@ export default function ContactComponent() {
           message: ''
         });
       } else {
-        // Handle error response
         throw new Error(data.error || 'Something went wrong sending your message');
       }
     } catch (error: any) {
       console.error('Error sending message:', error);
       
-      // More detailed error message to help with debugging
       Swal.fire({
         icon: 'error',
         title: 'Message Not Sent',
         html: `
           <p>Failed to send message. Please try again later or contact me directly.</p>
           <p class="mt-2 text-sm text-gray-400">Error: ${error.message || 'Unknown error'}</p>
-          <p class="mt-1 text-sm text-[#00BFFF]">Email: ramjib2311@gmail.com</p>
+          <p class="mt-1 text-sm text-[#00BFFF]">Email: ${EMAIL_TO}</p>
         `,
         background: '#151030',
         color: '#ffffff',
@@ -202,28 +250,17 @@ export default function ContactComponent() {
 
   return (
     <>
-      <section className="relative bg-none py-4 md:py-16 w-full min-h-screen flex items-center justify-center overflow-hidden">
-        <div className="absolute inset-0 bg-none opacity-40 rounded-full blur-3xl"></div>
-        <div className="hidden sm:flex fixed md:absolute left-2 md:left-4 top-1/2 transform -translate-y-1/2 flex-col gap-2 md:gap-3 z-50 pointer-events-auto">
-          {[ 
-            { name: 'Twitter', icon: <FaTwitter size={22} className="md:text-2xl" />, href: '#' },
-            { name: 'LinkedIn', icon: <FaLinkedin size={22} className="md:text-2xl" />, href: 'https://www.linkedin.com/in/ramji-b-613539308/' },
-            { name: 'GitHub', icon: <FaGithub size={22} className="md:text-2xl" />, href: 'https://github.com/Ramjirv32' },
-          ].map((social) => (
-            <a
-              key={social.name}
-              href={social.href}
-              target="_blank"
-              rel="noopener noreferrer" 
-              className="w-6 h-6 md:w-10 md:h-10 bg-gray-800 rounded-full flex items-center justify-center text-white hover:bg-[#00BFFF] transition-all duration-300 cursor-pointer relative z-50 hover:shadow-[0_0_15px_rgba(255,255,255,0.8)] hover:scale-110"
-            >
-              {social.icon}
-            </a>
-          ))}
-        </div>
-
-        <div className="container relative mx-auto px-3 md:px-4 max-w-6xl z-20">
-          <div className="flex flex-col md:flex-row items-center md:items-start justify-between gap-4 md:gap-12">
+      <section id="contact" className="relative bg-none py-8 md:py-16 w-full min-h-screen flex items-center justify-center overflow-hidden">
+        {/* Optional background effect */}
+        <div className="absolute inset-0 bg-gradient-to-b from-[#00BFFF]/5 to-transparent opacity-40 pointer-events-none"></div>
+        
+        <div className="container relative mx-auto px-4 md:px-6 max-w-6xl z-20">
+          <h2 className="text-center text-3xl md:text-4xl font-bold text-white mb-8 md:mb-12">
+            Contact <span className="text-[#00BFFF]">Me</span>
+          </h2>
+          
+          <div className="flex flex-col md:flex-row items-center md:items-start justify-between gap-8 md:gap-12">
+            {/* Left section with your contact information */}
             <div className="w-full md:w-1/2 mb-4 md:mb-0 relative z-20">
               <h2 
                 className="text-xl md:text-6xl lg:text-7xl font-bold mb-2 md:mb-6 text-white inline-block"
@@ -237,46 +274,76 @@ export default function ContactComponent() {
               </p>
               <div className="flex flex-col space-y-2 md:space-y-4" data-aos="fade-up">              <div className="flex items-center space-x-2">
                 <FaEnvelope className="text-[#00BFFF] text-base md:text-3xl" />
-                <span className="text-xs md:text-2xl text-gray-300">ramjib2311@gmail.com</span>
+                <span className="text-xs md:text-2xl text-gray-300">{EMAIL_TO}</span>
               </div>
               </div>
             </div>
 
+            {/* Right section with the contact form */}
             <div className="w-full md:w-1/2 relative z-30 pointer-events-auto">
-              <form onSubmit={handleSubmit} className="space-y-3 md:space-y-6 relative group">
-                <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-xl -z-10" />
-                <input 
-                  type="text" 
-                  name="user_name"
-                  required
-                  placeholder="Your Name" 
-                  value={formData.user_name}
-                  onChange={handleInputChange}
-                  className="w-full bg-gray-900/50 text-white placeholder-gray-400 text-xs md:text-xl px-3 md:px-4 py-2 md:py-3 rounded-md md:rounded-lg border border-[#00BFFF]/30 focus:border-[#00BFFF] focus:outline-none focus:ring-1 focus:ring-[#00BFFF] relative z-30 pointer-events-auto"
-                />
-                <input 
-                  type="email" 
-                  name="user_email"
-                  required
-                  placeholder="Your Email" 
-                  value={formData.user_email}
-                  onChange={handleInputChange}
-                  className="w-full bg-gray-900/50 text-white placeholder-gray-400 text-xs md:text-xl px-3 md:px-4 py-2 md:py-3 rounded-md md:rounded-lg border border-[#00BFFF]/30 focus:border-[#00BFFF] focus:outline-none focus:ring-1 focus:ring-[#00BFFF] relative z-30 pointer-events-auto"
-                />
-                <textarea 
-                  name="message"
-                  required
-                  placeholder="Your Message" 
-                  rows={5}
-                  value={formData.message}
-                  onChange={handleInputChange}
-                  className="w-full bg-gray-900/50 text-white placeholder-gray-400 text-xs md:text-xl px-3 md:px-4 py-2 md:py-3 rounded-md md:rounded-lg border border-[#00BFFF]/30 focus:border-[#00BFFF] focus:outline-none focus:ring-1 focus:ring-[#00BFFF] resize-none relative z-30 pointer-events-auto"
-                ></textarea>
+              <form onSubmit={handleSubmit} className="space-y-3 md:space-y-6 relative group backdrop-blur-sm bg-gray-900/30 p-6 rounded-xl border border-[#00BFFF]/20 shadow-lg transition-all duration-300 hover:shadow-[0_0_30px_rgba(0,191,255,0.2)]">
+                <h3 className="text-xl md:text-2xl font-semibold text-white mb-4">Get In Touch</h3>
+                
+                <div className="relative">
+                  <input 
+                    type="text" 
+                    name="user_name"
+                    required
+                    placeholder="Your Name" 
+                    value={formData.user_name}
+                    onChange={handleInputChange}
+                    onBlur={handleBlur}
+                    className={`w-full bg-gray-900/60 text-white placeholder-gray-400 text-xs md:text-base px-4 py-3 rounded-lg border ${
+                      formErrors.user_name ? 'border-red-500 focus:border-red-500 focus:ring-red-500' : 'border-[#00BFFF]/30 focus:border-[#00BFFF] focus:ring-[#00BFFF]'
+                    } focus:outline-none focus:ring-1 relative z-30 transition-all duration-300`}
+                  />
+                  {formErrors.user_name && (
+                    <p className="text-red-500 text-xs mt-1">{formErrors.user_name}</p>
+                  )}
+                  <div className="absolute inset-0 bg-gradient-to-r from-[#00BFFF]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-lg -z-10"></div>
+                </div>
+                
+                <div className="relative">
+                  <input 
+                    type="email" 
+                    name="user_email"
+                    required
+                    placeholder="Your Email" 
+                    value={formData.user_email}
+                    onChange={handleInputChange}
+                    onBlur={handleBlur}
+                    className={`w-full bg-gray-900/60 text-white placeholder-gray-400 text-xs md:text-base px-4 py-3 rounded-lg border ${
+                      formErrors.user_email ? 'border-red-500 focus:border-red-500 focus:ring-red-500' : 'border-[#00BFFF]/30 focus:border-[#00BFFF] focus:ring-[#00BFFF]'
+                    } focus:outline-none focus:ring-1 relative z-30 transition-all duration-300`}
+                  />
+                  {formErrors.user_email && (
+                    <p className="text-red-500 text-xs mt-1">{formErrors.user_email}</p>
+                  )}
+                </div>
+                
+                <div className="relative">
+                  <textarea 
+                    name="message"
+                    required
+                    placeholder="Your Message" 
+                    rows={5}
+                    value={formData.message}
+                    onChange={handleInputChange}
+                    onBlur={handleBlur}
+                    className={`w-full bg-gray-900/60 text-white placeholder-gray-400 text-xs md:text-base px-4 py-3 rounded-lg border ${
+                      formErrors.message ? 'border-red-500 focus:border-red-500 focus:ring-red-500' : 'border-[#00BFFF]/30 focus:border-[#00BFFF] focus:ring-[#00BFFF]'
+                    } focus:outline-none focus:ring-1 resize-none relative z-30 transition-all duration-300`}
+                  ></textarea>
+                  {formErrors.message && (
+                    <p className="text-red-500 text-xs mt-1">{formErrors.message}</p>
+                  )}
+                </div>
+                
                 <button 
                   type="submit"
                   disabled={isSubmitting}
-                  className={`w-full bg-gradient-to-r from-[#00BFFF] to-[#1E90FF] text-white text-xs md:text-xl px-3 md:px-6 py-2 md:py-3 rounded-md md:rounded-lg font-semibold transition-all duration-300 transform hover:scale-105 relative z-30 pointer-events-auto ${
-                    isSubmitting ? 'opacity-70 cursor-not-allowed' : 'hover:from-[#1E90FF] hover:to-[#00BFFF] hover:shadow-[0_0_20px_rgba(30,144,255,0.7)]'
+                  className={`w-full bg-gradient-to-r from-[#00BFFF] to-[#1E90FF] text-white text-xs md:text-base px-6 py-3 rounded-lg font-semibold transition-all duration-300 transform hover:scale-105 relative z-30 ${
+                    isSubmitting ? 'opacity-70 cursor-not-allowed' : 'hover:shadow-[0_0_20px_rgba(30,144,255,0.4)]'
                   }`}
                 >
                   {isSubmitting ? (
@@ -291,9 +358,17 @@ export default function ContactComponent() {
                     'Send Message'
                   )}
                 </button>
+                
+                <div className="text-xs text-gray-400 mt-4">
+                  Your message will be sent directly to my email. I'll respond as soon as possible.
+                </div>
               </form>
             </div>
           </div>
+          
+          {/* Optional decorative elements */}
+          <div className="absolute top-20 left-10 w-20 h-20 bg-[#00BFFF]/10 rounded-full blur-3xl pointer-events-none"></div>
+          <div className="absolute bottom-20 right-10 w-40 h-40 bg-[#00BFFF]/5 rounded-full blur-3xl pointer-events-none"></div>
         </div>
       </section>
     </>

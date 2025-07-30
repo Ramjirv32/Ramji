@@ -10,7 +10,7 @@ const Society = () => {
 
   useEffect(() => {
     AOS.init({
-      duration: 1000,
+      duration: 200,
       once: true,
       offset: 100,
     });
@@ -34,8 +34,8 @@ const Society = () => {
     },
     {
       icon: "🔒",
-      title: "Cybersecurity Leadership",
-      description: "Led cybersecurity initiatives and workshops, focusing on intelligent systems security, threat analysis, and secure development practices."
+      title: "Cybersecurity Implementation",
+      description: "Implemented robust security features focusing on intelligent systems security, ensuring proper user authentication and data protection."
     },
     {
       icon: "☁️",
@@ -44,8 +44,8 @@ const Society = () => {
     },
     {
       icon: "👥",
-      title: "Community Building",
-      description: "Built and nurtured a thriving community of cybersecurity enthusiasts and intelligent systems researchers through engaging events and initiatives."
+      title: "Team Collaboration",
+      description: "Collaborated with Mathan M in developing various components of the website and worked closely with Dr. Vishnukumar to meet project requirements."
     },
     {
       icon: "📚",
@@ -53,31 +53,31 @@ const Society = () => {
       description: "Implemented and managed content systems using WordPress and OJS (Open Journal Systems) for academic publications and community resources."
     },
     {
-      icon: "🏆",
-      title: "Innovation & Research",
-      description: "Spearheaded research initiatives in cyber intelligent systems, contributing to cutting-edge developments in AI security and automation."
+      icon: "🎨",
+      title: "UI/UX Design & Implementation",
+      description: "Created intuitive, responsive user interfaces with modern design principles to enhance user experience across desktop and mobile devices."
     }
   ];
 
   const activities = [
-    { name: "Cybersecurity Workshops", description: "Organized hands-on workshops on ethical hacking, penetration testing, and security auditing" },
-    { name: "AI Security Seminars", description: "Conducted seminars on AI/ML security, adversarial attacks, and intelligent threat detection" },
-    { name: "Full-Stack Development Training", description: "Led comprehensive training sessions on React, Node.js, MongoDB, and modern web technologies" },
-    { name: "Research Publications", description: "Managed academic publications through OJS platform for cybersecurity and AI research" },
-    { name: "Industry Collaborations", description: "Established partnerships with cybersecurity firms and tech companies for real-world exposure" },
-    { name: "Hackathons & CTF Events", description: "Organized Capture The Flag competitions and cybersecurity hackathons for skill development" }
+    { name: "Web Development", description: "Built responsive and secure website components with React and TypeScript" },
+    { name: "Backend Development", description: "Created robust API endpoints and database integration with Node.js and MongoDB" },
+    { name: "Security Implementation", description: "Implemented user authentication, data encryption, and secure communication channels" },
+    { name: "Content Management", description: "Set up and configured academic publishing systems through OJS platform" },
+    { name: "Cloud Management", description: "Configured and managed cloud hosting, CDN, and deployment pipelines" },
+    { name: "Technical Documentation", description: "Created comprehensive technical documentation for future maintenance and updates" }
   ];
 
   const timeline = [
     {
       date: "2023",
-      title: "Society Co-Founder & Technical Lead",
-      description: "Co-founded the Cyber Intelligent Systems society and took on the technical leadership role, establishing the foundation for community growth."
+      title: "Project Initiation",
+      description: "Started the internship at Society for Cyber Intelligent Systems under Dr. Vishnukumar's guidance to develop societycis.org."
     },
     {
       date: "2023",
       title: "Website Development & Launch",
-      description: "Developed and launched societycis.org using full-stack technologies, creating a comprehensive platform for the cybersecurity community."
+      description: "Developed and launched societycis.org using full-stack technologies, creating a comprehensive platform for Melange Publications."
     },
     {
       date: "2024",
@@ -86,8 +86,8 @@ const Society = () => {
     },
     {
       date: "2024",
-      title: "Community Expansion & Research",
-      description: "Expanded community reach, established research initiatives, and integrated academic publishing systems for knowledge sharing."
+      title: "Feature Enhancement & Maintenance",
+      description: "Added new features, maintained the platform, and provided technical support for ongoing operations."
     }
   ];
 
@@ -149,7 +149,7 @@ const Society = () => {
             >
               <FaShieldAlt className="text-white text-sm" />
             </div>
-            <span className="text-xl font-bold">Cyber Intelligent Systems Society</span>
+            <span className="text-xl font-bold">Society for Cyber Intelligent Systems</span>
           </div>
         </header>
 
@@ -164,12 +164,12 @@ const Society = () => {
                   boxShadow: "0 0 10px rgba(0, 191, 255, 0.3)"
                 }}
               >
-                2023 - Present
+                2023 - 2024
               </span>
             </div>
 
             <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-6 bg-gradient-to-r from-white via-[#00BFFF] to-white bg-clip-text text-transparent" data-aos="fade-up" data-aos-delay="100">
-              🔒 Cyber Intelligent Systems Society
+              🔒 Society for CIS Website
             </h1>
 
             <div className="flex items-center justify-center space-x-6 mb-8" data-aos="fade-up" data-aos-delay="200">
@@ -179,7 +179,7 @@ const Society = () => {
               </div>
               <div className="flex items-center space-x-2 text-gray-300">
                 <FaCalendarAlt className="text-[#00BFFF]" />
-                <span>2+ Years</span>
+                <span>Internship Project</span>
               </div>
               <div className="flex items-center space-x-2 text-gray-300">
                 <FaCode className="text-[#00BFFF]" />
@@ -188,13 +188,13 @@ const Society = () => {
             </div>
 
             <p className="text-lg md:text-xl text-gray-300 mb-8 max-w-4xl mx-auto leading-relaxed" data-aos="fade-up" data-aos-delay="300">
-              As co-founder and technical lead of the Cyber Intelligent Systems Society, I developed and maintain the complete 
-              societycis.org platform using modern full-stack technologies. This role combines my passion for cybersecurity, 
-              AI systems, and community building while advancing research in intelligent security solutions.
+              During my internship at KPRIET CSE Department under Dr. Vishnukumar, I worked with Mathan M to develop the 
+              complete societycis.org platform for Melange Publications in Pondicherry. This freelance-style project involved 
+              using modern full-stack technologies to create a comprehensive academic publishing platform.
             </p>
 
             <div className="flex flex-wrap gap-3 justify-center mb-12" data-aos="fade-up" data-aos-delay="400">
-              {["React", "TypeScript", "Node.js", "MongoDB", "Tailwind CSS", "Cloudflare", "Cybersecurity", "AI Security"].map((skill, index) => (
+              {["React", "TypeScript", "Node.js", "MongoDB", "Tailwind CSS", "Cloudflare", "Cybersecurity", "OJS"].map((skill, index) => (
                 <span
                   key={skill}
                   className="bg-white/10 backdrop-blur-sm border border-[#00BFFF]/30 px-4 py-2 rounded-full text-sm"
@@ -221,11 +221,11 @@ const Society = () => {
               <div className="flex items-start space-x-4">
                 <div className="text-2xl">🌐</div>
                 <div className="text-left">
-                  <h3 className="text-xl font-semibold mb-2">🚀 Full-Stack Development & Leadership</h3>
+                  <h3 className="text-xl font-semibold mb-2">🚀 Full-Stack Development Project</h3>
                   <p className="text-gray-300">
-                    Developed the complete societycis.org website from scratch using React, TypeScript, Node.js, and MongoDB. 
-                    Implemented robust security measures with Cloudflare, managed cloud deployment via Vercel, and integrated 
-                    academic publishing systems. Led a community of 200+ cybersecurity enthusiasts and researchers.
+                    Developed the complete societycis.org website from scratch for Melange Publications in Pondicherry as part of an 
+                    internship with Dr. Vishnukumar from the KPRIET CSE Department. Implemented the platform using React, TypeScript, 
+                    Node.js, and MongoDB with robust security measures, Cloudflare integration, and academic publishing systems.
                   </p>
                 </div>
               </div>
@@ -283,7 +283,7 @@ const Society = () => {
 
           {/* Achievements Grid */}
           <section className="max-w-6xl mx-auto py-16">
-            <h2 className="text-2xl md:text-3xl font-bold mb-8 text-center" data-aos="fade-up">Key Achievements & Impact</h2>
+            <h2 className="text-2xl md:text-3xl font-bold mb-8 text-center" data-aos="fade-up">Key Achievements & Contributions</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {achievements.map((achievement, index) => (
                 <div
@@ -328,7 +328,7 @@ const Society = () => {
           <section className="max-w-6xl mx-auto py-16">
             <div className="flex items-center space-x-3 mb-8" data-aos="fade-up">
               <div className="text-2xl">🎯</div>
-              <h2 className="text-2xl md:text-3xl font-bold">Activities & Initiatives</h2>
+              <h2 className="text-2xl md:text-3xl font-bold">Development Activities</h2>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
               {activities.map((activity, index) => (
@@ -365,12 +365,12 @@ const Society = () => {
                     <li>• Cloud Infrastructure & Security</li>
                     <li>• Database Design & Management</li>
                     <li>• DevOps & Deployment Pipelines</li>
-                    <li>• Cybersecurity Implementation</li>
+                    <li>• Content Management Systems</li>
                   </ul>
                 </div>
               </div>
 
-              {/* Leadership Skills */}
+              {/* Project Skills */}
               <div
                 className="bg-[#00BFFF]/10 backdrop-blur-sm border border-[#00BFFF]/30 rounded-2xl p-8"
                 style={{
@@ -379,16 +379,42 @@ const Society = () => {
                 data-aos="fade-left"
               >
                 <div className="text-center">
-                  <div className="text-4xl mb-4">👑</div>
-                  <h3 className="text-xl font-semibold mb-4">Leadership & Soft Skills</h3>
+                  <div className="text-4xl mb-4">👨‍💻</div>
+                  <h3 className="text-xl font-semibold mb-4">Project & Soft Skills</h3>
                   <ul className="text-gray-300 space-y-2 text-left">
-                    <li>• Community Building & Management</li>
-                    <li>• Technical Workshop Delivery</li>
-                    <li>• Project Management & Coordination</li>
-                    <li>• Research & Academic Publishing</li>
-                    <li>• Strategic Planning & Execution</li>
+                    <li>• Collaborative Development</li>
+                    <li>• Client Communication</li>
+                    <li>• Project Planning & Execution</li>
+                    <li>• Technical Documentation</li>
+                    <li>• Problem-Solving & Troubleshooting</li>
                   </ul>
                 </div>
+              </div>
+            </div>
+          </section>
+
+          {/* Team & Mentorship */}
+          <section className="max-w-6xl mx-auto py-16">
+            <h2 className="text-2xl md:text-3xl font-bold mb-8 text-center" data-aos="fade-up">Team & Mentorship</h2>
+            <div
+              className="bg-[#00BFFF]/10 backdrop-blur-sm border border-[#00BFFF]/30 rounded-2xl p-8"
+              style={{
+                boxShadow: "0 0 20px rgba(0, 191, 255, 0.2)"
+              }}
+              data-aos="fade-up"
+            >
+              <div className="text-center">
+                <div className="text-4xl mb-4">👨‍🏫</div>
+                <h3 className="text-xl font-semibold mb-4">Project Team</h3>
+                <p className="text-gray-300 mb-4">
+                  This project was developed under the guidance of <span className="text-[#00BFFF] font-semibold">Dr. Vishnukumar</span> from 
+                  the KPRIET CSE Department, in collaboration with <span className="text-[#00BFFF] font-semibold">Mathan M</span> as part of 
+                  our internship. We worked together to create a comprehensive solution for Melange Publications in Pondicherry.
+                </p>
+                <p className="text-gray-300">
+                  The experience taught me valuable lessons in client-focused development, team collaboration, and creating real-world solutions 
+                  that meet specific business requirements.
+                </p>
               </div>
             </div>
           </section>

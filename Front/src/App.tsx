@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import { Routes, Route, useLocation } from 'react-router-dom';
 import { AnimatePresence } from 'framer-motion';
 import Skills from "./components/skills"
@@ -10,7 +10,7 @@ import Projects from './components/Project';
 import Work from './components/Works';
 import Certificate from './components/certificate';
 import Contact from './components/Contact';
-
+import ResearchPublications from "./components/Research";
 
 import Pro1 from './components/compoPages/Projects/Pro1';
 import Pro2 from './components/compoPages/Projects/Pro2';
@@ -27,6 +27,7 @@ import withScrollReset from './components/hoc/withScrollReset';
 // Styles
 import './App.css';
 import './styles/globals.css';
+import './styles/animations.css';  // Add this line
 
 // ScrollToTop component to handle scroll to top on route change
 const ScrollToTop = () => {
@@ -42,13 +43,15 @@ const ScrollToTop = () => {
 
 const Home = () => {
   const isScrollingProgrammatically = useRef(false);
+  const [currentSection, setCurrentSection] = useState<string>('home');
 
   // Handle scroll to update active section
   useEffect(() => {
     const handleScroll = () => {
       if (isScrollingProgrammatically.current) return;
 
-      const sections = ["home", "about", "projects", "works", "certificate", "contact"];
+      // Updated order of sections to match navbar
+      const sections = ["home", "about", "skills", "projects", "works", "research", "certificate", "contact"];
       const scrollPosition = window.scrollY + 100;
 
       for (const section of sections) {
@@ -60,6 +63,7 @@ const Home = () => {
             if (window.location.hash !== `#${section}`) {
               window.history.replaceState(null, '', `#${section}`);
             }
+            setCurrentSection(section); // Update current section
             break;
           }
         }
@@ -75,13 +79,21 @@ const Home = () => {
 
   return (
     <>
-      <Navbar isScrollingProgrammatically={isScrollingProgrammatically} />
+      <Navbar 
+        activeSection={currentSection} 
+        setActiveSection={(section) => setCurrentSection(section)} 
+        isScrollingProgrammatically={isScrollingProgrammatically} 
+      />
       <section id="home" className="min-h-screen">
         <Hero />
       </section>
 
       <section id="about" className="min-h-screen">
         <About />
+      </section>
+      
+      <section id="skills" className="min-h-screen">
+        <Skills />
       </section>
 
       <section id="projects" className="min-h-screen">
@@ -91,8 +103,9 @@ const Home = () => {
       <section id="works" className="min-h-screen">
         <Work />
       </section>
-      <section id="skills" className="min-h-screen">
-        <Skills />
+
+      <section id="research" className="min-h-screen">
+        <ResearchPublications />
       </section>
 
       <section id="certificate" className="min-h-screen">
@@ -115,6 +128,7 @@ const ScrollResetPro5 = withScrollReset(Pro5);
 const ScrollResetLuxorHoliday = withScrollReset(LuxorHoliday);
 const ScrollResetSociety = withScrollReset(Society);
 const ScrollResetOodser = withScrollReset(Oodser);
+const ScrollResetResearch = withScrollReset(ResearchPublications);
 
 const App = () => {
   const location = useLocation();
@@ -131,6 +145,7 @@ const App = () => {
           <Route path="/project/3" element={<ScrollResetPro3 />} />
           <Route path="/project/4" element={<ScrollResetPro4 />} />
           <Route path="/project/5" element={<ScrollResetPro5 />} />
+          <Route path="/research" element={<ScrollResetResearch />} />
           <Route path="/internship/society" element={<ScrollResetSociety />} />
           <Route path="/internship/oodser" element={<ScrollResetOodser />} />
           <Route path="/internship/luxor-holiday" element={<ScrollResetLuxorHoliday />} />

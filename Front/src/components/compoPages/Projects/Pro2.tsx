@@ -11,7 +11,7 @@ const Index = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
     AOS.init({
-      duration: 1000,
+      duration: 200,
       once: true,
       offset: 100,
     });
@@ -79,15 +79,15 @@ const Index = () => {
             className="absolute top-1/3 left-1/3 w-96 h-96 rounded-full blur-3xl animate-pulse"
             style={{
               background: "radial-gradient(circle, rgba(0, 191, 255, 0.3) 0%, rgba(0, 191, 255, 0.1) 50%, transparent 80%)",
-              animationDuration: "4s"
+              // animationDuration: "4s"
             }}
           />
           <div
             className="absolute bottom-1/4 right-1/4 w-80 h-80 rounded-full blur-3xl animate-pulse"
             style={{
               background: "radial-gradient(circle, rgba(30, 144, 255, 0.25) 0%, rgba(30, 144, 255, 0.1) 50%, transparent 80%)",
-              animationDuration: "3.5s",
-              animationDelay: "1.5s"
+              // animationDuration: "3.5s",
+              // animationDelay: "1.5s"
             }}
           />
           {/* Floating accent glows */}
@@ -95,16 +95,16 @@ const Index = () => {
             className="absolute top-1/6 right-1/6 w-32 h-32 rounded-full blur-2xl animate-pulse"
             style={{
               background: "rgba(0, 191, 255, 0.2)",
-              animationDuration: "2.8s",
-              animationDelay: "0.8s"
+              // animationDuration: "2.8s",
+              // animationDelay: "0.8s"
             }}
           />
           <div
             className="absolute bottom-1/5 left-1/5 w-24 h-24 rounded-full blur-xl animate-pulse"
             style={{
               background: "rgba(30, 144, 255, 0.2)",
-              animationDuration: "3.2s",
-              animationDelay: "2.2s"
+              // animationDuration: "3.2s",
+              // animationDelay: "2.2s"
             }}
           />
         </div>
