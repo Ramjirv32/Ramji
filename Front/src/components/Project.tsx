@@ -5,6 +5,7 @@ import React from "react"
 import { useState, useEffect } from "react"
 import { FaExternalLinkAlt, FaGithub, FaPlus } from "react-icons/fa"
 import { useNavigate } from "react-router-dom"
+import { useAuth } from '../context/AuthContext';
 
 interface Project {
   id: number;
@@ -28,7 +29,7 @@ const Projects: React.FC = () => {
   const [showAddForm, setShowAddForm] = useState<boolean>(false);
   const [submitting, setSubmitting] = useState<boolean>(false);
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
-  const [adminMode, setAdminMode] = useState<boolean>(false);
+  const { isAdmin } = useAuth(); // Replace adminMode state with this
   const [newProject, setNewProject] = useState({
     title: "",
     p1: "",
@@ -42,13 +43,6 @@ const Projects: React.FC = () => {
   });
 
   useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.ctrlKey && e.shiftKey && e.key === 'P') {
-        setAdminMode(prev => !prev);
-      }
-    };
-    window.addEventListener('keydown', handleKeyDown);
-
     const fetchProjects = async () => {
       try {
         const response = await fetch('http://localhost:9000/demo');
@@ -95,10 +89,6 @@ const Projects: React.FC = () => {
     };
 
     fetchProjects();
-
-    return () => {
-      window.removeEventListener('keydown', handleKeyDown);
-    };
   }, []);
 
   // Fix the event handling by properly typing the event
@@ -274,14 +264,15 @@ const Projects: React.FC = () => {
           <h1 className="text-white text-5xl md:text-6xl font-bold">
             Projects<span className="text-[#00BFFF]">.</span>
           </h1>
-          {(adminMode || !showAddForm) && (
+          {/* Only show Add New Project button to admins */}
+          {isAdmin && !showAddForm && (
             <button
               onClick={() => setShowAddForm(true)}
               className="mt-6 px-6 py-3 bg-gradient-to-r from-blue-600/30 to-purple-600/30 rounded-full text-white border border-blue-500/50 hover:border-blue-400 hover:shadow-[0_0_15px_rgba(59,130,246,0.5)] transition-all duration-300"
             >
               <span className="flex items-center gap-2">
                 <FaPlus />
-                {adminMode ? "Add New Project (Admin)" : "Suggest a Project"}
+                Add New Project
               </span>
             </button>
           )}
@@ -295,7 +286,7 @@ const Projects: React.FC = () => {
 
         {showAddForm && (
           <div className="mb-16 bg-gradient-to-r from-blue-900/40 to-purple-900/40 backdrop-blur-md border border-blue-700/50 rounded-lg p-6 max-w-2xl mx-auto">
-            <h3 className="text-xl font-bold text-white mb-4">{adminMode ? "Add New Project" : "Suggest a Project"}</h3>
+            <h3 className="text-xl font-bold text-white mb-4">{isAdmin ? "Add New Project" : "Suggest a Project"}</h3>
             <form onSubmit={submitProject}>
               <div className="space-y-4">
                 <div>
