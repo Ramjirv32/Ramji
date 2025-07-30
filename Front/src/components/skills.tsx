@@ -71,6 +71,7 @@ import { IoLogoJavascript } from "react-icons/io5";
 import { DiJqueryLogo } from "react-icons/di";
 import AOS from 'aos';
 import 'aos/dist/aos.css';
+import React from 'react';
 
 // Interface for the skills data from the backend
 interface SkillsData {
@@ -81,7 +82,7 @@ interface SkillsData {
 
 // Extended mapping for skill names to their icons and colors
 // This includes many common technologies developers might use
-const skillIconsMap: Record<string, { icon: JSX.Element; color: string }> = {
+const skillIconsMap: Record<string, { icon: React.ReactElement; color: string }> = {
   // Front-end
   "HTML": { icon: <FaHtml5 size={20} />, color: "#E44D26" },
   "CSS": { icon: <FaCss3Alt size={20} />, color: "#1572B6" },
@@ -90,7 +91,7 @@ const skillIconsMap: Record<string, { icon: JSX.Element; color: string }> = {
   "Cloudflare": { icon: <SiCloudflare size={20} />, color: "#F38020" },
   "ReactJS": { icon: <FaReact size={20} />, color: "#61DAFB" },
   "React": { icon: <FaReact size={20} />, color: "#61DAFB" },
-  "fastapi":{icon: <SiFastapi size={20} />, color: "#009688" },
+  "fastapi": { icon: <SiFastapi size={20} />, color: "#009688" },
   "Framer Motion": { icon: <TbBrandFramerMotion size={20} />, color: "#0055FF" },
   "Shadcn": { icon: <RxShadowNone size={20} />, color: "#FFFFFF" },
   "Next.js": { icon: <SiNextdotjs size={20} />, color: "#000000" },
@@ -102,8 +103,6 @@ const skillIconsMap: Record<string, { icon: JSX.Element; color: string }> = {
   "TailwindCSS": { icon: <SiTailwindcss size={20} />, color: "#38bdf8" },
   "Bootstrap": { icon: <FaBootstrap size={20} />, color: "#7952B3" },
   "Sass": { icon: <FaSass size={20} />, color: "#CC6699" },
-  "Framer Motion": { icon: <TbBrandFramerMotion size={20} />, color: "#0055FF" },
-  "Shadcn": { icon: <RxShadowNone size={20} />, color: "#FFFFFF" },
   "NextJs": { icon: <SiNestjs size={20} />, color: "#000000" },
   // "Nuxt.js": { icon: <SiNuxtdotjs size={20} />, color: "#00C58E" },
   "Redux": { icon: <SiRedux size={20} />, color: "#764ABC" },

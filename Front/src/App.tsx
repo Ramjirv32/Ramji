@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import { Routes, Route, useLocation } from 'react-router-dom';
 import { AnimatePresence } from 'framer-motion';
 import Skills from "./components/skills"
@@ -43,6 +43,7 @@ const ScrollToTop = () => {
 
 const Home = () => {
   const isScrollingProgrammatically = useRef(false);
+  const [currentSection, setCurrentSection] = useState<string>('home');
 
   // Handle scroll to update active section
   useEffect(() => {
@@ -62,6 +63,7 @@ const Home = () => {
             if (window.location.hash !== `#${section}`) {
               window.history.replaceState(null, '', `#${section}`);
             }
+            setCurrentSection(section); // Update current section
             break;
           }
         }
@@ -77,7 +79,11 @@ const Home = () => {
 
   return (
     <>
-      <Navbar isScrollingProgrammatically={isScrollingProgrammatically} />
+      <Navbar 
+        activeSection={currentSection} 
+        setActiveSection={(section) => setCurrentSection(section)} 
+        isScrollingProgrammatically={isScrollingProgrammatically} 
+      />
       <section id="home" className="min-h-screen">
         <Hero />
       </section>

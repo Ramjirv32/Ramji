@@ -235,7 +235,7 @@ const Certificate = () => {
       </div>
 
       {/* Add custom CSS for the background pattern */}
-      <style jsx>{`
+      <style>{`
         .bg-grid-pattern {
           background-image: 
             linear-gradient(to right, rgba(0, 191, 255, 0.05) 1px, transparent 1px),

@@ -52,7 +52,7 @@ export default function ContactComponent() {
   });
 
   // Enhanced input validation
-  const validateInput = (name, value) => {
+  const validateInput = (name: string, value: string) => {
     let error = '';
     
     switch(name) {

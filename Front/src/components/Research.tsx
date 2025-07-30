@@ -171,7 +171,7 @@ const ResearchPublications: React.FC = () => {
 
   return (
     <div className="min-h-screen py-20 px-4 bg-gradient-to-b from-[#030014] to-[#080324]">
-      <style jsx>{`
+      <style>{`
         .magic-card {
           --glow-x: 50%;
           --glow-y: 50%;

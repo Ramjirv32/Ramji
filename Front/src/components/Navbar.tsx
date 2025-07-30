@@ -10,7 +10,9 @@ declare global {
 
 // Define interface for Navbar props
 interface NavbarProps {
-  isScrollingProgrammatically?: React.MutableRefObject<boolean>;
+  activeSection: string;
+  setActiveSection: (section: string) => void;
+  isScrollingProgrammatically: { current: boolean };
 }
 
 // Define nav items with their corresponding section IDs or paths
@@ -26,8 +28,10 @@ const navItems = [
 ];
 
 const Navbar = ({ 
+  activeSection,
+  setActiveSection,
   isScrollingProgrammatically 
-}: NavbarProps = {}) => {
+}: NavbarProps) => {
   const [active, setActive] = useState("Home");
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
@@ -52,6 +56,7 @@ const Navbar = ({
     const { name, link, id, path } = navItem;
     setActive(name);
     setIsMenuOpen(false);
+    setActiveSection(name); // Update active section
 
     // If path is provided, use it for navigation (like for Research page)
     if (path) {

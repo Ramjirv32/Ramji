@@ -101,7 +101,8 @@ const Projects: React.FC = () => {
     };
   }, []);
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | React.ChangeEvent<HTMLTextAreaElement>>) => {
+  // Fix the event handling by properly typing the event
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setNewProject(prev => ({
       ...prev,
@@ -720,7 +721,7 @@ const Projects: React.FC = () => {
         </div>
       </div>
 
-      <style jsx>{`
+      <style>{`
         .project-card {
           position: relative;
           overflow: hidden;

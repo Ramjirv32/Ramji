@@ -118,7 +118,7 @@ export const InternshipCard: FC<InternshipCardProps> = ({ internship, index }) =
         }}
       ></div>
       
-      <style jsx>{`
+      <style>{`
         .internship-card {
           position: relative;
           overflow: hidden;
