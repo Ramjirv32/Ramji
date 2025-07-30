@@ -3,15 +3,12 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
-// Helper function to validate email
 const isValidEmail = (email) => {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   return emailRegex.test(email);
 };
 
-// Create reusable transporter
 const createTransporter = () => {
-  // Check if email service is configured
   if (!process.env.EMAIL_USER || !process.env.EMAIL_PASS) {
     console.error('Missing email configuration');
     return null;
@@ -37,7 +34,6 @@ const createTransporter = () => {
 export const sendContactEmail = async (data) => {
   const { name, email, message } = data;
   
-  // Enhanced validation
   if (!name || name.trim().length < 2) {
     throw new Error('Please provide a valid name (at least 2 characters)');
   }
@@ -56,10 +52,8 @@ export const sendContactEmail = async (data) => {
     throw new Error('Email service not properly configured');
   }
 
-  // Format the current date and time
   const currentDate = new Date().toLocaleString();
 
-  // Set up email options with enhanced HTML template
   const mailOptions = {
     from: `"Portfolio Contact" <${process.env.EMAIL_USER}>`,
     to: process.env.EMAIL_TO || process.env.EMAIL_USER,
@@ -91,7 +85,6 @@ export const sendContactEmail = async (data) => {
   };
 
   try {
-    // Send email
     const info = await transporter.sendMail(mailOptions);
     console.log('Email sent: %s', info.messageId);
     return info;

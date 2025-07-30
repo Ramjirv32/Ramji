@@ -2,8 +2,13 @@ import { FaEnvelope, FaTwitter, FaLinkedin, FaGithub } from "react-icons/fa";
 import { useEffect, useState } from 'react';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
-import Swal from 'sweetalert2'; // Uncomment this import
+import Swal from 'sweetalert2';
 import * as THREE from 'three';
+
+// Use environment variables for API endpoints and email configuration
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:9000';
+const CONTACT_ENDPOINT = `${API_URL}/api/contact`;
+const EMAIL_TO = import.meta.env.VITE_EMAIL_TO || 'ramjib2311@gmail.com';
 
 const generateSpherePoints = () => {
   const points = [];
@@ -125,8 +130,8 @@ export default function ContactComponent() {
     setIsSubmitting(true);
     
     try {
-      // Send to your backend API instead of Luxor backend
-      const response = await fetch('http://localhost:9000/api/contact', {
+      // Send to your backend API using environment variables
+      const response = await fetch(CONTACT_ENDPOINT, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -134,7 +139,8 @@ export default function ContactComponent() {
         body: JSON.stringify({
           name: formData.user_name,
           email: formData.user_email,
-          message: formData.message
+          message: formData.message,
+          to: EMAIL_TO // Use environment variable
         }),
       });
       
@@ -169,7 +175,7 @@ export default function ContactComponent() {
         html: `
           <p>Failed to send message. Please try again later or contact me directly.</p>
           <p class="mt-2 text-sm text-gray-400">Error: ${error.message || 'Unknown error'}</p>
-          <p class="mt-1 text-sm text-[#00BFFF]">Email: ramjib2311@gmail.com</p>
+          <p class="mt-1 text-sm text-[#00BFFF]">Email: ${EMAIL_TO}</p>
         `,
         background: '#151030',
         color: '#ffffff',
@@ -268,7 +274,7 @@ export default function ContactComponent() {
               </p>
               <div className="flex flex-col space-y-2 md:space-y-4" data-aos="fade-up">              <div className="flex items-center space-x-2">
                 <FaEnvelope className="text-[#00BFFF] text-base md:text-3xl" />
-                <span className="text-xs md:text-2xl text-gray-300">ramjib2311@gmail.com</span>
+                <span className="text-xs md:text-2xl text-gray-300">{EMAIL_TO}</span>
               </div>
               </div>
             </div>

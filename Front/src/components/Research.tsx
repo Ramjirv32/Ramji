@@ -17,12 +17,12 @@ const ResearchPublications: React.FC = () => {
   const patents = [
     {
       id: 1,
-      title: "Automated Parking System with Intelligent License Plate Recognition",
-      patentNumber: "US20250123456",
-      inventors: ["Pranav V M", "NavaneethaKrishnan M V","Ramji B"],
-      filingDate: "January 15, 2025",
-      issueDate: "June 29, 2025",
-      abstract: "An innovative smart parking system that automates vehicle entry and verification through computer vision. The system captures license plate images, processes them using OpenCV for Automatic Number Plate Recognition (ANPR), and verifies bookings against a database. The system supports both pre-booked and offline parking scenarios, improving throughput and user experience at parking facilities.",
+      title: "AI-Powered Smart Parking System Enhancing Convenience and Security with Web IoT and Cloud Technologies",
+      patentNumber: "202441093238 A",
+      inventors: ["Dr. Premkumar D", "Munirathinam T", "S. Ramasami", "Karthik S", "Pranav V M", "Navaneethakrishnan M V", "Ramji B"],
+      filingDate: "November 28, 2024",
+      issueDate: "December 6, 2024",
+      abstract: "A smart parking system leveraging AI, IoT, cloud, and web technologies to optimize parking efficiency and security. The system integrates React.js (frontend) and Node.js (backend), with Firebase authentication and FastAPI-based microservices. Key innovations include number plate recognition using Tesseract OCR and automated gate access, creating a secure and user-friendly parking experience.",
       type: "patent",
       category: ["IoT & Smart Systems"],
       image: "/assets/research/smart-parking-patent.jpg",
@@ -386,27 +386,27 @@ const ResearchPublications: React.FC = () => {
                   </div>
                   
                   <div className="md:w-2/3">
-                    <h2 className="text-2xl font-bold text-white mb-3">Automated Parking System with Intelligent License Plate Recognition</h2>
+                    <h2 className="text-2xl font-bold text-white mb-3">AI-Powered Smart Parking System Enhancing Convenience and Security with Web IoT and Cloud Technologies</h2>
                     
                     <div className="flex flex-wrap gap-3 mb-4">
                       <div className="bg-[#00BFFF]/10 px-3 py-1 rounded-full text-sm border border-[#00BFFF]/30">
                         <span className="text-gray-400">Patent #: </span>
-                        <span className="text-white">US20250123456</span>
+                        <span className="text-white">202441093238 A</span>
                       </div>
                       <div className="bg-[#00BFFF]/10 px-3 py-1 rounded-full text-sm border border-[#00BFFF]/30">
                         <span className="text-gray-400">Filed: </span>
-                        <span className="text-white">January 15, 2025</span>
+                        <span className="text-white">November 28, 2024</span>
                       </div>
                       <div className="bg-[#00BFFF]/10 px-3 py-1 rounded-full text-sm border border-[#00BFFF]/30">
-                        <span className="text-gray-400">Issued: </span>
-                        <span className="text-white">June 29, 2025</span>
+                        <span className="text-gray-400">Published: </span>
+                        <span className="text-white">December 6, 2024</span>
                       </div>
                     </div>
                     
                     <div className="mb-4">
                       <p className="text-gray-400 mb-2">
                         <span className="text-[#00BFFF]">Inventors: </span>
-                        Arun A, Mathan M
+                        Dr. Premkumar D, Munirathinam T, S. Ramasami, Karthik S, Pranav V M, Navaneethakrishnan M V, Ramji B
                       </p>
                     </div>
                     
@@ -415,13 +415,13 @@ const ResearchPublications: React.FC = () => {
                         Smart Parking
                       </span>
                       <span className="bg-[#00BFFF]/20 text-[#00BFFF] text-xs px-3 py-1 rounded-full">
-                        Computer Vision
+                        AI/ML
                       </span>
                       <span className="bg-[#00BFFF]/20 text-[#00BFFF] text-xs px-3 py-1 rounded-full">
                         IoT
                       </span>
                       <span className="bg-[#00BFFF]/20 text-[#00BFFF] text-xs px-3 py-1 rounded-full">
-                        ANPR
+                        OCR
                       </span>
                     </div>
                     
@@ -539,43 +539,42 @@ const ResearchPublications: React.FC = () => {
                   <h4 className="text-lg font-semibold text-white">Abstract</h4>
                 </div>
                 <p className="text-gray-300 leading-relaxed">
-                  An innovative smart parking system that automates vehicle entry and verification through computer vision. 
-                  The system captures license plate images, processes them using OpenCV for Automatic Number Plate Recognition (ANPR), 
-                  and verifies bookings against a database. The system supports both pre-booked and offline parking scenarios, 
-                  improving throughput and user experience at parking facilities.
+                  A smart parking system leveraging AI, IoT, cloud, and web technologies to optimize parking efficiency and security. 
+                  The system integrates React.js (frontend) and Node.js (backend), with Firebase authentication and FastAPI-based microservices. 
+                  Key innovations include number plate recognition using Tesseract OCR and automated gate access, creating a secure and 
+                  user-friendly parking experience.
                 </p>
               </div>
               
               <h4 className="text-lg font-semibold text-white mb-3">System Architecture</h4>
               
               <div className="bg-[#151030]/80 backdrop-blur-sm rounded-lg p-4 mb-6">
-                <h5 className="font-medium text-[#00BFFF] mb-2">Stage 1: The Parking Searcher</h5>
-                <p className="text-sm text-gray-300 mb-2">User-facing web application built with React and Node.js where users can search and book parking spots.</p>
+                <h5 className="font-medium text-[#00BFFF] mb-2">Stage 1: User Interface</h5>
+                <p className="text-sm text-gray-300 mb-2">React.js frontend with Firebase authentication allowing users to search and book parking spots.</p>
                 <div className="flex flex-wrap gap-2">
+                  <span className="bg-white/10 text-gray-300 text-xs px-2 py-1 rounded-full">React.js</span>
                   <span className="bg-white/10 text-gray-300 text-xs px-2 py-1 rounded-full">Firebase Auth</span>
-                  <span className="bg-white/10 text-gray-300 text-xs px-2 py-1 rounded-full">PostgreSQL</span>
-                  <span className="bg-white/10 text-gray-300 text-xs px-2 py-1 rounded-full">React</span>
+                  <span className="bg-white/10 text-gray-300 text-xs px-2 py-1 rounded-full">Node.js</span>
                 </div>
               </div>
               
               <div className="bg-[#151030]/80 backdrop-blur-sm rounded-lg p-4 mb-6">
-                <h5 className="font-medium text-[#00BFFF] mb-2">Stage 2: Booking & Payment</h5>
-                <p className="text-sm text-gray-300 mb-2">Secure transaction handling with Razorpay integration and automated email confirmations.</p>
+                <h5 className="font-medium text-[#00BFFF] mb-2">Stage 2: Backend Services</h5>
+                <p className="text-sm text-gray-300 mb-2">Node.js backend with FastAPI-based microservices for handling bookings and payments.</p>
                 <div className="flex flex-wrap gap-2">
-                  <span className="bg-white/10 text-gray-300 text-xs px-2 py-1 rounded-full">Razorpay</span>
-                  <span className="bg-white/10 text-gray-300 text-xs px-2 py-1 rounded-full">Email API</span>
-                  <span className="bg-white/10 text-gray-300 text-xs px-2 py-1 rounded-full">PostgreSQL</span>
+                  <span className="bg-white/10 text-gray-300 text-xs px-2 py-1 rounded-full">FastAPI</span>
+                  <span className="bg-white/10 text-gray-300 text-xs px-2 py-1 rounded-full">Microservices</span>
+                  <span className="bg-white/10 text-gray-300 text-xs px-2 py-1 rounded-full">Cloud Integration</span>
                 </div>
               </div>
               
               <div className="bg-[#151030]/80 backdrop-blur-sm rounded-lg p-4">
-                <h5 className="font-medium text-[#00BFFF] mb-2">Stage 3: Automated Parking (IoT)</h5>
-                <p className="text-sm text-gray-300 mb-2">Camera-based ANPR system with AWS EC2 backend and FastAPI for real-time number plate recognition and verification.</p>
+                <h5 className="font-medium text-[#00BFFF] mb-2">Stage 3: AI & IoT Integration</h5>
+                <p className="text-sm text-gray-300 mb-2">Tesseract OCR-powered number plate recognition system with automated gate access control.</p>
                 <div className="flex flex-wrap gap-2">
-                  <span className="bg-white/10 text-gray-300 text-xs px-2 py-1 rounded-full">OpenCV</span>
-                  <span className="bg-white/10 text-gray-300 text-xs px-2 py-1 rounded-full">AWS EC2</span>
-                  <span className="bg-white/10 text-gray-300 text-xs px-2 py-1 rounded-full">FastAPI</span>
-                  <span className="bg-white/10 text-gray-300 text-xs px-2 py-1 rounded-full">Flask</span>
+                  <span className="bg-white/10 text-gray-300 text-xs px-2 py-1 rounded-full">Tesseract OCR</span>
+                  <span className="bg-white/10 text-gray-300 text-xs px-2 py-1 rounded-full">IoT Sensors</span>
+                  <span className="bg-white/10 text-gray-300 text-xs px-2 py-1 rounded-full">Automated Access</span>
                 </div>
               </div>
             </div>
@@ -584,8 +583,8 @@ const ResearchPublications: React.FC = () => {
         
         <div className="text-center mt-16 max-w-3xl mx-auto">
           <p className="text-gray-300 text-lg leading-relaxed">
-            This patent represents a significant innovation in automated parking systems, combining 
-            computer vision, cloud computing, and mobile technology to create a seamless experience for drivers.
+            This patent represents a significant innovation in the field of smart parking systems, 
+            combining AI, web technologies, and IoT to enhance convenience and security in parking facilities.
           </p>
         </div>
       </div>
