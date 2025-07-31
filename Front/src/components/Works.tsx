@@ -23,21 +23,9 @@ const textVariant = (delay?: number) => ({
 });
 
 const internships = [
+
   {
     id: 1,
-    title: "Full Stack Developer",
-    company: "Society for Cyber Intelligent Systems",
-    duration: "Jan 2024 - Present", // This is correct, keeping as is
-    description: "Developed societycis.org website with Mathan M for cyber intelligence systems. Built responsive web platform with modern security features and intelligent system integration.",
-    image: "/personal/Society.png",
-    skills: ["React", "Node.js", "Security", "AI Integration", "MongoDB"],
-    route: "/internship/society",
-    bgColor: "from-blue-500/20 to-cyan-500/20",
-    current: true,
-    type: "internship"
-  },
-  {
-    id: 2,
     title: "Full Stack Developer Intern",
     company: "Oodser Technologies",
     duration: "Jan 2023 - April 2023", // Updated to 3 months (Jan-April)
@@ -47,6 +35,19 @@ const internships = [
     route: "/internship/oodser",
     bgColor: "from-blue-600/20 to-indigo-600/20",
     current: false,
+    type: "internship"
+  },
+   {
+    id: 2,
+    title: "Full Stack Developer Intern",
+    company: "Society for Cyber Intelligent Systems",
+    duration: "April 25- May 25 Deployment - [July]", // This is correct, keeping as is
+    description: "Developed societycis.org website with Mathan M for cyber intelligence systems. Built responsive web platform with modern security features and intelligent system integration.",
+    image: "/personal/Society.png",
+    skills: ["React", "Node.js", "Security", "AI Integration", "MongoDB"],
+    route: "/internship/society",
+    bgColor: "from-blue-500/20 to-cyan-500/20",
+    current: true,
     type: "internship"
   },
   {
