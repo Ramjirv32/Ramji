@@ -153,7 +153,7 @@ app.post('/auth/login', async (req, res) => {
     }
     
     // Special case for admin
-    if (email === 'ramjib2311@gmail.com' && password === 'vikas2311') {
+    if (email === 'ramjib2311@gmail.com' && password === 'vikas23112005') {
       // Get the admin user ID
       const { data: adminUser } = await supabase
         .from('collectors')
