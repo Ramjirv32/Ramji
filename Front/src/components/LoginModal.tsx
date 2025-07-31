@@ -52,17 +52,36 @@ const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose, onLogin }) => 
         throw new Error(data.message || "Login failed");
       }
       
+      // Set session storage
       sessionStorage.setItem("isLoggedIn", "true");
       sessionStorage.setItem("userId", data.userId);
+      if (data.role === 'admin') {
+        sessionStorage.setItem("isAdmin", "true");
+      }
+      
+      // Call the onLogin callback and close modal
       onLogin();
       onClose();
+      
+      // Force a small delay to ensure state propagation
+      setTimeout(() => {
+        window.dispatchEvent(new CustomEvent('authStateChanged'));
+      }, 100);
+      
     } catch (err: any) {
       // Fallback for admin hardcoded credentials
       if (email === "ramjib2311@gmail.com" && password === "vikas2311") {
         sessionStorage.setItem("isLoggedIn", "true");
         sessionStorage.setItem("isAdmin", "true");
+        sessionStorage.setItem("userId", "admin");
+        
         onLogin();
         onClose();
+        
+        // Force state update
+        setTimeout(() => {
+          window.dispatchEvent(new CustomEvent('authStateChanged'));
+        }, 100);
       } else {
         setError(err.message || "Invalid credentials. Please try again.");
       }
@@ -91,7 +110,7 @@ const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose, onLogin }) => 
           email, 
           password,
           fullName,
-          role: "user" // Default role for new signups
+          role: "user"
         }),
       });
       

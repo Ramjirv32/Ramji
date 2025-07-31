@@ -60,22 +60,22 @@ const Projects: React.FC = () => {
             imagePath = "/assets/aadhya.png";
           } else if (project.title === "NebulX") {
             imagePath = "/assets/nebulx.png";
-          } else if (project.title === "AI Image Generator") { // This is the old title for Wistravel
-            imagePath = "/assets/wistravel.png"; // New image for Wistravel
-            livedemoUrl = "#"; // Set to # as per user request
-            project.title = "Wistravel"; // Update title in the mapped object
+          } else if (project.title === "AI Image Generator") {
+            imagePath = "/assets/wistravel.png";
+            livedemoUrl = "#";
+            project.title = "Wistravel";
           } else if (project.title === "FocusAI – Productive Assistant") {
-            imagePath = "/assets/focusai-dashboard.png";
-            livedemoUrl = "#"; // Set to # as per user request
+            imagePath = "/assets/focusai-dashboard.png"; // Update this path to your actual image
+            livedemoUrl = "https://focusai-dashboard.vercel.app"; // Add actual live demo URL
           } else if (project.title === "Weather API Integration") {
             imagePath = "/assets/api.png";
           }
 
           return {
             ...project,
-            title: project.title, // Ensure title is updated if it was "AI Image Generator"
+            title: project.title,
             image: imagePath,
-            livedemo: livedemoUrl, // Use the potentially updated livedemoUrl
+            livedemo: livedemoUrl,
             description: [project.p1, project.p2, project.p3, project.p4]
           };
         });
