@@ -40,6 +40,18 @@
                 {
                     "key": "Cache-Control",
                     "value": "no-store, no-cache, must-revalidate"
+                },
+                {
+                    "key": "Access-Control-Allow-Origin",
+                    "value": "https://ramji-etht.vercel.app"
+                },
+                {
+                    "key": "Access-Control-Allow-Methods",
+                    "value": "GET, POST, PUT, DELETE, OPTIONS"
+                },
+                {
+                    "key": "Access-Control-Allow-Headers",
+                    "value": "Content-Type, Authorization"
                 }
             ]
         },
@@ -60,17 +72,13 @@
     "rewrites": [
         {
             "source": "/api/:path*",
-            "destination": "/api/:path*"
+            "destination": "https://ramji-etht.vercel.app/api/:path*"
         }
     ],
     "trailingSlash": false,
     "cleanUrls": true,
     "env": {
-        "NODE_ENV": "production"
-    },
-    "functions": {
-        "app/api/**": {
-            "maxDuration": 10
-        }
+        "NODE_ENV": "production",
+        "VITE_API_URL": "https://ramji-etht.vercel.app"
     }
 }
