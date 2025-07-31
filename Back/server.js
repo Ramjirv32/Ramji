@@ -12,8 +12,8 @@ app.use(cors({
   origin: [
     'http://localhost:5173',
     'http://localhost:3000',
-    'https://your-frontend-domain.com',
-    'https://ramji-portfolio.vercel.app',
+    'https://ramji-b.in',
+    'https://ramjimainport.vercel.app/',
     process.env.FRONTEND_URL
   ],
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
