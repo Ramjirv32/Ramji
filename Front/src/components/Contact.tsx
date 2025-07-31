@@ -114,16 +114,21 @@ export default function ContactComponent() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    // Validation
-    if (!formData.user_name || !formData.user_email || !formData.message) {
-      Swal.fire({
-        icon: 'error',
-        title: 'Oops...',
-        text: 'Please fill in all fields',
-        background: '#151030',
-        color: '#ffffff',
-        confirmButtonColor: '#00BFFF'
-      });
+    // Validate all fields before submission
+    const isNameValid = validateInput('user_name', formData.user_name);
+    const isEmailValid = validateInput('user_email', formData.user_email);
+    const isMessageValid = validateInput('message', formData.message);
+    
+    // If any field is invalid, stop submission
+    if (!isNameValid || !isEmailValid || !isMessageValid) {
+      // Focus on the first invalid field
+      if (!isNameValid) {
+        document.getElementsByName('user_name')[0].focus();
+      } else if (!isEmailValid) {
+        document.getElementsByName('user_email')[0].focus();
+      } else {
+        document.getElementsByName('message')[0].focus();
+      }
       return;
     }
     
@@ -163,18 +168,30 @@ export default function ContactComponent() {
           user_email: '',
           message: ''
         });
+        
+        // Reset form errors
+        setFormErrors({
+          user_name: '',
+          user_email: '',
+          message: ''
+        });
       } else {
         throw new Error(data.error || 'Something went wrong sending your message');
       }
     } catch (error: any) {
       console.error('Error sending message:', error);
       
+      // Get the appropriate error message
+      const errorMessage = error.message === 'Failed to fetch' 
+        ? 'Could not connect to the server. Please try again later.' 
+        : error.message || 'Unknown error';
+      
       Swal.fire({
         icon: 'error',
         title: 'Message Not Sent',
         html: `
-          <p>Failed to send message. Please try again later or contact me directly.</p>
-          <p class="mt-2 text-sm text-gray-400">Error: ${error.message || 'Unknown error'}</p>
+          <p>Character must be minimum 10.</p>
+          <p class="mt-2 text-sm text-gray-400">Error: ${errorMessage}</p>
           <p class="mt-1 text-sm text-[#00BFFF]">Email: ${EMAIL_TO}</p>
         `,
         background: '#151030',
@@ -325,7 +342,7 @@ export default function ContactComponent() {
                   <textarea 
                     name="message"
                     required
-                    placeholder="Your Message" 
+                    placeholder="Your Message (minimum 10 characters)" 
                     rows={5}
                     value={formData.message}
                     onChange={handleInputChange}
@@ -337,13 +354,18 @@ export default function ContactComponent() {
                   {formErrors.message && (
                     <p className="text-red-500 text-xs mt-1">{formErrors.message}</p>
                   )}
+                  <div className="absolute bottom-2 right-2 text-xs text-gray-400">
+                    {formData.message.length}/10+ characters
+                  </div>
                 </div>
                 
                 <button 
                   type="submit"
-                  disabled={isSubmitting}
+                  disabled={isSubmitting || !!formErrors.user_name || !!formErrors.user_email || !!formErrors.message || formData.message.length < 10}
                   className={`w-full bg-gradient-to-r from-[#00BFFF] to-[#1E90FF] text-white text-xs md:text-base px-6 py-3 rounded-lg font-semibold transition-all duration-300 transform hover:scale-105 relative z-30 ${
-                    isSubmitting ? 'opacity-70 cursor-not-allowed' : 'hover:shadow-[0_0_20px_rgba(30,144,255,0.4)]'
+                    (isSubmitting || !!formErrors.user_name || !!formErrors.user_email || !!formErrors.message || formData.message.length < 10) 
+                    ? 'opacity-70 cursor-not-allowed' 
+                    : 'hover:shadow-[0_0_20px_rgba(30,144,255,0.4)]'
                   }`}
                 >
                   {isSubmitting ? (

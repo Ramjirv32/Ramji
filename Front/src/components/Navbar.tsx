@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import { FaFileAlt, FaBars, FaTimes, FaUserLock } from "react-icons/fa"; // Add FaUserLock
-import LoginModal from "./LoginModal"; // Import the LoginModal component
+import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { FaFileAlt, FaUserLock, FaTimes } from 'react-icons/fa';
+import LoginModal from './LoginModal';
+import { useAuth } from '../context/AuthContext';
 
 declare global {
   interface Window {
@@ -9,14 +10,12 @@ declare global {
   }
 }
 
-// Define interface for Navbar props
 interface NavbarProps {
   activeSection: string;
   setActiveSection: (section: string) => void;
   isScrollingProgrammatically: { current: boolean };
 }
 
-// Define nav items with their corresponding section IDs or paths
 const navItems = [
   { name: "Home", link: "/", id: "home" },
   { name: "About", link: "/#about", id: "about" },
@@ -37,29 +36,9 @@ const Navbar = ({
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [showLoginModal, setShowLoginModal] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const navigate = useNavigate();
+  const { isLoggedIn, isAdmin, user, login, logout } = useAuth();
   
-  // Check if user is logged in on component mount
-  useEffect(() => {
-    const loginStatus = sessionStorage.getItem('isLoggedIn');
-    if (loginStatus === 'true') {
-      setIsLoggedIn(true);
-    }
-  }, []);
-
-  // Handle logout
-  const handleLogout = () => {
-    sessionStorage.removeItem('isLoggedIn');
-    setIsLoggedIn(false);
-  };
-  
-  // Handle successful login
-  const handleSuccessfulLogin = () => {
-    setIsLoggedIn(true);
-  };
-  
-  // Handle scroll to change navbar background opacity
   useEffect(() => {
     const handleScroll = () => {
       const scrollTop = window.scrollY;
@@ -74,40 +53,40 @@ const Navbar = ({
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Update the handleNavClick function to ensure proper navigation
+  const handleSuccessfulLogin = () => {
+    login();
+  };
+
+  const handleLogout = () => {
+    logout();
+  };
+
   const handleNavClick = (navItem: { name: string; link: string; id?: string; path?: string }) => {
     const { name, link, id, path } = navItem;
     setActive(name);
     setIsMenuOpen(false);
     
-    // If the name is a section name (like "About", "Skills", etc.), convert it to lowercase for the section ID
-    const sectionName = name.toLowerCase(); // This ensures section IDs match the lowercase format
-    setActiveSection(sectionName); // Update active section using lowercase name
+    const sectionName = name.toLowerCase();
+    setActiveSection(sectionName);
 
-    // If path is provided, use it for navigation (like for Research page)
     if (path) {
       navigate(path);
       return;
     }
 
-    // For hash-based navigation like /#about
     if (link.includes('#')) {
       const sectionId = link.split('#')[1];
       
       if (window.location.pathname !== '/') {
-        // If not on home page, navigate to home with hash
         navigate(`/${link}`);
       } else {
-        // If on home page, scroll to section
         const element = document.getElementById(sectionId);
         if (element) {
-          // If we're programmatically scrolling, set the flag
           if (isScrollingProgrammatically) {
             isScrollingProgrammatically.current = true;
           }
           
-          // Offset for navbar height
-          const navbarHeight = 80; // Approximate navbar height
+          const navbarHeight = 80;
           const elementPosition = element.getBoundingClientRect().top;
           const offsetPosition = elementPosition + window.pageYOffset - navbarHeight;
           
@@ -116,7 +95,6 @@ const Navbar = ({
             behavior: "smooth"
           });
           
-          // Reset the flag after animation completes
           if (isScrollingProgrammatically) {
             setTimeout(() => {
               isScrollingProgrammatically.current = false;
@@ -125,7 +103,6 @@ const Navbar = ({
         }
       }
     } else {
-      // For regular paths like /research
       navigate(link);
     }
   };
@@ -172,14 +149,21 @@ const Navbar = ({
               
               {/* Admin Login/Logout Button */}
               {isLoggedIn ? (
-                <button
-                  onClick={handleLogout}
-                  className="flex items-center space-x-2 px-4 py-2 bg-red-600 text-white rounded-full hover:bg-red-700 transition-all duration-300"
-                  title="Logout from admin mode"
-                >
-                  <FaUserLock />
-                  <span className="font-medium">Logout</span>
-                </button>
+                <div className="flex items-center space-x-2">
+                  {isAdmin && (
+                    <span className="px-3 py-1 bg-purple-900/50 text-white text-xs rounded-lg border border-purple-500/30">
+                      Admin
+                    </span>
+                  )}
+                  <button
+                    onClick={handleLogout}
+                    className="flex items-center space-x-2 px-4 py-2 bg-red-600 text-white rounded-full hover:bg-red-700 transition-all duration-300"
+                    title="Logout from admin mode"
+                  >
+                    <FaUserLock />
+                    <span className="font-medium">Logout</span>
+                  </button>
+                </div>
               ) : (
                 <button
                   onClick={() => setShowLoginModal(true)}
@@ -199,11 +183,11 @@ const Navbar = ({
                 aria-expanded="false"
               >
                 <span className="sr-only">Open main menu</span>
-                {isMenuOpen ? (
-                  <FaTimes className="block h-6 w-6" />
-                ) : (
-                  <FaBars className="block h-6 w-6" />
-                )}
+                <div className="w-6 h-5 flex flex-col justify-between">
+                  <span className={`bg-white h-0.5 w-full transform transition duration-300 ${isMenuOpen ? 'rotate-45 translate-y-2' : ''}`}></span>
+                  <span className={`bg-white h-0.5 w-full transition duration-300 ${isMenuOpen ? 'opacity-0' : ''}`}></span>
+                  <span className={`bg-white h-0.5 w-full transform transition duration-300 ${isMenuOpen ? '-rotate-45 -translate-y-2' : ''}`}></span>
+                </div>
               </button>
             </div>
           </div>
@@ -251,33 +235,40 @@ const Navbar = ({
                 onClick={() => setIsMenuOpen(false)}
               >
                 <FaFileAlt />
-                <span className="font-medium">View Resume</span>
+                <span>View Resume</span>
               </a>
             </div>
             
             {/* Admin Login Button - Mobile */}
             <div className="px-3 py-2">
               {isLoggedIn ? (
-                <button
-                  onClick={() => {
-                    handleLogout();
-                    setIsMenuOpen(false);
-                  }}
-                  className="flex items-center justify-center w-full space-x-2 px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 transition-all duration-300"
-                >
-                  <FaUserLock />
-                  <span className="font-medium">Logout Admin</span>
-                </button>
+                <div className="space-y-2">
+                  {isAdmin && (
+                    <span className="inline-block px-3 py-1 bg-purple-900/50 text-white text-sm rounded-lg border border-purple-500/30">
+                      Admin Access
+                    </span>
+                  )}
+                  <button
+                    onClick={() => {
+                      handleLogout();
+                      setIsMenuOpen(false);
+                    }}
+                    className="w-full flex items-center justify-center space-x-2 px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 transition-all duration-300"
+                  >
+                    <FaUserLock />
+                    <span>Logout</span>
+                  </button>
+                </div>
               ) : (
                 <button
                   onClick={() => {
                     setShowLoginModal(true);
                     setIsMenuOpen(false);
                   }}
-                  className="flex items-center justify-center w-full space-x-2 px-4 py-2 bg-gray-800 text-white rounded-md hover:bg-gray-700 transition-all duration-300"
+                  className="w-full flex items-center justify-center space-x-2 px-4 py-2 bg-gray-700 text-white rounded-md hover:bg-gray-600 transition-all duration-300"
                 >
                   <FaUserLock />
-                  <span className="font-medium">Admin Login</span>
+                  <span>Login</span>
                 </button>
               )}
             </div>
