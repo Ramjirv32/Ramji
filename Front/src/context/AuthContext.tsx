@@ -14,6 +14,7 @@ interface AuthContextType {
   login: () => void;
   logout: () => void;
   fetchUserData: () => Promise<void>;
+  refreshAuthState: () => void;
 }
 
 const AuthContext = createContext<AuthContextType>({
@@ -23,6 +24,7 @@ const AuthContext = createContext<AuthContextType>({
   login: () => {},
   logout: () => {},
   fetchUserData: async () => {},
+  refreshAuthState: () => {},
 });
 
 export const useAuth = () => useContext(AuthContext);
@@ -36,10 +38,26 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const [isAdmin, setIsAdmin] = useState<boolean>(false);
   const [user, setUser] = useState<User | null>(null);
 
+  const refreshAuthState = () => {
+    const loginStatus = sessionStorage.getItem('isLoggedIn');
+    const adminStatus = sessionStorage.getItem('isAdmin');
+    
+    setIsLoggedIn(loginStatus === 'true');
+    setIsAdmin(adminStatus === 'true');
+    
+    if (loginStatus === 'true') {
+      fetchUserData();
+    } else {
+      setUser(null);
+    }
+  };
+
   const login = () => {
-    setIsLoggedIn(true);
-    const isAdmin = sessionStorage.getItem('isAdmin') === 'true';
-    setIsAdmin(isAdmin);
+    refreshAuthState();
+    // Dispatch a custom event to notify all components
+    window.dispatchEvent(new CustomEvent('authStateChanged', { 
+      detail: { isLoggedIn: true, isAdmin: sessionStorage.getItem('isAdmin') === 'true' } 
+    }));
   };
 
   const logout = () => {
@@ -49,6 +67,11 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     setIsLoggedIn(false);
     setIsAdmin(false);
     setUser(null);
+    
+    // Dispatch a custom event to notify all components
+    window.dispatchEvent(new CustomEvent('authStateChanged', { 
+      detail: { isLoggedIn: false, isAdmin: false } 
+    }));
   };
 
   const fetchUserData = async () => {
@@ -74,23 +97,24 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   };
 
   useEffect(() => {
-    const checkLoginStatus = () => {
-      const loginStatus = sessionStorage.getItem('isLoggedIn');
-      const adminStatus = sessionStorage.getItem('isAdmin');
-      
-      setIsLoggedIn(loginStatus === 'true');
-      setIsAdmin(adminStatus === 'true');
-      
-      if (loginStatus === 'true') {
-        fetchUserData();
-      }
+    refreshAuthState();
+
+    // Listen for storage changes from other tabs
+    const handleStorageChange = () => {
+      refreshAuthState();
     };
 
-    checkLoginStatus();
+    // Listen for custom auth state change events
+    const handleAuthStateChange = () => {
+      refreshAuthState();
+    };
 
-    window.addEventListener('storage', checkLoginStatus);
+    window.addEventListener('storage', handleStorageChange);
+    window.addEventListener('authStateChanged', handleAuthStateChange);
+    
     return () => {
-      window.removeEventListener('storage', checkLoginStatus);
+      window.removeEventListener('storage', handleStorageChange);
+      window.removeEventListener('authStateChanged', handleAuthStateChange);
     };
   }, []);
 
@@ -102,7 +126,8 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         user,
         login, 
         logout,
-        fetchUserData
+        fetchUserData,
+        refreshAuthState
       }}
     >
       {children}

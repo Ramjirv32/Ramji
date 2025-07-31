@@ -23,22 +23,21 @@ import Pro5 from './components/compoPages/Projects/Pro5';
 import Oodser from './components/compoPages/internships/Oodser';
 import Menagalme from './components/compoPages/internships/Society';
 import LuxorHoliday from './components/compoPages/internships/LuxorHoliday';
-import Society from './components/compoPages/internships/Society'; // Create this component
+import Society from './components/compoPages/internships/Society';
 import withScrollReset from './components/hoc/withScrollReset';
 
 // Styles
 import './App.css';
 import './styles/globals.css';
-import './styles/animations.css';  // Add this line
+import './styles/animations.css';
 
 // ScrollToTop component to handle scroll to top on route change
 const ScrollToTop = () => {
   const { pathname } = useLocation();
 
   useEffect(() => {
-    // Force scroll to top immediately when route changes
     window.scrollTo(0, 0);
-  }, [pathname]); // Add pathname as dependency
+  }, [pathname]);
 
   return null;
 };
@@ -68,7 +67,7 @@ const App = () => {
   );
 };
 
-// Update the Home component to ensure section IDs match with navigation
+// Updated Home component with improved scroll detection
 const Home = () => {
   const isScrollingProgrammatically = useRef(false);
   const [currentSection, setCurrentSection] = useState<string>('home');
@@ -78,38 +77,87 @@ const Home = () => {
     const handleScroll = () => {
       if (isScrollingProgrammatically.current) return;
 
-      // Updated order of sections to match navbar - ensure these IDs match the DOM elements
       const sections = ["home", "about", "skills", "projects", "works", "research", "certificate", "contact"];
-      const scrollPosition = window.scrollY + 100;
+      const navbarHeight = 80; // Height of your navbar
+      const scrollPosition = window.scrollY + navbarHeight + 50; // Add some offset for better detection
+      
+      let activeSection = 'home'; // Default to home
 
-      for (const section of sections) {
-        const element = document.getElementById(section);
+      // Check each section to find which one is currently in view
+      for (let i = 0; i < sections.length; i++) {
+        const element = document.getElementById(sections[i]);
         if (element) {
           const { offsetTop, offsetHeight } = element;
-          if (scrollPosition >= offsetTop && scrollPosition < offsetTop + offsetHeight) {
-            // Update URL hash without causing scroll
-            if (window.location.hash !== `#${section}`) {
-              window.history.replaceState(null, '', `#${section}`);
-            }
-            setCurrentSection(section); // Update current section
+          const sectionStart = offsetTop;
+          const sectionEnd = offsetTop + offsetHeight;
+          
+          // Check if scroll position is within this section
+          if (scrollPosition >= sectionStart && scrollPosition < sectionEnd) {
+            activeSection = sections[i];
+            break;
+          }
+          
+          // Special case for the last section (contact)
+          if (i === sections.length - 1 && scrollPosition >= sectionStart) {
+            activeSection = sections[i];
             break;
           }
         }
+      }
+
+      // Only update if the section has actually changed
+      if (activeSection !== currentSection) {
+        setCurrentSection(activeSection);
+        
+        // Update URL hash without causing scroll
+        const newHash = `#${activeSection}`;
+        if (window.location.hash !== newHash) {
+          window.history.replaceState(null, '', newHash);
+        }
+      }
+    };
+
+    // Throttle scroll events for better performance
+    let ticking = false;
+    const throttledHandleScroll = () => {
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          handleScroll();
+          ticking = false;
+        });
+        ticking = true;
       }
     };
 
     // Initial check
     handleScroll();
     
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+    window.addEventListener("scroll", throttledHandleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", throttledHandleScroll);
+  }, [currentSection]); // Add currentSection as dependency
+
+  // Handle hash changes from direct URL access
+  useEffect(() => {
+    const handleHashChange = () => {
+      const hash = window.location.hash.replace('#', '');
+      if (hash && hash !== currentSection) {
+        setCurrentSection(hash);
+      }
+    };
+
+    window.addEventListener('hashchange', handleHashChange);
+    
+    // Check initial hash
+    handleHashChange();
+    
+    return () => window.removeEventListener('hashchange', handleHashChange);
+  }, [currentSection]);
 
   return (
     <div>
       <Navbar
         activeSection={currentSection}
-        setActiveSection={(section) => setCurrentSection(section)}
+        setActiveSection={setCurrentSection}
         isScrollingProgrammatically={isScrollingProgrammatically}
       />
       {/* Make sure each section has the correct ID attribute */}
@@ -124,7 +172,6 @@ const Home = () => {
     </div>
   );
 };
-
 
 const ScrollResetPro1 = withScrollReset(Pro1);
 const ScrollResetPro2 = withScrollReset(Pro2);

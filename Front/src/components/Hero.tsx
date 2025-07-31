@@ -150,7 +150,7 @@ const HeroContent = () => {
           className="flex flex-col gap-6 mt-6 text-6xl font-bold w-auto h-auto text-center"
         >
           <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00BFFF] to-[#1E90FF] animate-pulse">
-            Fullstack Developer & Devops Enthusiast
+        Engineering the Future with Code, Automation & Intelligence
           </span>
         </motion.div>
 

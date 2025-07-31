@@ -39,6 +39,14 @@ const Navbar = ({
   const navigate = useNavigate();
   const { isLoggedIn, isAdmin, user, login, logout } = useAuth();
   
+  // Sync active state with activeSection prop
+  useEffect(() => {
+    const activeItem = navItems.find(item => item.id === activeSection);
+    if (activeItem) {
+      setActive(activeItem.name);
+    }
+  }, [activeSection]);
+
   useEffect(() => {
     const handleScroll = () => {
       const scrollTop = window.scrollY;
@@ -49,7 +57,7 @@ const Navbar = ({
       }
     };
 
-    window.addEventListener("scroll", handleScroll);
+    window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
@@ -66,8 +74,10 @@ const Navbar = ({
     setActive(name);
     setIsMenuOpen(false);
     
-    const sectionName = name.toLowerCase();
-    setActiveSection(sectionName);
+    // Update the active section immediately
+    if (id) {
+      setActiveSection(id);
+    }
 
     if (path) {
       navigate(path);
@@ -94,6 +104,9 @@ const Navbar = ({
             top: offsetPosition,
             behavior: "smooth"
           });
+          
+          // Update hash in URL
+          window.history.pushState(null, '', `#${sectionId}`);
           
           if (isScrollingProgrammatically) {
             setTimeout(() => {
@@ -138,7 +151,7 @@ const Navbar = ({
             {/* Resume Button & Admin Login - Desktop */}
             <div className="hidden md:flex items-center space-x-3">
               <a
-                href="/assets/ResumeR.pdf"
+                href="/com/RamjiMain-Resume.pdf"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center space-x-2 px-4 py-2 bg-gradient-to-r from-purple-600 to-blue-600 text-white rounded-full hover:shadow-lg hover:shadow-purple-500/25 transition-all duration-300 hover:from-purple-700 hover:to-blue-700 hover:scale-105"
@@ -228,7 +241,7 @@ const Navbar = ({
             {/* Resume Button - Mobile */}
             <div className="px-3 py-4">
               <a
-                href="/assets/ResumeR.pdf"
+                href="/com/RamjiMain-Resume.pdf"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center justify-center space-x-2 px-4 py-2 bg-gradient-to-r from-purple-600 to-blue-600 text-white rounded-md hover:from-purple-700 hover:to-blue-700 transition-all duration-300"

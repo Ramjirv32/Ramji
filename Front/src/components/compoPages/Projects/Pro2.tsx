@@ -79,15 +79,12 @@ const Index = () => {
             className="absolute top-1/3 left-1/3 w-96 h-96 rounded-full blur-3xl animate-pulse"
             style={{
               background: "radial-gradient(circle, rgba(0, 191, 255, 0.3) 0%, rgba(0, 191, 255, 0.1) 50%, transparent 80%)",
-              // animationDuration: "4s"
             }}
           />
           <div
             className="absolute bottom-1/4 right-1/4 w-80 h-80 rounded-full blur-3xl animate-pulse"
             style={{
               background: "radial-gradient(circle, rgba(30, 144, 255, 0.25) 0%, rgba(30, 144, 255, 0.1) 50%, transparent 80%)",
-              // animationDuration: "3.5s",
-              // animationDelay: "1.5s"
             }}
           />
           {/* Floating accent glows */}
@@ -95,16 +92,12 @@ const Index = () => {
             className="absolute top-1/6 right-1/6 w-32 h-32 rounded-full blur-2xl animate-pulse"
             style={{
               background: "rgba(0, 191, 255, 0.2)",
-              // animationDuration: "2.8s",
-              // animationDelay: "0.8s"
             }}
           />
           <div
             className="absolute bottom-1/5 left-1/5 w-24 h-24 rounded-full blur-xl animate-pulse"
             style={{
               background: "rgba(30, 144, 255, 0.2)",
-              // animationDuration: "3.2s",
-              // animationDelay: "2.2s"
             }}
           />
         </div>
@@ -124,7 +117,7 @@ const Index = () => {
         </div>
 
         {/* Header with glow */}
-        <header className="relative z-10 flex justify-center items-center p-6 md:p-8 pt-20 bg-black/50 backdrop-blur-md border-b border-[#00BFFF]/30" data-aos="fade-down" data-aos-delay="200">
+        <header className="relative z-10 flex justify-center items-center p-6 md:p-8 pt-20 bg-black/50 backdrop-blur-md border-b border-[#00BFFF]/30" data-aos="fade-down">
           <div className="flex items-center space-x-2">
             <div 
               className="w-8 h-8 bg-gradient-to-r from-[#00BFFF] to-[#1E90FF] rounded-lg flex items-center justify-center"
@@ -152,14 +145,14 @@ const Index = () => {
                 April 2023 - July 2023
               </span>
             </div>
-            <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-6 bg-gradient-to-r from-white via-[#00BFFF] to-white bg-clip-text text-transparent" data-aos="fade-up" data-aos-delay="200">
+            <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-6 bg-gradient-to-r from-white via-[#00BFFF] to-white bg-clip-text text-transparent" data-aos="fade-up">
               Smart Parking System
             </h1>
-            <p className="text-lg md:text-xl text-gray-300 mb-8 max-w-4xl mx-auto leading-relaxed" data-aos="fade-up" data-aos-delay="400">
+            <p className="text-lg md:text-xl text-gray-300 mb-8 max-w-4xl mx-auto leading-relaxed" data-aos="fade-up">
               A full-stack parking management platform that integrates IoT technology for real-time
               tracking of parking spaces, allowing users to find, book, and pay for parking spots seamlessly.
             </p>
-            <div className="flex flex-wrap gap-3 justify-center mb-12" data-aos="fade-up" data-aos-delay="600">
+            <div className="flex flex-wrap gap-3 justify-center mb-12" data-aos="fade-up">
               {["React", "Node.js", "IoT", "PostgreSQL"].map((tech, index) => (
                 <span 
                   key={tech} 
@@ -168,7 +161,6 @@ const Index = () => {
                     boxShadow: "0 0 8px rgba(0, 191, 255, 0.2)"
                   }}
                   data-aos="zoom-in"
-                  data-aos-delay={600 + index * 100}
                 >
                   {tech}
                 </span>
@@ -178,8 +170,7 @@ const Index = () => {
             {/* Project highlight card with glow */}
             <div 
               className="bg-[#00BFFF]/10 backdrop-blur-sm border border-[#00BFFF]/30 rounded-2xl p-6 mb-16 max-w-4xl mx-auto" 
-              data-aos="fade-up" 
-              data-aos-delay="800"
+              data-aos="fade-up"
               style={{
                 boxShadow: "0 0 20px rgba(0, 191, 255, 0.2)"
               }}
@@ -198,7 +189,7 @@ const Index = () => {
             </div>
 
             {/* Project links with glow */}
-            <div className="flex flex-wrap gap-4 justify-center mb-12" data-aos="fade-up" data-aos-delay="1000">
+            <div className="flex flex-wrap gap-4 justify-center mb-12" data-aos="fade-up">
               <a 
                 href="https://github.com/Ramjirv32/Smart-Parking-System" 
                 target="_blank" 
@@ -226,7 +217,7 @@ const Index = () => {
             </div>
 
             {/* Project image with glow */}
-            <div className="mb-16" data-aos="zoom-in" data-aos-delay="1200">
+            <div className="mb-16" data-aos="zoom-in">
               <img 
                 src="/assets/aadhya.png"
                 alt="Smart Parking System"
@@ -239,14 +230,13 @@ const Index = () => {
           </section>
 
           {/* Features Grid with glow */}
-          <section className="max-w-6xl mx-auto py-16" data-aos="fade-up" data-aos-delay="1500">
+          <section className="max-w-6xl mx-auto py-16" data-aos="fade-up">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {features.map((feature, index) => (
                 <div 
                   key={index}
                   className="bg-white/5 backdrop-blur-sm border border-[#00BFFF]/20 rounded-2xl p-6 hover:bg-white/10 transition-all duration-300 transform hover:scale-105" 
-                  data-aos="fade-up" 
-                  data-aos-delay={index * 100}
+                  data-aos="fade-up"
                   style={{
                     boxShadow: "0 0 15px rgba(0, 191, 255, 0.1)"
                   }}
@@ -260,7 +250,7 @@ const Index = () => {
           </section>
 
           {/* Technologies Section */}
-          <section className="max-w-6xl mx-auto py-16" data-aos="fade-up" data-aos-delay="2000">
+          <section className="max-w-6xl mx-auto py-16" data-aos="fade-up">
             <div className="flex items-center space-x-3 mb-8">
               <div className="text-2xl">🔧</div>
               <h2 className="text-2xl md:text-3xl font-bold">Technologies Used</h2>
@@ -270,8 +260,7 @@ const Index = () => {
                 <div 
                   key={index} 
                   className="flex items-center space-x-4" 
-                  data-aos="fade-right" 
-                  data-aos-delay={index * 100}
+                  data-aos="fade-right"
                 >
                   <div 
                     className="w-2 h-2 bg-[#00BFFF] rounded-full"

@@ -1,7 +1,5 @@
 "use client"
 
-
-
 import { useEffect, useState, useRef } from "react"
 import { motion, AnimatePresence, useMotionValue, useTransform } from "framer-motion"
 import AOS from "aos"
@@ -24,7 +22,6 @@ const About = () => {
 
   // Transform mouse position to rotation values for tilt effect
   const tiltX = useTransform(mouseY, [-300, 300], [15, -15])
-  // const tiltY = useTransform(mouseX, [-300, 300], [-15, 15])
 
   useEffect(() => {
     AOS.init({
@@ -157,22 +154,25 @@ const About = () => {
           <div className="w-full lg:w-2/5" data-aos="fade-right">
             <div className="space-y-4">
               <h3 className="text-2xl md:text-3xl font-semibold text-white mb-6" data-aos="fade-up">
-                Full Stack Developer & Cloud Enthusiast
+                Full Stack Developer, Cloud & AI/ML Enthusiast
               </h3>
               <p className="text-gray-300 text-sm md:text-base leading-relaxed" data-aos="fade-up">
-  My name is Ramji, and I am a Full Stack Developer currently pursuing B.E. CSE at KPRIET, set to graduate in 2027. There has
-  always been a burning passion for creating new things and a constant urge to learn, which has driven me
-  into the technology industry.
-</p>
+                My name is Ramji, and I am a Full Stack Developer currently pursuing B.E. CSE at KPRIET, set to graduate in 2027. There has
+                always been a burning passion for creating new things and a constant urge to learn, which has driven me
+                into the technology industry.
+              </p>
 
-<p className="text-gray-300 text-sm md:text-base leading-relaxed mt-2 md:mt-4" data-aos="fade-up">
-  I have experience in both frontend and backend development, with a growing expertise in DevOps and cloud technologies. As a Red Hat Linux Administrator, I'm proficient in managing Linux systems and building robust infrastructures.
-</p>
+              <p className="text-gray-300 text-sm md:text-base leading-relaxed mt-2 md:mt-4" data-aos="fade-up">
+                I have experience in both frontend and backend development, with a growing expertise in DevOps and cloud technologies. As a Red Hat Linux Administrator, I'm proficient in managing Linux systems and building robust infrastructures.
+              </p>
 
-<p className="text-gray-300 text-sm md:text-base leading-relaxed mt-2 md:mt-4" data-aos="fade-up">
-  I love working with cloud platforms, containerization, and automation tools. I'm always ready for collaboration and new opportunities in web development, cloud technologies, and DevOps practices.
-</p>
+              <p className="text-gray-300 text-sm md:text-base leading-relaxed mt-2 md:mt-4" data-aos="fade-up">
+                With a keen interest in Artificial Intelligence and Machine Learning, I'm exploring how these technologies can be integrated into modern web applications to create intelligent, data-driven solutions. I love working with cloud platforms, containerization, automation tools, and AI/ML frameworks.
+              </p>
 
+              <p className="text-gray-300 text-sm md:text-base leading-relaxed mt-2 md:mt-4" data-aos="fade-up">
+                I'm always ready for collaboration and new opportunities in web development, cloud technologies, DevOps practices, and AI/ML innovations.
+              </p>
 
               <div className="flex flex-wrap gap-4 mt-8" data-aos="fade-up">
                 {/* Fixed Get In Touch button with proper z-index */}
@@ -246,8 +246,6 @@ const About = () => {
                 perspective: "1500px", // Explicitly set perspective as inline style
               }}
             >
-           
-
               {/* 3D rotating container - FIXED STYLES */}
               <motion.div
                 className="w-full h-full relative"
@@ -341,7 +339,6 @@ const About = () => {
                       backfaceVisibility: "hidden" 
                     }}
                   >
-                    {/* <div className="w-full h-full bg-gradient-to-br from-purple-500/20 to-blue-500/20 rounded-3xl"></div> */}
                   </div>
                 </motion.div>
 
@@ -374,7 +371,6 @@ const About = () => {
                 </motion.div>
               )}
 
-            
               <motion.div
                 className="absolute cursor-pointer z-10"
                 style={{ top: "35%", right: "35%" }}
@@ -389,9 +385,6 @@ const About = () => {
                   setShowLocation(!showLocation)
                 }}
               >
-               
-
-             
               </motion.div>
             </motion.div>
           </motion.div>
