@@ -168,7 +168,7 @@ const Home = () => {
       <div id="works"><Work /></div>
       <div id="research"><ResearchPublications /></div>
       <div id="certificate"><Certificate /></div>
-      <div id="contact"><Contact /></div>
+      <div id="contact" className="contact-mobile-margin"><Contact /></div>
     </div>
   );
 };

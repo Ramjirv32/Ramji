@@ -147,12 +147,69 @@ const HeroContent = () => {
 
         <motion.div
           variants={slideInFromLeft(0.5)}
-          className="flex flex-col gap-6 mt-6 text-6xl font-bold w-auto h-auto text-center"
+          className="flex flex-col gap-6 mt-6 font-bold w-auto h-auto text-center"
         >
-          <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00BFFF] to-[#1E90FF] animate-pulse">
-        Engineering the Future with Code, Automation & Intelligence
+          <span className="hero-main-title text-transparent bg-clip-text bg-gradient-to-r from-[#00BFFF] to-[#1E90FF] animate-pulse">
+            <span className="block sm:inline">Engineering the Future with</span>
+            <span className="block sm:inline"> Code, Automation & Intelligence</span>
           </span>
         </motion.div>
+
+        {/* Add this CSS to your Hero.tsx file or in your CSS file */}
+        <style>{`
+          .hero-main-title {
+            font-size: 1rem !important; /* 16px on mobile */
+            line-height: 1.2 !important;
+          }
+          
+          @media (min-width: 320px) {
+            .hero-main-title {
+              font-size: 1.125rem !important; /* 18px */
+            }
+          }
+          
+          @media (min-width: 375px) {
+            .hero-main-title {
+              font-size: 1.25rem !important; /* 20px */
+            }
+          }
+          
+          @media (min-width: 425px) {
+            .hero-main-title {
+              font-size: 1.375rem !important; /* 22px */
+            }
+          }
+          
+          @media (min-width: 640px) {
+            .hero-main-title {
+              font-size: 1.875rem !important; /* 30px */
+            }
+          }
+          
+          @media (min-width: 768px) {
+            .hero-main-title {
+              font-size: 2.25rem !important; /* 36px */
+            }
+          }
+          
+          @media (min-width: 1024px) {
+            .hero-main-title {
+              font-size: 3rem !important; /* 48px */
+            }
+          }
+          
+          @media (min-width: 1280px) {
+            .hero-main-title {
+              font-size: 3.75rem !important; /* 60px */
+            }
+          }
+          
+          @media (min-width: 1536px) {
+            .hero-main-title {
+              font-size: 4.5rem !important; /* 72px - original text-6xl */
+            }
+          }
+        `}</style>
 
         <motion.h2
           variants={slideInFromLeft(0.6)}

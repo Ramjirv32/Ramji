@@ -123,23 +123,25 @@ const Navbar = ({
   return (
     <>
       <nav className={`fixed top-0 left-0 w-full ${scrolled ? 'bg-black/60' : 'bg-black/30'} backdrop-blur-md z-50 text-white transition-all duration-300`}>
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16 md:h-20">
-            {/* Logo */}
-            <div className="text-2xl md:text-3xl font-bold">Ramji</div>
+            {/* Logo - Fixed width on left */}
+            <div className="flex-shrink-0">
+              <div className="text-xl sm:text-2xl md:text-3xl font-bold text-white">Ramji</div>
+            </div>
             
-            {/* Desktop Navigation */}
-            <div className="hidden md:block">
-              <div className="relative bg-white/5 border border-white/10 backdrop-blur-md rounded-full px-3 py-1 flex items-center space-x-2 shadow-[0_0_20px_rgba(255,255,255,0.1)]">
+            {/* Desktop Navigation - Centered */}
+            <div className="hidden lg:block absolute left-1/2 transform -translate-x-1/2">
+              <div className="relative bg-white/10 border border-white/20 backdrop-blur-md rounded-full px-2 py-1.5 flex items-center space-x-1 shadow-[0_0_20px_rgba(255,255,255,0.1)]">
                 {navItems.map((item) => (
                   <button
                     key={item.name}
                     data-section={item.id}
                     onClick={() => handleNavClick(item)}
-                    className={`relative px-3 py-2 text-sm rounded-full transition-all duration-300 ${
+                    className={`relative px-3 py-2 text-sm font-medium rounded-full transition-all duration-300 whitespace-nowrap ${
                       active === item.name
-                        ? "bg-white text-black shadow-[0_0_10px_white]"
-                        : "text-gray-300 hover:text-white"
+                        ? "bg-white text-black shadow-[0_0_10px_white] scale-105"
+                        : "text-gray-300 hover:text-white hover:bg-white/10"
                     }`}
                   >
                     {item.name}
@@ -148,60 +150,68 @@ const Navbar = ({
               </div>
             </div>
             
-            {/* Resume Button & Admin Login - Desktop */}
-            <div className="hidden md:flex items-center space-x-3">
-              <a
-                href="/com/RamjiMain-Resume.pdf"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center space-x-2 px-4 py-2 bg-gradient-to-r from-purple-600 to-blue-600 text-white rounded-full hover:shadow-lg hover:shadow-purple-500/25 transition-all duration-300 hover:from-purple-700 hover:to-blue-700 hover:scale-105"
-              >
-                <FaFileAlt />
-                <span className="font-medium">View Resume</span>
-              </a>
-              
-              {/* Admin Login/Logout Button */}
-              {isLoggedIn ? (
-                <div className="flex items-center space-x-2">
-                  {isAdmin && (
-                    <span className="px-3 py-1 bg-purple-900/50 text-white text-xs rounded-lg border border-purple-500/30">
-                      Admin
-                    </span>
-                  )}
-                  <button
-                    onClick={handleLogout}
-                    className="flex items-center space-x-2 px-4 py-2 bg-red-600 text-white rounded-full hover:bg-red-700 transition-all duration-300"
-                    title="Logout from admin mode"
+            {/* Right side buttons - Fixed width on right */}
+            <div className="flex items-center space-x-2 sm:space-x-3 flex-shrink-0">
+              {/* Resume Button - Hidden on small screens, visible on md+, and hidden when admin is logged in */}
+              {!isLoggedIn && (
+                <div className="hidden md:block">
+                  <a
+                    href="/com/RamjiMain-Resume.pdf"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center space-x-2 px-3 lg:px-4 py-2 bg-gradient-to-r from-purple-600 to-blue-600 text-white rounded-full hover:shadow-lg hover:shadow-purple-500/25 transition-all duration-300 hover:from-purple-700 hover:to-blue-700 hover:scale-105 text-sm font-medium whitespace-nowrap"
                   >
-                    <FaUserLock />
-                    <span className="font-medium">Logout</span>
-                  </button>
+                    <FaFileAlt className="text-sm" />
+                    <span className="hidden lg:inline">View Resume</span>
+                    <span className="lg:hidden">Resume</span>
+                  </a>
                 </div>
-              ) : (
-                <button
-                  onClick={() => setShowLoginModal(true)}
-                  className="flex items-center justify-center w-10 h-10 bg-gray-800 text-gray-300 rounded-full hover:bg-gray-700 hover:text-white transition-all duration-300"
-                  title="Admin login"
-                >
-                  <FaUserLock />
-                </button>
               )}
-            </div>
-            
-            {/* Mobile menu button */}
-            <div className="flex md:hidden">
-              <button
-                onClick={() => setIsMenuOpen(!isMenuOpen)}
-                className="inline-flex items-center justify-center p-2 rounded-md text-white hover:text-white focus:outline-none"
-                aria-expanded="false"
-              >
-                <span className="sr-only">Open main menu</span>
-                <div className="w-6 h-5 flex flex-col justify-between">
-                  <span className={`bg-white h-0.5 w-full transform transition duration-300 ${isMenuOpen ? 'rotate-45 translate-y-2' : ''}`}></span>
-                  <span className={`bg-white h-0.5 w-full transition duration-300 ${isMenuOpen ? 'opacity-0' : ''}`}></span>
-                  <span className={`bg-white h-0.5 w-full transform transition duration-300 ${isMenuOpen ? '-rotate-45 -translate-y-2' : ''}`}></span>
-                </div>
-              </button>
+              
+              {/* Admin Login/Logout Button - Responsive */}
+              <div className="hidden md:block">
+                {isLoggedIn ? (
+                  <div className="flex items-center space-x-2">
+                    {isAdmin && (
+                      <span className="hidden lg:inline-block px-2 py-1 bg-purple-900/50 text-white text-xs rounded-lg border border-purple-500/30">
+                        Admin
+                      </span>
+                    )}
+                    <button
+                      onClick={handleLogout}
+                      className="flex items-center space-x-1 lg:space-x-2 px-3 lg:px-4 py-2 bg-red-600 text-white rounded-full hover:bg-red-700 transition-all duration-300 text-sm font-medium"
+                      title="Logout from admin mode"
+                    >
+                      <FaUserLock className="text-sm" />
+                      <span className="hidden lg:inline">Logout</span>
+                    </button>
+                  </div>
+                ) : (
+                  <button
+                    onClick={() => setShowLoginModal(true)}
+                    className="flex items-center justify-center w-9 h-9 lg:w-10 lg:h-10 bg-gray-800 text-gray-300 rounded-full hover:bg-gray-700 hover:text-white transition-all duration-300"
+                    title="Admin login"
+                  >
+                    <FaUserLock className="text-sm" />
+                  </button>
+                )}
+              </div>
+              
+              {/* Mobile menu button */}
+              <div className="flex lg:hidden">
+                <button
+                  onClick={() => setIsMenuOpen(!isMenuOpen)}
+                  className="inline-flex items-center justify-center p-2 rounded-md text-white hover:text-white focus:outline-none"
+                  aria-expanded="false"
+                >
+                  <span className="sr-only">Open main menu</span>
+                  <div className="w-6 h-5 flex flex-col justify-between">
+                    <span className={`bg-white h-0.5 w-full transform transition duration-300 ${isMenuOpen ? 'rotate-45 translate-y-2' : ''}`}></span>
+                    <span className={`bg-white h-0.5 w-full transition duration-300 ${isMenuOpen ? 'opacity-0' : ''}`}></span>
+                    <span className={`bg-white h-0.5 w-full transform transition duration-300 ${isMenuOpen ? '-rotate-45 -translate-y-2' : ''}`}></span>
+                  </div>
+                </button>
+              </div>
             </div>
           </div>
         </div>
@@ -210,7 +220,7 @@ const Navbar = ({
         <div
           className={`${
             isMenuOpen ? "translate-x-0 opacity-100" : "translate-x-full opacity-0"
-          } md:hidden fixed inset-0 z-40 bg-black/95 backdrop-blur-md transition-all duration-300 ease-in-out`}
+          } lg:hidden fixed inset-0 z-40 bg-black/95 backdrop-blur-md transition-all duration-300 ease-in-out`}
         >
           <div className="flex items-center justify-between px-4 py-4 border-b border-gray-800">
             <div className="text-2xl font-bold text-white">Ramji</div>
@@ -222,15 +232,15 @@ const Navbar = ({
               <FaTimes className="h-6 w-6" />
             </button>
           </div>
-          <div className="px-2 pt-2 pb-3 space-y-1">
+          <div className="px-2 pt-2 pb-3 space-y-1 max-h-[calc(100vh-80px)] overflow-y-auto">
             {navItems.map((item) => (
               <button
                 key={item.name}
                 data-section={item.id}
                 onClick={() => handleNavClick(item)}
-                className={`block w-full text-left px-3 py-4 rounded-md text-base font-medium border-b border-gray-800 ${
+                className={`block w-full text-left px-4 py-4 rounded-md text-base font-medium border-b border-gray-800/50 ${
                   active === item.name
-                    ? "text-white bg-purple-800/30"
+                    ? "text-white bg-purple-800/30 border-purple-500/30"
                     : "text-gray-300 hover:bg-purple-900/20 hover:text-white"
                 }`}
               >
@@ -238,26 +248,28 @@ const Navbar = ({
               </button>
             ))}
             
-            {/* Resume Button - Mobile */}
-            <div className="px-3 py-4">
-              <a
-                href="/com/RamjiMain-Resume.pdf"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center justify-center space-x-2 px-4 py-2 bg-gradient-to-r from-purple-600 to-blue-600 text-white rounded-md hover:from-purple-700 hover:to-blue-700 transition-all duration-300"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                <FaFileAlt />
-                <span>View Resume</span>
-              </a>
-            </div>
+            {/* Resume Button - Mobile - Hidden when admin is logged in */}
+            {!isLoggedIn && (
+              <div className="px-4 py-4">
+                <a
+                  href="/com/RamjiMain-Resume.pdf"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center justify-center space-x-2 px-4 py-3 bg-gradient-to-r from-purple-600 to-blue-600 text-white rounded-lg hover:from-purple-700 hover:to-blue-700 transition-all duration-300 font-medium"
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  <FaFileAlt />
+                  <span>View Resume</span>
+                </a>
+              </div>
+            )}
             
             {/* Admin Login Button - Mobile */}
-            <div className="px-3 py-2">
+            <div className="px-4 py-2">
               {isLoggedIn ? (
-                <div className="space-y-2">
+                <div className="space-y-3">
                   {isAdmin && (
-                    <span className="inline-block px-3 py-1 bg-purple-900/50 text-white text-sm rounded-lg border border-purple-500/30">
+                    <span className="inline-block px-3 py-2 bg-purple-900/50 text-white text-sm rounded-lg border border-purple-500/30 font-medium">
                       Admin Access
                     </span>
                   )}
@@ -266,7 +278,7 @@ const Navbar = ({
                       handleLogout();
                       setIsMenuOpen(false);
                     }}
-                    className="w-full flex items-center justify-center space-x-2 px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 transition-all duration-300"
+                    className="w-full flex items-center justify-center space-x-2 px-4 py-3 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-all duration-300 font-medium"
                   >
                     <FaUserLock />
                     <span>Logout</span>
@@ -278,10 +290,10 @@ const Navbar = ({
                     setShowLoginModal(true);
                     setIsMenuOpen(false);
                   }}
-                  className="w-full flex items-center justify-center space-x-2 px-4 py-2 bg-gray-700 text-white rounded-md hover:bg-gray-600 transition-all duration-300"
+                  className="w-full flex items-center justify-center space-x-2 px-4 py-3 bg-gray-700 text-white rounded-lg hover:bg-gray-600 transition-all duration-300 font-medium"
                 >
                   <FaUserLock />
-                  <span>Login</span>
+                  <span>Admin Login</span>
                 </button>
               )}
             </div>
