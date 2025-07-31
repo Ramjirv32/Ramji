@@ -29,7 +29,7 @@ const Projects: React.FC = () => {
   const [showAddForm, setShowAddForm] = useState<boolean>(false);
   const [submitting, setSubmitting] = useState<boolean>(false);
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
-  const { isAdmin } = useAuth(); // Replace adminMode state with this
+  const { isAdmin } = useAuth();
   const [newProject, setNewProject] = useState({
     title: "",
     p1: "",
@@ -45,7 +45,10 @@ const Projects: React.FC = () => {
   useEffect(() => {
     const fetchProjects = async () => {
       try {
-        const response = await fetch('http://localhost:9000/demo');
+        // Use environment variable for API URL, with fallback to localhost
+        const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:9000';
+        const response = await fetch(`${API_URL}/demo`);
+        
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
@@ -65,8 +68,8 @@ const Projects: React.FC = () => {
             livedemoUrl = "#";
             project.title = "Wistravel";
           } else if (project.title === "FocusAI – Productive Assistant") {
-            imagePath = "/assets/focusai-dashboard.png"; // Update this path to your actual image
-            livedemoUrl = "https://focusai-dashboard.vercel.app"; // Add actual live demo URL
+            imagePath = "/assets/focusai-dashboard.png";
+            livedemoUrl = "https://focusai-dashboard.vercel.app";
           } else if (project.title === "Weather API Integration") {
             imagePath = "/assets/api.png";
           }
@@ -144,7 +147,9 @@ const Projects: React.FC = () => {
         image: newProject.image || '/assets/default-project.png'
       };
 
-      const response = await fetch('http://localhost:9000/demo', {
+      // Use environment variable for API URL
+      const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:9000';
+      const response = await fetch(`${API_URL}/demo`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -194,6 +199,7 @@ const Projects: React.FC = () => {
     
     // Original logic with fallback that isn't a rocket
     if (technologies.includes("C")) return "💻";
+    if (technologies.includes(".NET") || technologies.includes("ASP.NET")) return "🔷"; // .NET icon
     if (technologies.includes("AI APIs") || technologies.includes("Hugging Face API")) return "🤖";
     if (technologies.includes("IoT")) return "📱";
     if (technologies.includes("API")) return "🔌";
@@ -210,6 +216,8 @@ const Projects: React.FC = () => {
     if (title === "Weather API Integration") return "#9FE2BF"; // Mint
     
     // Colors based on technologies
+    if (technologies.includes(".NET") || technologies.includes("ASP.NET") || technologies.includes("C#")) 
+      return "#512BD4"; // .NET Purple
     if (technologies.includes("AI APIs") || technologies.includes("Hugging Face API")) 
       return "#FF69B4"; // Hot Pink
     if (technologies.includes("IoT")) 
@@ -410,7 +418,7 @@ const Projects: React.FC = () => {
                           value={tech}
                           onChange={(e) => handleTechChange(e, index)}
                           className="flex-grow bg-gray-900/80 border border-blue-700/30 text-white px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                          placeholder={`e.g., ${index === 0 ? 'React' : index === 1 ? 'TypeScript' : 'API'}`}
+                          placeholder={`e.g., ${index === 0 ? 'React' : index === 1 ? 'TypeScript' : index === 2 ? '.NET' : 'API'}`}
                           required={index === 0}
                         />
                         {index > 0 && (
@@ -434,6 +442,9 @@ const Projects: React.FC = () => {
                       </button>
                     )}
                   </div>
+                  <p className="text-gray-400 text-xs mt-1">
+                    Common technologies: React, Node.js, .NET, ASP.NET, C#, Python, TypeScript, MongoDB, PostgreSQL
+                  </p>
                 </div>
                 <div>
                   <label htmlFor="github" className="block text-gray-300 mb-1">
@@ -460,7 +471,7 @@ const Projects: React.FC = () => {
                     value={newProject.livedemo}
                     onChange={handleInputChange}
                     className="w-full bg-gray-900/80 border border-blue-700/30 text-white px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    placeholder="https://yourproject.vercel.app"
+                    placeholder="https://yourproject.vercel.app or https://yourapp.azurewebsites.net"
                   />
                 </div>
                 <div className="flex justify-end gap-3 mt-6">

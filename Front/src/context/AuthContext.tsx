@@ -77,9 +77,9 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const fetchUserData = async () => {
     const userId = sessionStorage.getItem('userId');
     if (!userId) return;
-
+    const url = import.meta.env.VITE_API_URL || 'http://localhost:9000';
     try {
-      const response = await fetch(`http://localhost:9000/auth/user/${userId}`);
+      const response = await fetch(`${url}/auth/user/${userId}`);
       if (!response.ok) {
         throw new Error('Failed to fetch user data');
       }

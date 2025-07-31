@@ -36,9 +36,9 @@ const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose, onLogin }) => 
     
     setLoading(true);
     setError("");
-    
+    const url = import.meta.env.VITE_API_URL || 'http://localhost:9000';
     try {
-      const response = await fetch("http://localhost:9000/auth/login", {
+      const response = await fetch(`${url}/auth/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -99,9 +99,9 @@ const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose, onLogin }) => 
     
     setLoading(true);
     setError("");
-    
+    const url = import.meta.env.VITE_API_URL || 'http://localhost:9000';
     try {
-      const response = await fetch("http://localhost:9000/auth/signup", {
+      const response = await fetch(`${url}/auth/signup`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -248,7 +248,7 @@ const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose, onLogin }) => 
               )}
             </button>
             
-            <div className="mt-4 text-center text-sm text-gray-400">
+            {/* <div className="mt-4 text-center text-sm text-gray-400">
               Need an account?{" "}
               <button
                 type="button"
@@ -261,7 +261,7 @@ const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose, onLogin }) => 
               >
                 Sign up
               </button>
-            </div>
+            </div> */}
           </form>
         ) : (
           <form onSubmit={handleSignup} className="p-6">
