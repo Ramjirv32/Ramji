@@ -1,5 +1,5 @@
 {
-    "buildCommand": "npm audit fix --force && npm install --legacy-peer-deps && npm run build",
+    "buildCommand": "npm install --legacy-peer-deps && npm run build",
     "headers": [
         {
             "source": "/(.*)",
