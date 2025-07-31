@@ -2,25 +2,27 @@
 import { useState, useEffect } from "react"
 import { motion } from "framer-motion"
 import { InternshipCard } from "./InternshipCard"
-import AOS from 'aos'
+import * as AOS from 'aos'
 import 'aos/dist/aos.css'
 
 // Animation variants
-const textVariant = (delay?: number) => ({
-  hidden: {
-    y: -50,
-    opacity: 0,
-  },
-  show: {
-    y: 0,
-    opacity: 1,
-    transition: {
-      type: "spring",
-      duration: 1.25,
-      delay,
+const textVariant = (delay?: number) => {
+  return {
+    hidden: {
+      y: -50,
+      opacity: 0,
     },
-  },
-});
+    show: {
+      y: 0,
+      opacity: 1,
+      transition: {
+        type: "spring" as const, // Use 'as const' to ensure proper typing
+        duration: 1.25,
+        delay: delay || 0,
+      },
+    },
+  };
+};
 
 const internships = [
 
