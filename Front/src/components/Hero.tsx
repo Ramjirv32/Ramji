@@ -35,9 +35,10 @@ const HeroContent = () => {
 
   return (
     <motion.div
+      id="hero" // Add this ID
+      className="flex flex-col items-center justify-center px-4 sm:px-8 md:px-12 m6 w-full z-[20] mt-[200px] hero-section" // Added hero-section class as fallback
       initial="hidden"
       animate="visible"
-      className="flex flex-col items-center justify-center px-4 sm:px-8 md:px-12 m6 w-full z-[20] mt-[200px]"
     >
       
       
