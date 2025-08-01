@@ -191,7 +191,17 @@ const EnhancedSkills = () => {
       setIsAdmin(true)
     }
 
-    // Fetch skills
+    
+    AOS.init({
+      duration: 1000,
+      easing: 'ease-in-out',
+      once: false,
+    });
+    
+   
+
+
+
     const fetchSkills = async () => {
       try {
         const API_URL = import.meta.env.VITE_API_URL || "http://localhost:9000"
