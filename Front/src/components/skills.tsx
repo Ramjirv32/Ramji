@@ -64,6 +64,17 @@ import {
   SiSupabase,
   SiRedux,
   SiWebgl,
+  SiFastapi
+} from "react-icons/si";
+import { TbBrandFramerMotion } from "react-icons/tb";
+import { RxShadowNone } from "react-icons/rx";
+import { IoLogoJavascript } from "react-icons/io5";
+import { DiJqueryLogo } from "react-icons/di";
+import AOS from 'aos';
+import 'aos/dist/aos.css';
+import React from 'react';
+
+// Interface for the skills data from the backend
   SiFastapi,
 } from "react-icons/si"
 import { TbBrandFramerMotion } from "react-icons/tb"
@@ -78,6 +89,34 @@ interface SkillsData {
   s: string[]
 }
 
+// Extended mapping for skill names to their icons and colors
+const skillIconsMap: Record<string, { icon: React.ReactElement; color: string }> = {
+  // Front-end
+  "HTML": { icon: <FaHtml5 size={20} />, color: "#E44D26" },
+  "CSS": { icon: <FaCss3Alt size={20} />, color: "#1572B6" },
+  "JavaScript": { icon: <FaJs size={20} />, color: "#F7DF1E" },
+  "TypeScript": { icon: <SiTypescript size={18} />, color: "#3178C6" },
+  "Cloudflare": { icon: <SiCloudflare size={20} />, color: "#F38020" },
+  "ReactJS": { icon: <FaReact size={20} />, color: "#61DAFB" },
+  "React": { icon: <FaReact size={20} />, color: "#61DAFB" },
+  "fastapi": { icon: <SiFastapi size={20} />, color: "#009688" },
+  "FastAPI": { icon: <SiFastapi size={20} />, color: "#009688" },
+  "Framer Motion": { icon: <TbBrandFramerMotion size={20} />, color: "#0055FF" },
+  "Shadcn": { icon: <RxShadowNone size={20} />, color: "#FFFFFF" },
+  "Next.js": { icon: <SiNextdotjs size={20} />, color: "#000000" },
+  "Angular": { icon: <FaAngular size={20} />, color: "#DD0031" },
+  "Vue.js": { icon: <FaVuejs size={20} />, color: "#4FC08D" },
+  "Svelte": { icon: <SiSvelte size={20} />, color: "#FF3E00" },
+  "jQuery": { icon: <DiJqueryLogo size={20} />, color: "#0769AD" },
+  "Tailwind CSS": { icon: <SiTailwindcss size={20} />, color: "#38bdf8" },
+  "TailwindCSS": { icon: <SiTailwindcss size={20} />, color: "#38bdf8" },
+  "Bootstrap": { icon: <FaBootstrap size={20} />, color: "#7952B3" },
+  "Sass": { icon: <FaSass size={20} />, color: "#CC6699" },
+  "NextJs": { icon: <SiNextdotjs size={20} />, color: "#000000" },
+  "Redux": { icon: <SiRedux size={20} />, color: "#764ABC" },
+  "WebGL": { icon: <SiWebgl size={20} />, color: "#990000" },
+  "WordPress": { icon: <FaWordpress size={20} />, color: "#21759B" },
+  
 const skillIconsMap: Record<string, { icon: React.ReactElement; color: string }> = {
   // Front-end
   HTML: { icon: <FaHtml5 size={16} />, color: "#E44D26" },
@@ -159,6 +198,26 @@ const skillIconsMap: Record<string, { icon: React.ReactElement; color: string }>
   Figma: { icon: <FaFigma size={16} />, color: "#F24E1E" },
 
   // Others
+  "Stripe": { icon: <FaStripe size={20} />, color: "#008CDD" },
+  "API": { icon: <SiPostman size={20} />, color: "#FF6C37" },
+  "AI APIs": { icon: <IoLogoJavascript size={20} />, color: "#F7DF1E" },
+  "Hugging Face API": { icon: <IoLogoJavascript size={20} />, color: "#F7DF1E" },
+  "IoT": { icon: <FaNodeJs size={20} />, color: "#339933" },
+};
+
+const Skills = () => {
+  // State for fetched skills
+  const [skills, setSkills] = useState<string[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
+  const [isAdmin, setIsAdmin] = useState(false);
+  const [newSkill, setNewSkill] = useState<string>("");
+  
+  // New states for public skill suggestion
+  const [showSuggestForm, setShowSuggestForm] = useState<boolean>(false);
+  const [suggestedSkill, setSuggestedSkill] = useState<string>("");
+  const [submitting, setSubmitting] = useState<boolean>(false);
+  const [successMessage, setSuccessMessage] = useState<string | null>(null);
   Stripe: { icon: <FaStripe size={16} />, color: "#008CDD" },
   API: { icon: <SiPostman size={16} />, color: "#FF6C37" },
   "AI APIs": { icon: <IoLogoJavascript size={16} />, color: "#F7DF1E" },
@@ -198,6 +257,12 @@ const EnhancedSkills = () => {
       once: false,
     });
     
+    const fetchSkills = async () => {
+      try {
+        // Use environment variable for API URL with the correct endpoint
+        const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:9000';
+        const response = await fetch(`${API_URL}/skills`);
+        
    
 
 
@@ -229,6 +294,11 @@ const EnhancedSkills = () => {
   const addSkill = async () => {
     if (!newSkill.trim() || !isAdmin) return
 
+  // Function to add a new skill (admin mode)
+  const addNewSkill = async () => {
+    if (!newSkill.trim() || !isAdmin) return;
+    
+    // Check if skill already exists
     if (skills.includes(newSkill)) {
       alert("This skill already exists!")
       return
@@ -863,6 +933,10 @@ const EnhancedSkills = () => {
     fetchSkills()
   }, [])
 
+  // Function to add skill from suggestion form
+  const addSkill = async () => {
+    if (!suggestedSkill.trim() || !isAdmin) return;
+    
   const addSkill = async () => {
     if (!newSkill.trim() || !isAdmin) return
 
@@ -1034,6 +1108,32 @@ const EnhancedSkills = () => {
           My Tech Stack
         </motion.h2>
       </div>
+      
+      {/* Success message */}
+      {successMessage && (
+        <div className="fixed top-20 right-4 bg-green-500/90 text-white px-6 py-3 rounded-lg shadow-lg z-50 animate-fade-in-out">
+          {successMessage}
+        </div>
+      )}
+      
+      {/* Public suggestion form (only shown to admins) */}
+      {isAdmin && showSuggestForm && (
+        <motion.div 
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -20 }}
+          className="bg-gradient-to-r from-blue-900/40 to-purple-900/40 backdrop-blur-md border border-blue-700/50 rounded-lg p-4 mb-6 w-full max-w-md"
+        >
+          <h3 className="text-lg font-semibold mb-3 text-white">Add New Skill</h3>
+          <div className="flex flex-col gap-3">
+            <input
+              type="text"
+              value={suggestedSkill}
+              onChange={(e) => setSuggestedSkill(e.target.value)}
+              className="bg-gray-900/80 border border-blue-700/30 text-white px-3 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              placeholder="Enter skill name (e.g., React, Python)"
+            />
+            <div className="flex gap-2 justify-end">
 
       {/* Success Message */}
       <AnimatePresence>
@@ -1098,6 +1198,43 @@ const EnhancedSkills = () => {
             </div>
           </div>
         </div>
+      ) : error ? (
+        <div className="text-red-500">{error}</div>
+      ) : (
+        <>
+          <IconContext.Provider value={{ className: "icon" }}>
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 max-w-6xl px-4">
+              {skills.map((skill, index) => {
+                const skillInfo = skillIconsMap[skill] || { 
+                  icon: <span>•</span>, 
+                  color: "#FFFFFF" 
+                };
+                
+                return (
+                  <motion.div 
+                    key={index}
+                    initial={{ opacity: 0 }}
+                    whileInView={{ opacity: 1 }}
+                    transition={{ duration: 0.5, delay: index * 0.1 }}
+                    viewport={{ once: true }}
+                    drag={isAdmin}
+                    dragConstraints={{ left: 0, right: 0, top: 0, bottom: 0 }}
+                    dragElastic={0.1}
+                    whileHover={isAdmin ? { scale: 1.05 } : { y: -5 }}
+                    whileTap={isAdmin ? { scale: 0.95 } : {}}
+                    style={{ '--skill-color': skillInfo.color || '#FFFFFF' } as React.CSSProperties}
+                    className="relative group flex items-center justify-center gap-2 px-4 py-2 rounded-full bg-black border border-zinc-800 text-white transition-all duration-300 hover:border-[var(--skill-color)] hover:shadow-[0_0_15px_var(--skill-color)]"
+                  >
+                    <span className="group-hover:animate-bounce" style={{ color: skillInfo.color }}>
+                      {skillInfo.icon}
+                    </span>
+                    <span className="group-hover:text-white">{skill}</span>
+                  </motion.div>
+                );
+              })}
+              
+              {/* "Add Skill" button only shown to admins */}
+              {isAdmin && !showSuggestForm && (
 
         {/* Admin Add Form */}
         <AnimatePresence>
