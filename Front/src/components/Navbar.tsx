@@ -17,7 +17,7 @@ interface NavbarProps {
 }
 
 const navItems = [
-  { name: "Home", link: "/", id: "home" },
+  { name: "Home", link: "#hero", id: "home" },
   { name: "About", link: "/#about", id: "about" },
   { name: "Skills", link: "/#skills", id: "skills" },
   { name: "Projects", link: "/#projects", id: "projects" },
@@ -87,10 +87,17 @@ const Navbar = ({
     if (link.includes('#')) {
       const sectionId = link.split('#')[1];
       
+      // Fix for the hero section - check if it's the home/hero link
+      const isHomeLink = name === "Home" || sectionId === "hero";
+      
       if (window.location.pathname !== '/') {
         navigate(`/${link}`);
       } else {
-        const element = document.getElementById(sectionId);
+        // For home link, look for "hero" element
+        const element = isHomeLink 
+          ? document.getElementById("hero") || document.querySelector(".hero-section") // Try both ID and class
+          : document.getElementById(sectionId);
+        
         if (element) {
           if (isScrollingProgrammatically) {
             isScrollingProgrammatically.current = true;
@@ -106,13 +113,20 @@ const Navbar = ({
           });
           
           // Update hash in URL
-          window.history.pushState(null, '', `#${sectionId}`);
+          window.history.pushState(null, '', `#${isHomeLink ? 'hero' : sectionId}`);
           
           if (isScrollingProgrammatically) {
             setTimeout(() => {
               isScrollingProgrammatically.current = false;
             }, 1000);
           }
+        } else if (isHomeLink) {
+          // If we can't find the hero element, just scroll to top for home
+          window.scrollTo({
+            top: 0,
+            behavior: "smooth"
+          });
+          window.history.pushState(null, '', '#hero');
         }
       }
     } else {
