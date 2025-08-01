@@ -462,6 +462,176 @@ const EnhancedSkills = () => {
 }
 
 export default EnhancedSkills
+t-red-500 text-center">
+          <p className="text-xl mb-2">⚠️ {error}</p>
+          <p className="text-sm text-gray-400">Please try refreshing the page</p>
+        </div>
+      </div>
+    )
+  }
+
+  return (
+    <div className="w-full flex flex-col items-center justify-center gap-10 py-20">
+      {/* Header */}
+      <div className="flex flex-col items-center justify-center">
+        <img src="/earth1.png" alt="Abstract 3D shape" width={300} height={200} className="mb-4" />
+        <h4 className="text-gray-400 text-center text-sm tracking-widest uppercase mb-2">
+          I CONSTANTLY TRY TO IMPROVE
+        </h4>
+        <h2 className="text-white text-center text-5xl md:text-6xl font-bold">My Tech Stack</h2>
+      </div>
+
+      {/* Success Message */}
+      <AnimatePresence>
+        {successMessage && (
+          <motion.div
+            initial={{ opacity: 0, y: -50 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -50 }}
+            className="fixed top-20 right-4 bg-green-500/90 text-white px-6 py-3 rounded-lg shadow-lg z-50"
+          >
+            {successMessage}
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Search */}
+      <div className="flex flex-col gap-4 w-full max-w-4xl px-4">
+        <div className="relative max-w-md mx-auto">
+          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={20} />
+          <input
+            type="text"
+            placeholder="Search skills..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="w-full pl-10 pr-4 py-2 bg-gray-900/50 border border-gray-700 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+          />
+        </div>
+
+        {/* Admin Add Form */}
+        <AnimatePresence>
+          {isAdmin && showAddForm && (
+            <motion.div
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: "auto" }}
+              exit={{ opacity: 0, height: 0 }}
+              className="bg-gradient-to-r from-blue-900/40 to-purple-900/40 backdrop-blur-md border border-blue-700/50 rounded-lg p-4"
+            >
+              <h3 className="text-lg font-semibold mb-3 text-white">Add New Skill</h3>
+              <div className="flex gap-3">
+                <input
+                  type="text"
+                  value={newSkill}
+                  onChange={(e) => setNewSkill(e.target.value)}
+                  placeholder="Enter skill name (e.g., React, Python)"
+                  className="flex-1 bg-gray-900/80 border border-blue-700/30 text-white px-3 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  onKeyPress={(e) => e.key === "Enter" && addSkill()}
+                />
+                <button
+                  onClick={() => setShowAddForm(false)}
+                  className="bg-gray-700 hover:bg-gray-600 text-white px-4 py-2 rounded-lg transition-colors"
+                  disabled={submitting}
+                >
+                  <X size={16} />
+                </button>
+                <button
+                  onClick={addSkill}
+                  disabled={submitting || !newSkill.trim()}
+                  className={`bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition-colors flex items-center gap-2 ${
+                    submitting || !newSkill.trim() ? "opacity-50 cursor-not-allowed" : ""
+                  }`}
+                >
+                  {submitting ? (
+                    <>
+                      <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
+                      Adding...
+                    </>
+                  ) : (
+                    <>
+                      <Plus size={16} />
+                      Add
+                    </>
+                  )}
+                </button>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
+
+      {/* Skills Display */}
+      <IconContext.Provider value={{ className: "icon" }}>
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 max-w-6xl px-4">
+          {/* Render skills from the API data */}
+          {filteredSkills.map((skill, index) => {
+            const skillInfo = skillIconsMap[skill] || {
+              icon: <span>•</span>,
+              color: "#FFFFFF",
+            }
+
+            return (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+                viewport={{ once: true }}
+                drag={isAdmin}
+                dragConstraints={{ left: 0, right: 0, top: 0, bottom: 0 }}
+                dragElastic={0.1}
+                whileHover={isAdmin ? { scale: 1.05 } : { y: -5 }}
+                whileTap={isAdmin ? { scale: 0.95 } : {}}
+                style={{ "--skill-color": skillInfo.color || "#FFFFFF" } as React.CSSProperties}
+                className="relative group flex items-center justify-center gap-2 px-4 py-2 rounded-full bg-black border border-zinc-800 text-white transition-all duration-300 hover:border-[var(--skill-color)] hover:shadow-[0_0_15px_var(--skill-color)]"
+              >
+                <span className="group-hover:animate-bounce" style={{ color: skillInfo.color }}>
+                  {skillInfo.icon}
+                </span>
+                <span className="group-hover:text-white">{skill}</span>
+
+                {/* Remove button for admin */}
+                {isAdmin && (
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation()
+                      removeSkill(skill)
+                    }}
+                    className="absolute -top-2 -right-2 w-6 h-6 bg-red-500 hover:bg-red-600 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-200"
+                  >
+                    <Trash2 size={12} className="text-white" />
+                  </button>
+                )}
+              </motion.div>
+            )
+          })}
+
+          {/* "Add Skill" button only shown to admins */}
+          {isAdmin && !showAddForm && (
+            <motion.button
+              onClick={() => setShowAddForm(true)}
+              className="flex items-center justify-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-blue-600/30 to-purple-600/30 border border-blue-500/50 text-white hover:border-blue-400 hover:shadow-[0_0_15px_rgba(59,130,246,0.5)] transform transition-all duration-300 hover:scale-110"
+              whileHover={{ y: -5 }}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: filteredSkills.length * 0.1 }}
+            >
+              <span className="text-lg">+</span>
+              <span>Add Skill</span>
+            </motion.button>
+          )}
+        </div>
+      </IconContext.Provider>
+
+      {/* Optional: Show available skills count */}
+      <div className="text-gray-400 text-sm mt-4">
+        {filteredSkills.length} of {skills.length} skills
+        {searchTerm && ` matching "${searchTerm}"`} and growing!
+      </div>
+    </div>
+  )
+}
+
+export default EnhancedSkills
   SiVercel,
   SiPostman,
   SiPrisma,
