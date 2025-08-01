@@ -55,7 +55,6 @@ import {
   SiNestjs,
   SiSpring,
   SiDotnet,
-  // SiNuxtdotjs,
   SiSvelte,
   SiJest,
   SiCypress,
@@ -64,7 +63,7 @@ import {
   SiSupabase,
   SiRedux,
   SiWebgl,
-  SiFastapi // Add FastAPI import here
+  SiFastapi
 } from "react-icons/si";
 import { TbBrandFramerMotion } from "react-icons/tb";
 import { RxShadowNone } from "react-icons/rx";
@@ -73,7 +72,6 @@ import { DiJqueryLogo } from "react-icons/di";
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 import React from 'react';
-import { useAuth } from '../context/AuthContext';
 
 // Interface for the skills data from the backend
 interface SkillsData {
@@ -83,7 +81,6 @@ interface SkillsData {
 }
 
 // Extended mapping for skill names to their icons and colors
-// This includes many common technologies developers might use
 const skillIconsMap: Record<string, { icon: React.ReactElement; color: string }> = {
   // Front-end
   "HTML": { icon: <FaHtml5 size={20} />, color: "#E44D26" },
@@ -106,11 +103,10 @@ const skillIconsMap: Record<string, { icon: React.ReactElement; color: string }>
   "TailwindCSS": { icon: <SiTailwindcss size={20} />, color: "#38bdf8" },
   "Bootstrap": { icon: <FaBootstrap size={20} />, color: "#7952B3" },
   "Sass": { icon: <FaSass size={20} />, color: "#CC6699" },
-  "NextJs": { icon: <SiNextdotjs size={20} />, color: "#000000" }, // Fixed: should be SiNextdotjs, not SiNestjs
+  "NextJs": { icon: <SiNextdotjs size={20} />, color: "#000000" },
   "Redux": { icon: <SiRedux size={20} />, color: "#764ABC" },
   "WebGL": { icon: <SiWebgl size={20} />, color: "#990000" },
   "WordPress": { icon: <FaWordpress size={20} />, color: "#21759B" },
-  // Removed WooCommerce mapping because SiWoo is not imported and does not exist in react-icons
   
   // Back-end
   "NodeJS": { icon: <FaNodeJs size={20} />, color: "#339933" },
@@ -178,7 +174,7 @@ const Skills = () => {
   const [skills, setSkills] = useState<string[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
-  const [isAdmin, setIsAdmin] = useState(false); // Local state instead of context
+  const [isAdmin, setIsAdmin] = useState(false);
   const [newSkill, setNewSkill] = useState<string>("");
   
   // New states for public skill suggestion
@@ -200,12 +196,11 @@ const Skills = () => {
       once: false,
     });
     
-   
     const fetchSkills = async () => {
       try {
         // Use environment variable for API URL with the correct endpoint
         const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:9000';
-        const response = await fetch(`${API_URL}/skills`); // Make sure this matches your backend route
+        const response = await fetch(`${API_URL}/skills`);
         
         if (!response.ok) {
           throw new Error('Failed to fetch skills');
@@ -229,7 +224,7 @@ const Skills = () => {
 
   // Function to add a new skill (admin mode)
   const addNewSkill = async () => {
-    if (!newSkill.trim() || !isAdmin) return; // Check admin status
+    if (!newSkill.trim() || !isAdmin) return;
     
     // Check if skill already exists
     if (skills.includes(newSkill)) {
@@ -263,9 +258,9 @@ const Skills = () => {
     }
   };
 
-  // Update or remove suggestSkill function since it's now admin-only
+  // Function to add skill from suggestion form
   const addSkill = async () => {
-    if (!suggestedSkill.trim() || !isAdmin) return; // Check admin status
+    if (!suggestedSkill.trim() || !isAdmin) return;
     
     try {
       setSubmitting(true);
@@ -341,31 +336,6 @@ const Skills = () => {
         </div>
       )}
       
-      {/* Admin mode UI (shown when logged in) */}
-      {/* {isAdmin && (
-        <div className="bg-black/60 backdrop-blur-md border border-gray-700 rounded-lg p-4 mb-6 w-full max-w-md">
-          <h3 className="text-lg font-semibold mb-3 text-white">Admin Mode: Add New Skill</h3>
-          <div className="flex gap-2">
-            <input
-              type="text"
-              value={newSkill}
-              onChange={(e) => setNewSkill(e.target.value)}
-              className="bg-gray-900 border border-gray-700 text-white px-3 py-2 rounded-lg flex-grow focus:outline-none focus:ring-2 focus:ring-blue-500"
-              placeholder="Enter new skill name"
-            />
-            <button
-              onClick={addNewSkill}
-              className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition-colors"
-            >
-              Add
-            </button>
-          </div>
-          <p className="mt-2 text-xs text-gray-400">
-            Note: Make sure the skill name matches exactly with the icon mapping.
-          </p>
-        </div>
-      )} */}
-      
       {/* Public suggestion form (only shown to admins) */}
       {isAdmin && showSuggestForm && (
         <motion.div 
@@ -426,7 +396,6 @@ const Skills = () => {
         <>
           <IconContext.Provider value={{ className: "icon" }}>
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 max-w-6xl px-4">
-              {/* Render skills from the API data */}
               {skills.map((skill, index) => {
                 const skillInfo = skillIconsMap[skill] || { 
                   icon: <span>•</span>, 
