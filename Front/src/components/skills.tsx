@@ -200,7 +200,7 @@ const Skills = () => {
       once: false,
     });
     
-    // Fetch skills from the API
+   
     const fetchSkills = async () => {
       try {
         // Use environment variable for API URL with the correct endpoint
