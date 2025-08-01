@@ -169,6 +169,38 @@ const skillIconsMap: Record<string, { icon: React.ReactElement; color: string }>
   "IoT": { icon: <FaNodeJs size={20} />, color: "#339933" },
 };
 
+// Skill categories mapping
+const skillCategories: Record<string, string[]> = {
+  "Frontend": [
+    "HTML", "CSS", "ReactJS", "React", "NextJS", "NextJs", 
+    "Angular", "Vue.js", "Svelte", "jQuery", "Tailwind CSS", "TailwindCSS", "Bootstrap", 
+    "Sass", "Redux", "WebGL", "Framer Motion", "Shadcn"
+  ],
+  "Backend": [
+    "NodeJS", "Node.js", "Express", "ExpressJS", "PHP", "Django", "NestJS", "Spring", 
+    ".NET", "fastapi", "FastAPI"
+  ],
+  "Languages": [
+    "C", "Java", "Python", "Rust", "Go", "Kotlin", "Swift", "Dart", "JavaScript", "TypeScript","JavaScript", "TypeScript",
+  ],
+  "Database": [
+    "MongoDB", "PostgreSQL", "MySQL", "Redis", "Elasticsearch", "Prisma", "Supabase", 
+    "Firebase", "GraphQL"
+  ],
+  "Tools": [
+    "Git", "GitHub", "Postman", "Linux", "Webpack", "Vite", "Jest", "Cypress", "Figma"
+  ],
+  "Cloud & Deployment": [
+    "AWS", "Vercel", "Docker", "Kubernetes", "Jenkins", "Terraform", "Cloudflare"
+  ],
+  "CMS & Others": [
+    "WordPress", "Stripe", "API", "AI APIs", "Hugging Face API", "IoT"
+  ],
+  "Mobile": [
+    "Flutter", "React Native", "Kotlin", "Swift", "Dart"
+  ]
+};
+
 const Skills = () => {
   // State for fetched skills
   const [skills, setSkills] = useState<string[]>([]);
@@ -182,6 +214,9 @@ const Skills = () => {
   const [suggestedSkill, setSuggestedSkill] = useState<string>("");
   const [submitting, setSubmitting] = useState<boolean>(false);
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
+  
+  // New state for view toggle
+  const [isGridView, setIsGridView] = useState<boolean>(true);
 
   useEffect(() => {
     // Check if user is admin from session storage
@@ -221,6 +256,44 @@ const Skills = () => {
     
     fetchSkills();
   }, []);
+
+  // Function to categorize skills
+  const categorizeSkills = () => {
+    const categorized: Record<string, string[]> = {};
+    
+    // Initialize categories
+    Object.keys(skillCategories).forEach(category => {
+      categorized[category] = [];
+    });
+    
+    // Add uncategorized for skills not in any category
+    categorized["Others"] = [];
+    
+    skills.forEach(skill => {
+      let categoryFound = false;
+      
+      for (const [category, categorySkills] of Object.entries(skillCategories)) {
+        if (categorySkills.includes(skill)) {
+          categorized[category].push(skill);
+          categoryFound = true;
+          break;
+        }
+      }
+      
+      if (!categoryFound) {
+        categorized["Others"].push(skill);
+      }
+    });
+    
+    // Remove empty categories
+    Object.keys(categorized).forEach(category => {
+      if (categorized[category].length === 0) {
+        delete categorized[category];
+      }
+    });
+    
+    return categorized;
+  };
 
   // Function to add a new skill (admin mode)
   const addNewSkill = async () => {
@@ -298,6 +371,8 @@ const Skills = () => {
     }
   };
 
+  const categorizedSkills = categorizeSkills();
+
   return (
     <div className="w-full flex flex-col items-center justify-center gap-10 py-20" data-aos="fade-up">
       <div className="flex flex-col items-center justify-center">
@@ -327,6 +402,30 @@ const Skills = () => {
         >
           My Tech Stack
         </h2>
+      </div>
+
+      {/* View Toggle Buttons */}
+      <div className="flex gap-4 mb-6">
+        <button
+          onClick={() => setIsGridView(true)}
+          className={`px-6 py-2 rounded-full border transition-all duration-300 ${
+            isGridView 
+              ? 'bg-gradient-to-r from-blue-600 to-purple-600 border-blue-500 text-white shadow-lg' 
+              : 'bg-gray-800/50 border-gray-600 text-gray-300 hover:border-gray-500'
+          }`}
+        >
+          Grid View
+        </button>
+        <button
+          onClick={() => setIsGridView(false)}
+          className={`px-6 py-2 rounded-full border transition-all duration-300 ${
+            !isGridView 
+              ? 'bg-gradient-to-r from-blue-600 to-purple-600 border-blue-500 text-white shadow-lg' 
+              : 'bg-gray-800/50 border-gray-600 text-gray-300 hover:border-gray-500'
+          }`}
+        >
+          Normal View
+        </button>
       </div>
       
       {/* Success message */}
@@ -395,48 +494,102 @@ const Skills = () => {
       ) : (
         <>
           <IconContext.Provider value={{ className: "icon" }}>
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 max-w-6xl px-4">
-              {skills.map((skill, index) => {
-                const skillInfo = skillIconsMap[skill] || { 
-                  icon: <span>•</span>, 
-                  color: "#FFFFFF" 
-                };
-                
-                return (
-                  <motion.div 
-                    key={index}
-                    initial={{ opacity: 0 }}
-                    whileInView={{ opacity: 1 }}
-                    transition={{ duration: 0.5, delay: index * 0.1 }}
-                    viewport={{ once: true }}
-                    drag={isAdmin}
-                    dragConstraints={{ left: 0, right: 0, top: 0, bottom: 0 }}
-                    dragElastic={0.1}
-                    whileHover={isAdmin ? { scale: 1.05 } : { y: -5 }}
-                    whileTap={isAdmin ? { scale: 0.95 } : {}}
-                    style={{ '--skill-color': skillInfo.color || '#FFFFFF' } as React.CSSProperties}
-                    className="relative group flex items-center justify-center gap-2 px-4 py-2 rounded-full bg-black border border-zinc-800 text-white transition-all duration-300 hover:border-[var(--skill-color)] hover:shadow-[0_0_15px_var(--skill-color)]"
-                  >
-                    <span className="group-hover:animate-bounce" style={{ color: skillInfo.color }}>
-                      {skillInfo.icon}
-                    </span>
-                    <span className="group-hover:text-white">{skill}</span>
-                  </motion.div>
-                );
-              })}
+            <div className="w-full max-w-7xl px-4">
+              {isGridView ? (
+                // Grid View - Show categories
+                Object.entries(categorizedSkills).map(([category, categorySkills], categoryIndex) => (
+                  <div key={category} className="mb-12">
+                    <div className="relative mb-8">
+                      {/* Enhanced background with gradient and glow effect */}
+                      <div className="absolute inset-0 bg-gradient-to-r from-blue-600/10 via-purple-600/10 to-pink-600/10 rounded-lg blur-xl"></div>
+                      <div className="relative bg-gradient-to-r from-gray-900/50 via-gray-800/30 to-gray-900/50 backdrop-blur-sm border border-gray-700/30 rounded-lg p-4">
+                        <h3 className="text-white text-2xl font-bold text-left bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">
+                          {category}
+                        </h3>
+                        <div className="h-0.5 w-16 bg-gradient-to-r from-blue-500 to-purple-500 mt-2 rounded-full"></div>
+                      </div>
+                    </div>
+                    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 justify-items-center">
+                      {categorySkills.map((skill, index) => {
+                        const skillInfo = skillIconsMap[skill] || { 
+                          icon: <span>•</span>, 
+                          color: "#FFFFFF" 
+                        };
+                        
+                        return (
+                          <motion.div 
+                            key={`${category}-${index}`}
+                            initial={{ opacity: 0 }}
+                            whileInView={{ opacity: 1 }}
+                            transition={{ duration: 0.5, delay: index * 0.1 }}
+                            viewport={{ once: true }}
+                            drag={isAdmin}
+                            dragConstraints={{ left: 0, right: 0, top: 0, bottom: 0 }}
+                            dragElastic={0.1}
+                            whileHover={isAdmin ? { scale: 1.05 } : { y: -5 }}
+                            whileTap={isAdmin ? { scale: 0.95 } : {}}
+                            style={{ '--skill-color': skillInfo.color || '#FFFFFF' } as React.CSSProperties}
+                            className="relative group flex items-center justify-center gap-2 px-4 py-2 rounded-full bg-black border border-zinc-800 text-white transition-all duration-300 hover:border-[var(--skill-color)] hover:shadow-[0_0_15px_var(--skill-color)]"
+                          >
+                            <span className="group-hover:animate-bounce" style={{ color: skillInfo.color }}>
+                              {skillInfo.icon}
+                            </span>
+                            <span className="group-hover:text-white">{skill}</span>
+                          </motion.div>
+                        );
+                      })}
+                    </div>
+                  </div>
+                ))
+              ) : (
+                // Normal View - Show all skills without categories
+                <div className="mb-12">
+                  <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-8 gap-4 justify-items-center">
+                    {skills.map((skill, index) => {
+                      const skillInfo = skillIconsMap[skill] || { 
+                        icon: <span>•</span>, 
+                        color: "#FFFFFF" 
+                      };
+                      
+                      return (
+                        <motion.div 
+                          key={`all-skills-${index}`}
+                          initial={{ opacity: 0 }}
+                          whileInView={{ opacity: 1 }}
+                          transition={{ duration: 0.5, delay: index * 0.05 }}
+                          viewport={{ once: true }}
+                          drag={isAdmin}
+                          dragConstraints={{ left: 0, right: 0, top: 0, bottom: 0 }}
+                          dragElastic={0.1}
+                          whileHover={isAdmin ? { scale: 1.05 } : { y: -5 }}
+                          whileTap={isAdmin ? { scale: 0.95 } : {}}
+                          style={{ '--skill-color': skillInfo.color || '#FFFFFF' } as React.CSSProperties}
+                          className="relative group flex items-center justify-center gap-2 px-4 py-2 rounded-full bg-black border border-zinc-800 text-white transition-all duration-300 hover:border-[var(--skill-color)] hover:shadow-[0_0_15px_var(--skill-color)]"
+                        >
+                          <span className="group-hover:animate-bounce" style={{ color: skillInfo.color }}>
+                            {skillInfo.icon}
+                          </span>
+                          <span className="group-hover:text-white">{skill}</span>
+                        </motion.div>
+                      );
+                    })}
+                  </div>
+                </div>
+              )}
               
               {/* "Add Skill" button only shown to admins */}
               {isAdmin && !showSuggestForm && (
-                <motion.button
-                  onClick={() => setShowSuggestForm(true)}
-                  className="flex items-center justify-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-blue-600/30 to-purple-600/30 border border-blue-500/50 text-white hover:border-blue-400 hover:shadow-[0_0_15px_rgba(59,130,246,0.5)] transform transition-all duration-300 hover:scale-110"
-                  whileHover={{ y: -5 }}
-                  data-aos="zoom-in"
-                  data-aos-delay={100 * ((skills.length + 1) % 10)}
-                >
-                  <span className="text-lg">+</span>
-                  <span>Add Skill</span>
-                </motion.button>
+                <div className="flex justify-center mt-8">
+                  <motion.button
+                    onClick={() => setShowSuggestForm(true)}
+                    className="flex items-center justify-center gap-2 px-6 py-3 rounded-full bg-gradient-to-r from-blue-600/30 to-purple-600/30 border border-blue-500/50 text-white hover:border-blue-400 hover:shadow-[0_0_15px_rgba(59,130,246,0.5)] transform transition-all duration-300 hover:scale-110"
+                    whileHover={{ y: -5 }}
+                    data-aos="zoom-in"
+                  >
+                    <span className="text-lg">+</span>
+                    <span>Add Skill</span>
+                  </motion.button>
+                </div>
               )}
             </div>
           </IconContext.Provider>
