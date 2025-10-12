@@ -1,30 +1,37 @@
-import  { useRef, useEffect, useState } from 'react';
+import { useRef, useEffect, useState, lazy, Suspense, memo } from 'react';
 import { Routes, Route, useLocation } from 'react-router-dom';
 import { AnimatePresence } from 'framer-motion';
 import { AuthProvider } from './context/AuthContext';
 
-// Components
+// Loading component for lazy-loaded routes
+import Loading from './components/Loading';
+
+// Critical components - load immediately
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
-import About from './components/About';
-import Skills from './components/skills';
-import Projects from './components/Project';
-import Work from './components/Works';
-import Certificate from './components/certificate';
-import Contact from './components/Contact';
-import ResearchPublications from "./components/Research";
-
-import Pro1 from './components/compoPages/Projects/Pro1';
-import Pro2 from './components/compoPages/Projects/Pro2';
-import Pro3 from './components/compoPages/Projects/Pro3';
-import Pro4 from './components/compoPages/Projects/Pro4';
-import Pro5 from './components/compoPages/Projects/Pro5';
-
-import Oodser from './components/compoPages/internships/Oodser';
-import Menagalme from './components/compoPages/internships/Society';
-import LuxorHoliday from './components/compoPages/internships/LuxorHoliday';
-import Society from './components/compoPages/internships/Society';
 import withScrollReset from './components/hoc/withScrollReset';
+
+// Lazy load non-critical components
+const About = lazy(() => import('./components/About'));
+const Skills = lazy(() => import('./components/skills'));
+const Projects = lazy(() => import('./components/Project'));
+const Work = lazy(() => import('./components/Works'));
+const Certificate = lazy(() => import('./components/certificate'));
+const Contact = lazy(() => import('./components/Contact'));
+const ResearchPublications = lazy(() => import('./components/Research'));
+
+// Lazy load project detail pages
+const Pro1 = lazy(() => import('./components/compoPages/Projects/Pro1'));
+const Pro2 = lazy(() => import('./components/compoPages/Projects/Pro2'));
+const Pro3 = lazy(() => import('./components/compoPages/Projects/Pro3'));
+const Pro4 = lazy(() => import('./components/compoPages/Projects/Pro4'));
+const Pro5 = lazy(() => import('./components/compoPages/Projects/Pro5'));
+
+// Lazy load internship pages
+const Oodser = lazy(() => import('./components/compoPages/internships/Oodser'));
+const Menagalme = lazy(() => import('./components/compoPages/internships/Society'));
+const LuxorHoliday = lazy(() => import('./components/compoPages/internships/LuxorHoliday'));
+const Society = lazy(() => import('./components/compoPages/internships/Society'));
 
 // Styles
 import './App.css';
@@ -32,7 +39,7 @@ import './styles/globals.css';
 import './styles/animations.css';
 
 // ScrollToTop component to handle scroll to top on route change
-const ScrollToTop = () => {
+const ScrollToTop = memo(() => {
   const { pathname } = useLocation();
 
   useEffect(() => {
@@ -40,7 +47,7 @@ const ScrollToTop = () => {
   }, [pathname]);
 
   return null;
-};
+});
 
 const App = () => {
   const location = useLocation();
@@ -49,19 +56,21 @@ const App = () => {
     <AuthProvider>
       <ScrollToTop />
       <AnimatePresence mode="wait">
-        <Routes location={location} key={location.pathname}>
-          <Route path="/" element={<Home />} />
-          <Route path="/certifications" element={<Certificate />} />
-          <Route path="/project/1" element={<ScrollResetPro1 />} />
-          <Route path="/project/2" element={<ScrollResetPro2 />} />
-          <Route path="/project/3" element={<ScrollResetPro3 />} />
-          <Route path="/project/4" element={<ScrollResetPro4 />} />
-          <Route path="/project/5" element={<ScrollResetPro5 />} />
-          <Route path="/research" element={<ScrollResetResearch />} />
-          <Route path="/internship/society" element={<ScrollResetSociety />} />
-          <Route path="/internship/oodser" element={<ScrollResetOodser />} />
-          <Route path="/internship/luxor-holiday" element={<ScrollResetLuxorHoliday />} />
-        </Routes>
+        <Suspense fallback={<Loading />}>
+          <Routes location={location} key={location.pathname}>
+            <Route path="/" element={<Home />} />
+            <Route path="/certifications" element={<Certificate />} />
+            <Route path="/project/1" element={<ScrollResetPro1 />} />
+            <Route path="/project/2" element={<ScrollResetPro2 />} />
+            <Route path="/project/3" element={<ScrollResetPro3 />} />
+            <Route path="/project/4" element={<ScrollResetPro4 />} />
+            <Route path="/project/5" element={<ScrollResetPro5 />} />
+            <Route path="/research" element={<ScrollResetResearch />} />
+            <Route path="/internship/society" element={<ScrollResetSociety />} />
+            <Route path="/internship/oodser" element={<ScrollResetOodser />} />
+            <Route path="/internship/luxor-holiday" element={<ScrollResetLuxorHoliday />} />
+          </Routes>
+        </Suspense>
       </AnimatePresence>
     </AuthProvider>
   );
@@ -162,25 +171,40 @@ const Home = () => {
       />
       {/* Make sure each section has the correct ID attribute */}
       <div id="home"><Hero /></div>
-      <div id="about"><About /></div>
-      <div id="skills"><Skills /></div>
-      <div id="projects"><Projects /></div>
-      <div id="works"><Work /></div>
-      <div id="research"><ResearchPublications /></div>
-      <div id="certificate"><Certificate /></div>
-      <div id="contact" className="contact-mobile-margin"><Contact /></div>
+      <Suspense fallback={<div className="min-h-screen flex items-center justify-center"><Loading /></div>}>
+        <div id="about"><About /></div>
+        <div id="skills"><Skills /></div>
+        <div id="projects"><Projects /></div>
+        <div id="works"><Work /></div>
+        <div id="research"><ResearchPublications /></div>
+        <div id="certificate"><Certificate /></div>
+        <div id="contact" className="contact-mobile-margin"><Contact /></div>
+      </Suspense>
     </div>
   );
 };
 
-const ScrollResetPro1 = withScrollReset(Pro1);
-const ScrollResetPro2 = withScrollReset(Pro2);
-const ScrollResetPro3 = withScrollReset(Pro3);
-const ScrollResetPro4 = withScrollReset(Pro4);
-const ScrollResetPro5 = withScrollReset(Pro5);
-const ScrollResetLuxorHoliday = withScrollReset(LuxorHoliday);
-const ScrollResetSociety = withScrollReset(Society);
-const ScrollResetOodser = withScrollReset(Oodser);
-const ScrollResetResearch = withScrollReset(ResearchPublications);
+// Create wrapped components with lazy loading and scroll reset
+const createLazyScrollResetComponent = (LazyComponent: React.LazyExoticComponent<React.ComponentType<any>>) => {
+  const Component = (props: any) => (
+    <Suspense fallback={<Loading />}>
+      {(() => {
+        const WrappedComponent = withScrollReset(LazyComponent as any);
+        return <WrappedComponent {...props} />;
+      })()}
+    </Suspense>
+  );
+  return Component;
+};
+
+const ScrollResetPro1 = createLazyScrollResetComponent(Pro1);
+const ScrollResetPro2 = createLazyScrollResetComponent(Pro2);
+const ScrollResetPro3 = createLazyScrollResetComponent(Pro3);
+const ScrollResetPro4 = createLazyScrollResetComponent(Pro4);
+const ScrollResetPro5 = createLazyScrollResetComponent(Pro5);
+const ScrollResetLuxorHoliday = createLazyScrollResetComponent(LuxorHoliday);
+const ScrollResetSociety = createLazyScrollResetComponent(Society);
+const ScrollResetOodser = createLazyScrollResetComponent(Oodser);
+const ScrollResetResearch = createLazyScrollResetComponent(ResearchPublications);
 
 export default App;
