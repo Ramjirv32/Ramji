@@ -24,7 +24,11 @@ import {
   FaFigma,
   FaJenkins,
   FaStripe,
-  FaWordpress
+  FaWordpress,
+  FaSlack,
+  FaTrello,
+  FaDiscord,
+  FaDigitalOcean
 } from "react-icons/fa";
 import { 
   SiTypescript, 
@@ -63,8 +67,17 @@ import {
   SiSupabase,
   SiRedux,
   SiWebgl,
-  SiFastapi
+  SiFastapi,
+  SiGooglecloud,
+  SiRazorpay,
+  SiSocketdotio,
+  SiNginx,
+  SiJira,
+  SiNotion,
+  SiFramer,
+  SiThreedotjs
 } from "react-icons/si";
+import { TbBrandAzure } from "react-icons/tb";
 import { TbBrandFramerMotion } from "react-icons/tb";
 import { RxShadowNone } from "react-icons/rx";
 import { IoLogoJavascript } from "react-icons/io5";
@@ -88,11 +101,18 @@ const skillIconsMap: Record<string, { icon: React.ReactElement; color: string }>
   "JavaScript": { icon: <FaJs size={20} />, color: "#F7DF1E" },
   "TypeScript": { icon: <SiTypescript size={18} />, color: "#3178C6" },
   "Cloudflare": { icon: <SiCloudflare size={20} />, color: "#F38020" },
+  "Azure": { icon: <TbBrandAzure size={20} />, color: "#0078D4" },
+  "Microsoft Azure": { icon: <TbBrandAzure size={20} />, color: "#0078D4" },
+  "GCP": { icon: <SiGooglecloud size={20} />, color: "#4285F4" },
+  "Google Cloud": { icon: <SiGooglecloud size={20} />, color: "#4285F4" },
+  "DigitalOcean": { icon: <FaDigitalOcean size={20} />, color: "#0080FF" },
   "ReactJS": { icon: <FaReact size={20} />, color: "#61DAFB" },
   "React": { icon: <FaReact size={20} />, color: "#61DAFB" },
   "fastapi": { icon: <SiFastapi size={20} />, color: "#009688" },
   "FastAPI": { icon: <SiFastapi size={20} />, color: "#009688" },
   "Framer Motion": { icon: <TbBrandFramerMotion size={20} />, color: "#0055FF" },
+  "Framer": { icon: <SiFramer size={20} />, color: "#0055FF" },
+  "Three.js": { icon: <SiThreedotjs size={20} />, color: "#000000" },
   "Shadcn": { icon: <RxShadowNone size={20} />, color: "#FFFFFF" },
   "Next.js": { icon: <SiNextdotjs size={20} />, color: "#000000" },
   "Angular": { icon: <FaAngular size={20} />, color: "#DD0031" },
@@ -107,6 +127,8 @@ const skillIconsMap: Record<string, { icon: React.ReactElement; color: string }>
   "Redux": { icon: <SiRedux size={20} />, color: "#764ABC" },
   "WebGL": { icon: <SiWebgl size={20} />, color: "#990000" },
   "WordPress": { icon: <FaWordpress size={20} />, color: "#21759B" },
+  "Socket.io": { icon: <SiSocketdotio size={20} />, color: "#010101" },
+  "Nginx": { icon: <SiNginx size={20} />, color: "#009639" },
   
   // Back-end
   "NodeJS": { icon: <FaNodeJs size={20} />, color: "#339933" },
@@ -155,6 +177,11 @@ const skillIconsMap: Record<string, { icon: React.ReactElement; color: string }>
   "Vite": { icon: <SiVite size={20} />, color: "#646CFF" },
   "Jest": { icon: <SiJest size={20} />, color: "#C21325" },
   "Cypress": { icon: <SiCypress size={20} />, color: "#17202C" },
+  "Jira": { icon: <SiJira size={20} />, color: "#0052CC" },
+  "Notion": { icon: <SiNotion size={20} />, color: "#000000" },
+  "Slack": { icon: <FaSlack size={20} />, color: "#4A154B" },
+  "Discord": { icon: <FaDiscord size={20} />, color: "#5865F2" },
+  "Trello": { icon: <FaTrello size={20} />, color: "#0052CC" },
   
   // Mobile & Design
   "Flutter": { icon: <SiFlutter size={20} />, color: "#02569B" },
@@ -163,6 +190,7 @@ const skillIconsMap: Record<string, { icon: React.ReactElement; color: string }>
   
   // Others
   "Stripe": { icon: <FaStripe size={20} />, color: "#008CDD" },
+  "Razorpay": { icon: <SiRazorpay size={20} />, color: "#0C2451" },
   "API": { icon: <SiPostman size={20} />, color: "#FF6C37" },
   "AI APIs": { icon: <IoLogoJavascript size={20} />, color: "#F7DF1E" },
   "Hugging Face API": { icon: <IoLogoJavascript size={20} />, color: "#F7DF1E" },
@@ -174,11 +202,11 @@ const skillCategories: Record<string, string[]> = {
   "Frontend": [
     "HTML", "CSS", "ReactJS", "React", "NextJS", "NextJs", 
     "Angular", "Vue.js", "Svelte", "jQuery", "Tailwind CSS", "TailwindCSS", "Bootstrap", 
-    "Sass", "Redux", "WebGL", "Framer Motion", "Shadcn"
+    "Sass", "Redux", "WebGL", "Framer Motion", "Framer", "Three.js", "Shadcn"
   ],
   "Backend": [
     "NodeJS", "Node.js", "Express", "ExpressJS", "PHP", "Django", "NestJS", "Spring", 
-    ".NET", "fastapi", "FastAPI"
+    ".NET", "fastapi", "FastAPI", "Socket.io", "Nginx"
   ],
   "Languages": [
     "C", "Java", "Python", "Rust", "Go", "Kotlin", "Swift", "Dart", "JavaScript", "TypeScript","JavaScript", "TypeScript",
@@ -188,13 +216,15 @@ const skillCategories: Record<string, string[]> = {
     "Firebase", "GraphQL"
   ],
   "Tools": [
-    "Git", "GitHub", "Postman", "Linux", "Webpack", "Vite", "Jest", "Cypress", "Figma"
+    "Git", "GitHub", "Postman", "Linux", "Webpack", "Vite", "Jest", "Cypress", "Figma",
+    "Jira", "Notion", "Slack", "Discord", "Trello"
   ],
   "Cloud & Deployment": [
-    "AWS", "Vercel", "Docker", "Kubernetes", "Jenkins", "Terraform", "Cloudflare"
+    "AWS", "Azure", "Microsoft Azure", "GCP", "Google Cloud", "DigitalOcean", "Vercel", 
+    "Docker", "Kubernetes", "Jenkins", "Terraform", "Cloudflare"
   ],
   "CMS & Others": [
-    "WordPress", "Stripe", "API", "AI APIs", "Hugging Face API", "IoT"
+    "WordPress", "Stripe", "Razorpay", "API", "AI APIs", "Hugging Face API", "IoT"
   ],
   "Mobile": [
     "Flutter", "React Native", "Kotlin", "Swift", "Dart"

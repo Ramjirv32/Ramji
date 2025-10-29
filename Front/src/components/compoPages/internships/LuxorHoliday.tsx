@@ -153,12 +153,15 @@ const LuxorHoliday = () => {
               </div>
             </div>
             <div className="mt-8 flex justify-center gap-4" data-aos="fade-up" data-aos-delay="400">
-              <div
-                className="flex items-center px-6 py-3 bg-gray-800 text-gray-300 rounded-lg font-medium cursor-default"
+              <a
+                href="https://luxorholidayhomestays.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center px-6 py-3 bg-gradient-to-r from-[#00BFFF] to-[#0096FF] text-white rounded-lg hover:from-[#0096FF] hover:to-[#00BFFF] transition-all duration-300 font-medium shadow-lg hover:shadow-[#00BFFF]/50 hover:-translate-y-1"
               >
-                <FaLock className="mr-2" />
-                Website Coming Soon
-              </div>
+                <FaExternalLinkAlt className="mr-2" />
+                Visit Website
+              </a>
             </div>
           </div>
         </div>
@@ -279,16 +282,25 @@ const LuxorHoliday = () => {
           </div>
           
           {/* Project Status */}
-          <div className="bg-gray-900/50 backdrop-blur-sm rounded-2xl p-8 border border-gray-800" data-aos="fade-up">
+          <div className="bg-gradient-to-r from-green-900/30 to-blue-900/30 backdrop-blur-sm rounded-2xl p-8 border border-green-700/50" data-aos="fade-up">
             <div className="flex items-center mb-4">
-              <div className="h-4 w-4 rounded-full bg-amber-400 animate-pulse mr-3"></div>
-              <h2 className="text-2xl font-bold">Project Status: In Development</h2>
+              <div className="h-4 w-4 rounded-full bg-green-400 animate-pulse mr-3"></div>
+              <h2 className="text-2xl font-bold">Project Status: Live & Deployed</h2>
             </div>
-            <p className="text-gray-300">
-              The Luxor Holiday Homestay platform is currently in active development with core features implemented.
-              We're working on final testing, content population, and performance optimization before the official launch.
-              Stay tuned for the public release soon.
+            <p className="text-gray-300 mb-4">
+              The Luxor Holiday Homestay platform is now live and accepting bookings! The platform features
+              secure payment processing, real-time availability updates, and comprehensive property management
+              tools. Visit the website to explore our beautiful homestays and make your reservation.
             </p>
+            <a
+              href="https://luxorholidayhomestays.com/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-green-600 to-blue-600 text-white rounded-lg hover:from-green-700 hover:to-blue-700 transition-all duration-300 font-medium shadow-lg hover:shadow-green-500/50 hover:-translate-y-1"
+            >
+              <FaExternalLinkAlt className="mr-2" />
+              Visit Luxor Holiday Homestays
+            </a>
           </div>
         </div>
       </div>
