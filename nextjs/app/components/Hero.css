@@ -1,0 +1,101 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+
+body {
+  font-family: 'Poppins', sans-serif;
+}
+
+h1, h2, h3 {
+  font-weight: 600; 
+}
+
+p {
+  font-weight: 400; 
+}
+
+button {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600; 
+}
+
+@keyframes rotate-icon {
+  from {
+    transform: rotate(0deg) translate(300px) rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg) translate(300px) rotate(-360deg);
+  }
+}
+
+
+@media (max-width: 768px) {
+  @keyframes rotate-icon {
+    from {
+      transform: rotate(0deg) translate(150px) rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg) translate(150px) rotate(-360deg);
+    }
+  }
+}
+
+/* Add these styles if needed */
+.certificate-card:hover .certificate-overlay {
+  opacity: 1;
+}
+
+.certificate-overlay {
+  transition: opacity 0.3s ease-in-out;
+}
+
+.hero-main-title {
+  font-size: 1rem !important;
+  line-height: 1.2 !important;
+}
+
+@media (min-width: 320px) {
+  .hero-main-title {
+    font-size: 1.125rem !important;
+  }
+}
+
+@media (min-width: 375px) {
+  .hero-main-title {
+    font-size: 1.25rem !important;
+  }
+}
+
+@media (min-width: 425px) {
+  .hero-main-title {
+    font-size: 1.375rem !important;
+  }
+}
+
+@media (min-width: 640px) {
+  .hero-main-title {
+    font-size: 1.875rem !important;
+  }
+}
+
+@media (min-width: 768px) {
+  .hero-main-title {
+    font-size: 2.25rem !important;
+  }
+}
+
+@media (min-width: 1024px) {
+  .hero-main-title {
+    font-size: 3rem !important;
+  }
+}
+
+@media (min-width: 1280px) {
+  .hero-main-title {
+    font-size: 3.75rem !important;
+  }
+}
+
+@media (min-width: 1536px) {
+  .hero-main-title {
+    font-size: 4.5rem !important;
+  }
+}
