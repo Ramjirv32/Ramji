@@ -2,8 +2,7 @@
 
 import { useEffect, useState, useRef } from "react"
 import { motion, AnimatePresence, useMotionValue, useTransform } from "framer-motion"
-import AOS from "aos"
-import "aos/dist/aos.css"
+import Image from "next/image"
 import { FaMapMarkerAlt } from "react-icons/fa"
 
 
@@ -23,11 +22,14 @@ const About = () => {
   const tiltX = useTransform(mouseY, [-300, 300], [15, -15])
 
   useEffect(() => {
-    AOS.init({
-      duration: 1000,
-      easing: "ease-in-out",
-      once: false,
-    })
+    // Dynamically import AOS to reduce initial bundle size
+    import('aos').then((AOS) => {
+      AOS.default.init({
+        duration: 1000,
+        easing: "ease-in-out",
+        once: false,
+      });
+    });
   }, [])
 
 
@@ -271,25 +273,18 @@ const About = () => {
                     
                     <div className="absolute inset-[12px] overflow-hidden rounded-full border-[4px] border-black">
                       <div className="w-full h-full relative">
-                        <motion.img
+                        <Image
                           src="/h/r3.webp"
-                          alt="Ramji" 
-                          className="w-full h-full object-cover absolute inset-0"
+                          alt="Ramji - Full Stack Developer" 
+                          width={400}
+                          height={400}
+                          quality={85}
+                          className="w-full h-full object-cover"
                           style={{
                             objectPosition: "center",
                           }}
-                          animate={
-                            !hovering && !isDragging
-                              ? {
-                                  scale: [1, 1.03, 1],
-                                }
-                              : { scale: 1 }
-                          }
-                          transition={{
-                            repeat: !hovering && !isDragging ? Number.POSITIVE_INFINITY : 0,
-                            duration: 5,
-                            ease: "easeInOut",
-                          }}
+                          loading="lazy"
+                          sizes="(max-width: 768px) 300px, 400px"
                         />
                       </div>
                     </div>

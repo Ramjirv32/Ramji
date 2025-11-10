@@ -1,0 +1,45 @@
+/* Critical CSS - Above the fold only */
+/* Offline font setup */
+@font-face {
+  font-family: "Momo Trust Display";
+  src: url("/Momo_Trust_Display/MomoTrustDisplay-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+.momo-trust-display-regular {
+  font-family: "Momo Trust Display", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+html {
+  overflow-x: hidden;
+  max-width: 100vw;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: "Momo Trust Display", sans-serif;
+  background-color: #030014 !important;
+  overflow-x: hidden;
+  max-width: 100vw;
+  position: relative;
+  min-height: 100vh;
+}
+
+/* Ensure proper scrolling behavior */
+* {
+  box-sizing: border-box;
+}
+
+/* Hero section critical styles */
+.hero-section {
+  min-height: 100vh;
+}
+
+/* Navigation critical styles */
+nav {
+  z-index: 50;
+}

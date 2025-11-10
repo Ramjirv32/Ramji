@@ -1,14 +1,29 @@
-"use client";
+"use client"
 
-import { useEffect, useState } from 'react';
-import { motion } from "framer-motion";
+import { useEffect, useState } from "react"
+import Image from "next/image"
+import { motion } from "framer-motion"
 import { IconContext } from "react-icons";
+
+// Import only necessary icons - split by library to enable better tree shaking
 import { 
-  FaHtml5, FaCss3Alt, FaJs, FaReact, FaNodeJs, FaGit, FaGithub, FaJava, FaLinux, FaPython, FaDocker, FaAws, FaAngular, FaVuejs, FaPhp, FaSass, FaBootstrap, FaFigma, FaJenkins, FaStripe, FaWordpress, FaSlack, FaTrello, FaDiscord, FaDigitalOcean
+  FaHtml5, FaCss3Alt, FaJs, FaReact, FaNodeJs, FaGit, FaGithub, 
+  FaJava, FaLinux, FaPython, FaDocker, FaAws, FaAngular, FaVuejs, 
+  FaPhp, FaSass, FaBootstrap, FaFigma, FaJenkins, FaStripe, 
+  FaWordpress, FaSlack, FaTrello, FaDiscord, FaDigitalOcean
 } from "react-icons/fa";
+
 import { 
-  SiTypescript, SiTailwindcss, SiExpress, SiMongodb, SiPostgresql, SiVercel, SiPostman, SiPrisma, SiC, SiRust, SiGo, SiKotlin, SiSwift, SiDart, SiFlutter, SiFirebase, SiRedis, SiMysql, SiGraphql, SiElasticsearch, SiKubernetes, SiTerraform, SiDjango, SiCloudflare, SiNextdotjs, SiNestjs, SiSpring, SiDotnet, SiSvelte, SiJest, SiCypress, SiWebpack, SiVite, SiSupabase, SiRedux, SiWebgl, SiFastapi, SiGooglecloud, SiRazorpay, SiSocketdotio, SiNginx, SiJira, SiNotion, SiFramer, SiThreedotjs
+  SiTypescript, SiTailwindcss, SiExpress, SiMongodb, SiPostgresql, 
+  SiVercel, SiPostman, SiPrisma, SiC, SiRust, SiGo, SiKotlin, 
+  SiSwift, SiDart, SiFlutter, SiFirebase, SiRedis, SiMysql, 
+  SiGraphql, SiElasticsearch, SiKubernetes, SiTerraform, SiDjango, 
+  SiCloudflare, SiNextdotjs, SiNestjs, SiSpring, SiDotnet, SiSvelte, 
+  SiJest, SiCypress, SiWebpack, SiVite, SiSupabase, SiRedux, 
+  SiWebgl, SiFastapi, SiGooglecloud, SiRazorpay, SiSocketdotio, 
+  SiNginx, SiJira, SiNotion, SiFramer, SiThreedotjs
 } from "react-icons/si";
+
 import { TbBrandAzure, TbBrandFramerMotion } from "react-icons/tb";
 import { RxShadowNone } from "react-icons/rx";
 import { IoLogoJavascript } from "react-icons/io5";
@@ -167,10 +182,13 @@ const Skills = () => {
   const [isGridView, setIsGridView] = useState<boolean>(true);
 
   useEffect(() => {
-    AOS.init({
-      duration: 1000,
-      easing: 'ease-in-out',
-      once: false,
+    // Dynamically import AOS to reduce initial bundle size
+    import('aos').then((AOS) => {
+      AOS.default.init({
+        duration: 1000,
+        easing: 'ease-in-out',
+        once: false,
+      });
     });
     
     fetchSkills();
@@ -263,11 +281,13 @@ const Skills = () => {
     <section id="skills" className="w-full py-20 relative bg-transparent">
       <div className="w-full flex flex-col items-center justify-center gap-10 py-20">
         <div className="flex flex-col items-center justify-center">
-        <img
+        <Image
           src="/h/earth1.webp" 
-          alt="Abstract 3D shape" 
+          alt="3D Earth visualization" 
           width={300} 
-          height={200} 
+          height={200}
+          quality={85}
+          loading="lazy"
           className="mb-4"
         />
         

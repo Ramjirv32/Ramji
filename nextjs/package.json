@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "next lint",
+    "check-images": "node scripts/optimize-images.js"
   },
   "dependencies": {
     "@splinetool/react-spline": "^4.1.0",

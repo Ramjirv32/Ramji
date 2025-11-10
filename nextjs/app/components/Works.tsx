@@ -3,8 +3,6 @@
 import { useState, useEffect } from "react"
 import { motion } from "framer-motion"
 import { InternshipCard } from "./InternshipCard"
-import AOS from 'aos'
-import 'aos/dist/aos.css'
 import Link from 'next/link'
 
 // Animation variants
@@ -73,10 +71,13 @@ const Works = () => {
 
   useEffect(() => {
     setIsLoaded(true);
-    AOS.init({
-      duration: 1000,
-      once: true,
-      offset: 100,
+    // Dynamically import AOS to reduce initial bundle size
+    import('aos').then((AOS) => {
+      AOS.default.init({
+        duration: 1000,
+        once: true,
+        offset: 100,
+      });
     });
   }, []);
 

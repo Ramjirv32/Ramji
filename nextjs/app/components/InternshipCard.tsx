@@ -1,6 +1,7 @@
 "use client"
 
 import { motion } from "framer-motion"
+import Image from "next/image"
 
 interface Internship {
   id: number;
@@ -111,12 +112,15 @@ export const InternshipCard: React.FC<InternshipCardProps> = ({ internship, inde
 
         {/* Company image */}
         <div className="relative h-32 overflow-hidden">
-          <motion.img
-            variants={imageVariants}
+          <Image
             src={internship.image}
-            alt={internship.company}
-            className="w-full h-full object-cover object-center"
+            alt={`${internship.company} - ${internship.title}`}
+            fill
+            quality={85}
+            loading="lazy"
+            className="object-cover object-center"
             style={{ filter: "brightness(0.8)" }}
+            sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
         </div>

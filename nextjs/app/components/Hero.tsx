@@ -2,9 +2,8 @@
 
 import { useEffect } from 'react';
 import { motion } from "framer-motion";
+import Image from 'next/image';
 import { FaHtml5, FaReact, FaCss3Alt, FaJsSquare, FaNodeJs, FaServer, FaAws, FaFire } from 'react-icons/fa';
-import AOS from 'aos';
-import 'aos/dist/aos.css';
 import './Hero.css';
 
 const slideInFromTop = {
@@ -47,11 +46,14 @@ const technologies = [
 
 const Hero = () => {
   useEffect(() => {
+    // Dynamically import AOS only when component mounts
     if (typeof window !== 'undefined') {
-      AOS.init({
-        duration: 1000,
-        easing: 'ease-in-out',
-        once: true,
+      import('aos').then((AOS) => {
+        AOS.default.init({
+          duration: 1000,
+          easing: 'ease-in-out',
+          once: true,
+        });
       });
     }
   }, []);
@@ -130,10 +132,15 @@ const Hero = () => {
                 }}
               />
               
-              <img
+              <Image
                 src="/h/j1.webp" 
-                alt="Hero"
-                className="w-full h-full object-cover relative z-10"
+                alt="Ramji - Full Stack Developer"
+                width={256}
+                height={256}
+                priority
+                quality={85}
+                className="w-full h-full object-cover relative z-10 rounded-full"
+                sizes="(max-width: 768px) 128px, 256px"
               />
               
               <div
