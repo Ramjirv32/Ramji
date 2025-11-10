@@ -4,6 +4,7 @@ import dotenv from 'dotenv';
 import bcrypt from 'bcrypt';
 import { createClient } from '@supabase/supabase-js';
 import contactRoutes from './routes/contactRoutes.js';
+import adminRoutes from './routes/adminRoutes.js';
 
 dotenv.config();
 const app = express();
@@ -35,17 +36,6 @@ const supabase = createClient(supabaseUrl, supabaseKey);
 const initializeAdminUser = async () => {
   try {
     // Check if collectors table exists
-    const { error: tableCheckError } = await supabase
-      .from('collectors')
-      .select('count')
-      .limit(1);
-    
-    // If table doesn't exist, create it
-    if (tableCheckError) {
-      await supabase.rpc('create_collectors_table');
-    }
-    
-    // Check if admin user exists
     const { data: existingAdmins, error: adminCheckError } = await supabase
       .from('collectors')
       .select('*')
@@ -53,13 +43,33 @@ const initializeAdminUser = async () => {
       .limit(1);
     
     if (adminCheckError) {
+      if (adminCheckError.message.includes('does not exist')) {
+        console.log('⚠️  Table "collectors" does not exist.');
+        console.log('📋 Please create the table in Supabase with the following SQL:');
+        console.log(`
+CREATE TABLE IF NOT EXISTS public.collectors (
+  id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+  email VARCHAR(255) UNIQUE NOT NULL,
+  password VARCHAR(255) NOT NULL,
+  full_name VARCHAR(255) NOT NULL,
+  role VARCHAR(50) DEFAULT 'user',
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+
+-- Insert admin user
+INSERT INTO public.collectors (email, password, full_name, role)
+VALUES ('ramjib2311@gmail.com', '${await bcrypt.hash('Vikas@231112005', 10)}', 'Admin User', 'admin')
+ON CONFLICT (email) DO NOTHING;
+        `);
+        return;
+      }
       console.error('Error checking for admin user:', adminCheckError.message);
       return;
     }
     
     // If admin doesn't exist, create it
     if (!existingAdmins || existingAdmins.length === 0) {
-      const hashedPassword = await bcrypt.hash('vikas2311', 10);
+      const hashedPassword = await bcrypt.hash('Vikas@231112005', 10);
       const { error: insertError } = await supabase
         .from('collectors')
         .insert([
@@ -75,8 +85,10 @@ const initializeAdminUser = async () => {
       if (insertError) {
         console.error('Error creating admin user:', insertError.message);
       } else {
-        console.log('Admin user created successfully');
+        console.log('✅ Admin user created successfully');
       }
+    } else {
+      console.log('✅ Admin user already exists');
     }
   } catch (error) {
     console.error('Error initializing admin user:', error.message);
@@ -87,6 +99,7 @@ const initializeAdminUser = async () => {
 initializeAdminUser();
 
 app.use('/api/contact', contactRoutes);
+app.use('/api/admin', adminRoutes);
 
 // Authentication routes
 app.post('/auth/signup', async (req, res) => {
@@ -148,13 +161,15 @@ app.post('/auth/login', async (req, res) => {
   try {
     const { email, password } = req.body;
     
+    console.log('Login attempt:', { email, passwordLength: password?.length });
+    
     if (!email || !password) {
       return res.status(400).json({ message: 'Email and password are required' });
     }
     
-    // Special case for admin
-    if (email === 'ramjib2311@gmail.com' && password === 'vikas23112005') {
-      // Get the admin user ID
+    // For admin, check if plain password matches first (for convenience)
+    if (email === 'ramjib2311@gmail.com' && password === 'Vikas@23112005') {
+      console.log('Admin login successful with plain password');
       const { data: adminUser } = await supabase
         .from('collectors')
         .select('id, role')
@@ -164,11 +179,14 @@ app.post('/auth/login', async (req, res) => {
       return res.status(200).json({ 
         message: 'Admin login successful',
         userId: adminUser?.[0]?.id || 'admin',
-        role: 'admin'
+        role: 'admin',
+        email: email
       });
     }
     
-    // For regular users, check in database
+    console.log('Checking database for user...');
+    
+    // Check in database for all users (including admin with hashed password)
     const { data: user, error } = await supabase
       .from('collectors')
       .select('*')
@@ -176,20 +194,26 @@ app.post('/auth/login', async (req, res) => {
       .limit(1);
     
     if (error || !user || user.length === 0) {
+      console.log('User not found in database');
       return res.status(401).json({ message: 'Invalid credentials' });
     }
     
-    // Compare password
+    console.log('User found, comparing password...');
+    
+    // Compare password with hashed password in database
     const passwordMatch = await bcrypt.compare(password, user[0].password);
     
     if (!passwordMatch) {
+      console.log('Password does not match');
       return res.status(401).json({ message: 'Invalid credentials' });
     }
     
+    console.log('Login successful for user:', user[0].email);
     res.status(200).json({ 
       message: 'Login successful',
       userId: user[0].id,
-      role: user[0].role
+      role: user[0].role,
+      email: user[0].email
     });
     
   } catch (error) {

@@ -1,8 +1,0 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
-
-/* Add this to your App.css file */
-@media (max-width: 768px) {
-  .contact-mobile-margin {
-    margin-top: 1000px;
-  }
-}
