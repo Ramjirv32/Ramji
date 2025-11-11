@@ -69,7 +69,7 @@ const Hero = () => {
           variants={slideInFromRight(0.8)}
           className="w-full relative flex justify-center items-center mb-16"
         >
-          <div className="relative w-full h-[25rem] md:h-[35rem] mt-[100px]">
+          <div className="relative w-full h-[15rem] md:h-[35rem] mt-[100px]">
             <div
               className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 rounded-full blur-3xl z-10 w-64 h-64 md:w-80 md:h-80"
               style={{
@@ -100,54 +100,15 @@ const Hero = () => {
             </div>
 
             <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-32 h-32 md:w-64 md:h-64 rounded-full overflow-hidden flex items-center justify-center z-20">
-              <div
-                className="absolute inset-[-20px] rounded-full blur-3xl animate-pulse"
-                style={{
-                  background: "radial-gradient(circle, rgba(0, 191, 255, 0.4) 0%, rgba(0, 191, 255, 0.2) 50%, transparent 80%)",
-                  animationDuration: "3s"
-                }}
-              />
-              <div
-                className="absolute inset-[-15px] rounded-full blur-2xl animate-pulse"
-                style={{
-                  background: "radial-gradient(circle, rgba(30, 144, 255, 0.3) 0%, rgba(30, 144, 255, 0.1) 60%, transparent 90%)",
-                  animationDuration: "2.5s",
-                  animationDelay: "1s"
-                }}
-              />
-              <div
-                className="absolute inset-[-10px] rounded-full blur-xl animate-pulse"
-                style={{
-                  background: "rgba(0, 191, 255, 0.2)",
-                  animationDuration: "2s",
-                  animationDelay: "0.5s"
-                }}
-              />
-              
-              <div
-                className="absolute inset-0 rounded-full"
-                style={{
-                  boxShadow: "0 0 60px rgba(0, 191, 255, 0.8), inset 0 0 30px rgba(0, 191, 255, 0.3), 0 0 100px rgba(30, 144, 255, 0.6)",
-                  border: "2px solid rgba(0, 191, 255, 0.6)"
-                }}
-              />
-              
               <Image
                 src="/h/j1.webp" 
                 alt="Ramji - Full Stack Developer"
                 width={256}
-                height={256}
+                height={236}
                 priority
                 quality={85}
                 className="w-full h-full object-cover relative z-10 rounded-full"
                 sizes="(max-width: 768px) 128px, 256px"
-              />
-              
-              <div
-                className="absolute inset-2 rounded-full"
-                style={{
-                  boxShadow: "inset 0 0 20px rgba(0, 191, 255, 0.2)"
-                }}
               />
             </div>
           </div>
