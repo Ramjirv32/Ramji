@@ -70,13 +70,6 @@ export default function RootLayout({
         <noscript>
           <link rel="stylesheet" href="/non-critical.css" />
         </noscript>
-
-        {/* Preconnect to external resources */}
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        
-        {/* DNS prefetch for other external resources if any */}
-        <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
       </head>
       <body className="momo-trust-display-regular antialiased overflow-x-hidden">
         <SmoothScroll>

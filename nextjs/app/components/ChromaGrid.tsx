@@ -1,5 +1,6 @@
 "use client"
 
+import Image from 'next/image';
 import { useRef, useEffect } from 'react';
 import { gsap } from 'gsap';
 
@@ -198,12 +199,16 @@ const ChromaGrid = ({
             }}
           />
           <div className="relative z-10 flex-1 p-4 box-border">
-            <img 
-              src={c.image} 
-              alt={c.title} 
-              loading="lazy" 
-              className="w-full h-full object-cover rounded-lg" 
-            />
+            <div className="relative w-full h-full">
+              <Image
+                src={c.image}
+                alt={c.title}
+                fill
+                sizes="(max-width: 768px) 200px, 280px"
+                className="object-cover rounded-lg"
+                loading="lazy"
+              />
+            </div>
           </div>
           <footer className="relative z-10 p-4 text-white font-sans">
             <h3 className="m-0 text-lg font-semibold line-clamp-2 mb-2">{c.title}</h3>

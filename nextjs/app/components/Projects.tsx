@@ -1,6 +1,7 @@
 "use client"
 
-import React, { useEffect, useState } from "react"
+import Image from "next/image"
+import React from "react"
 import { FaExternalLinkAlt, FaGithub } from "react-icons/fa"
 
 interface Project {
@@ -17,12 +18,6 @@ interface Project {
 }
 
 const Projects: React.FC = () => {
-  const [isClient, setIsClient] = useState(false);
-
-  useEffect(() => {
-    setIsClient(true);
-  }, []);
-
   // Hardcoded project data
   const projects: Project[] = [
     {
@@ -57,8 +52,8 @@ const Projects: React.FC = () => {
       p2: "Captured real-time behavioral data with Node.js and Python backend, stored in MongoDB",
       p3: "Designed interactive dashboards with visual summaries for daily, weekly, and category-wise usage",
       Tech: ["TSX", "Node.js", "MongoDB", "Machine Learning", "Docker", "FastAPI"],
-      github: "hh",
-      livedemo: "hhh",
+      github: "#",
+      livedemo: "#",
       image: "/personal/focus.webp"
     },
     {
@@ -127,14 +122,9 @@ const Projects: React.FC = () => {
           </h1>
         </div>
 
-        {!isClient ? (
-          <div className="flex justify-center items-center h-64">
-            <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-[#00BFFF]"></div>
-          </div>
-        ) : (
-          <div className="relative">
-            {projects.map((project, index) => (
-              <div key={project.id} className="relative group mb-20 px-4">
+        <div className="relative">
+          {projects.map((project, index) => (
+            <div key={project.id} className="relative group mb-20 px-4">
                 {/* Glowing lines and circles */}
                 <div className="absolute left-1/2 transform -translate-x-1/2 w-0.5 h-full hidden md:block">
                   <div className="w-full h-full bg-gradient-to-b from-[#00BFFF] to-transparent" style={{
@@ -173,7 +163,7 @@ const Projects: React.FC = () => {
                 {/* Project card */}
                 <div className={`w-full md:w-4/12 ${index % 2 === 0 ? 'md:mr-auto md:pr-8' : 'md:ml-auto md:pl-8'} mt-8 md:mt-0 relative z-20`}>
                   <div 
-                    className="bg-[#151030]/80 backdrop-blur-sm p-4 md:p-6 rounded-lg border border-[#00BFFF]/20 shadow-xl transition-all duration-300 book-card project-card"
+                    className="bg-[#151030]/80 backdrop-blur-sm p-4 md:p-6 rounded-lg border border-[#00BFFF]/20 shadow-xl transition-all duration-300 relative overflow-hidden hover:shadow-lg hover:-translate-y-0.5"
                     style={{
                       '--card-color': getProjectColor(project.Tech, project.title),
                       '--glow-x': '50%',
@@ -182,7 +172,7 @@ const Projects: React.FC = () => {
                       '--glow-blur': '15px',
                     } as React.CSSProperties}
                     onMouseMove={(e) => {
-                      if (window.innerWidth <= 768) return;
+                      if (typeof window !== "undefined" && window.innerWidth <= 768) return;
                       
                       const rect = e.currentTarget.getBoundingClientRect();
                       const x = ((e.clientX - rect.left) / rect.width) * 100;
@@ -196,12 +186,16 @@ const Projects: React.FC = () => {
                       e.currentTarget.style.setProperty('--glow-opacity', '0');
                     }}
                   >
-                    <div className="book-content relative z-10">
+                    <div className="relative z-10">
                       <div className="mb-4 overflow-hidden rounded-lg relative z-0">
-                        <img 
-                          src={project.image || "/placeholder.svg"} 
-                          alt={project.title} 
-                          className="w-full h-32 md:h-40 object-cover object-center rounded-lg transition-transform duration-500 hover:scale-110" 
+                        <Image
+                          src={project.image || "/placeholder.svg"}
+                          alt={project.title}
+                          width={380}
+                          height={200}
+                          sizes="(max-width: 768px) 100vw, 33vw"
+                          className="w-full h-32 md:h-40 object-cover object-center rounded-lg transition-transform duration-500 hover:scale-110"
+                          priority={index === 0}
                         />
                       </div>
                       <h3 className="text-white font-bold text-xl mb-2 relative z-0">{project.title}</h3>
@@ -284,10 +278,9 @@ const Projects: React.FC = () => {
                     </span>
                   </div>
                 </div>
-              </div>
-            ))}
-          </div>
-        )}
+            </div>
+          ))}
+        </div>
 
         <div className="text-center mt-16">
           <p className="text-gray-300 text-lg max-w-3xl mx-auto leading-relaxed">
@@ -298,47 +291,7 @@ const Projects: React.FC = () => {
         </div>
       </div>
 
-      <style jsx>{`
-        .project-card {
-          position: relative;
-          overflow: hidden;
-          transform: translateZ(0);
-          transition: all 0.3s ease;
-        }
-        
-        .project-card:hover {
-          transform: translateY(-3px);
-          box-shadow: 
-            0 10px 20px -8px rgba(0, 0, 0, 0.3),
-            0 0 8px rgba(var(--card-color-rgb, 0, 191, 255), 0.15),
-            0 0 15px rgba(var(--card-color-rgb, 0, 191, 255), 0.1);
-          border-color: rgba(var(--card-color-rgb, 0, 191, 255), 0.5);
-        }
-        
-        .project-card::after {
-          content: '';
-          position: absolute;
-          inset: 0;
-          padding: 2px;
-          border-radius: 8px;
-          background: linear-gradient(
-            to bottom right,
-            var(--card-color, #00BFFF) 0%,
-            transparent 50%,
-            var(--card-color, #00BFFF) 100%
-          );
-          -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-          -webkit-mask-composite: xor;
-          mask-composite: exclude;
-          pointer-events: none;
-          opacity: 0.4;
-          transition: opacity 0.3s ease;
-        }
-        
-        .project-card:hover::after {
-          opacity: 0.4;
-        }
-      `}</style>
+
     </section>
   );
 };

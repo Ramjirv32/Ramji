@@ -1,6 +1,7 @@
 "use client"
 
 import type React from "react"
+import Image from "next/image"
 import { useEffect, useState } from "react"
 import { FaAward, FaMedal, FaFilePdf, FaExternalLinkAlt, FaChevronLeft, FaChevronRight, FaTimes } from "react-icons/fa"
 import AOS from 'aos'
@@ -186,10 +187,13 @@ const CertificateCard = ({ cert, index, onImageClick }: { cert: typeof projects[
       >
         {/* Certificate Image */}
         <div className="relative h-48 overflow-hidden cursor-pointer" onClick={() => onImageClick(cert)}>
-          <img
+          <Image
             src={cert.image}
             alt={cert.name}
-            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+            fill
+            sizes="(max-width: 1024px) 90vw, 360px"
+            className="object-cover transition-transform duration-500 group-hover:scale-110"
+            priority={index === 0}
           />
           <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
             <span className="text-white font-semibold">Click to view full certificate</span>
@@ -412,10 +416,13 @@ const Certificate = () => {
 
             {/* Certificate Image */}
             <div className="p-4">
-              <img
+              <Image
                 src={selectedCert.image}
                 alt={selectedCert.name}
-                className="w-full h-auto rounded-lg"
+                width={1280}
+                height={720}
+                className="h-auto w-full rounded-lg object-contain"
+                sizes="(max-width: 768px) 90vw, 60vw"
               />
               <div className="mt-4 text-center">
                 <h3 className="text-white text-xl font-bold mb-2">{selectedCert.name}</h3>
