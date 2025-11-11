@@ -7,18 +7,42 @@ const fallbackSkillsData = [
     id: 1,
     created_at: new Date().toISOString(),
     s: [
-      "HTML", "CSS", "JavaScript", "TypeScript", "React", "Next.js", "Vue.js", "Angular", "Svelte",
-      "Node.js", "Express", "NestJS", "Django", "FastAPI", "Spring Boot", ".NET",
-      "MongoDB", "PostgreSQL", "MySQL", "Redis", "Firebase", "Supabase",
-      "Tailwind CSS", "Bootstrap", "Sass", "Material-UI", "Shadcn",
-      "Git", "GitHub", "Docker", "Kubernetes", "AWS", "Azure", "Google Cloud", "Vercel", "Cloudflare",
-      "Python", "Java", "C", "C++", "Rust", "Go", "Kotlin", "Swift", "Dart", "PHP",
-      "GraphQL", "REST API", "WebSocket", "Prisma", "Redux", "Three.js", "WebGL", "Framer Motion",
-      "Jest", "Cypress", "Webpack", "Vite", "Postman", "Figma", "Nginx", "Jenkins",
-      "Flutter", "React Native", "WordPress", "Stripe", "Razorpay"
+      "HTML",
+      "CSS",
+      "JavaScript",
+      "TypeScript",
+      "ReactJS",
+      "C",
+      "Java",
+      "Tailwind CSS",
+      "Framer Motion",
+      "Shadcn",
+      "NodeJS",
+      "ExpressJS",
+      "MongoDB",
+      "PostgreSQL",
+      "Prisma",
+      "Git",
+      "GitHub",
+      "Vercel",
+      "Postman",
+      "Linux",
+      "Supabase",
+      "NextJS",
+      "Python",
+      "fastapi",
+      "Docker",
+      "Cloudflare",
+      "WordPress",
+      "Figma",
+      "Firebase",
+      "AWS",
+      "Redux",
+      "Jenkins",
+      "Azure"
     ]
   }
-]
+];
 
 export async function GET(request: NextRequest) {
   try {
