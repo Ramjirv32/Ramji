@@ -31,14 +31,20 @@ import { DiJqueryLogo } from "react-icons/di"
 import AOS from 'aos'
 import 'aos/dist/aos.css'
 
-const API_URL = process.env.NODE_ENV === 'development' 
-  ? 'http://localhost:3000' 
-  : 'https://ramji-etht.vercel.app'
+// Backend server URL
+const BACKEND_URL = process.env.NODE_ENV === 'development' 
+  ? 'http://localhost:9000' 
+  : 'https://your-backend-domain.com' // Replace with your actual backend domain
+
+interface Skill {
+  name: string
+  icon: string
+}
 
 interface SkillsData {
   id: number
   created_at: string
-  s: string[]
+  s: Skill[]
 }
 
 const skillIconsMap: Record<string, { icon: React.ReactElement; color: string }> = {
@@ -61,6 +67,7 @@ const skillIconsMap: Record<string, { icon: React.ReactElement; color: string }>
   "Three.js": { icon: <SiThreedotjs size={20} />, color: "#000000" },
   "Shadcn": { icon: <RxShadowNone size={20} />, color: "#FFFFFF" },
   "Next.js": { icon: <SiNextdotjs size={20} />, color: "#000000" },
+  "NextJS": { icon: <SiNextdotjs size={20} />, color: "#000000" },
   "Angular": { icon: <FaAngular size={20} />, color: "#DD0031" },
   "Vue.js": { icon: <FaVuejs size={20} />, color: "#4FC08D" },
   "Svelte": { icon: <SiSvelte size={20} />, color: "#FF3E00" },
@@ -69,7 +76,6 @@ const skillIconsMap: Record<string, { icon: React.ReactElement; color: string }>
   "TailwindCSS": { icon: <SiTailwindcss size={20} />, color: "#38bdf8" },
   "Bootstrap": { icon: <FaBootstrap size={20} />, color: "#7952B3" },
   "Sass": { icon: <FaSass size={20} />, color: "#CC6699" },
-  "NextJs": { icon: <SiNextdotjs size={20} />, color: "#000000" },
   "Redux": { icon: <SiRedux size={20} />, color: "#764ABC" },
   "WebGL": { icon: <SiWebgl size={20} />, color: "#990000" },
   "WordPress": { icon: <FaWordpress size={20} />, color: "#21759B" },
@@ -125,10 +131,6 @@ const skillIconsMap: Record<string, { icon: React.ReactElement; color: string }>
   "Figma": { icon: <FaFigma size={20} />, color: "#F24E1E" },
   "Stripe": { icon: <FaStripe size={20} />, color: "#008CDD" },
   "Razorpay": { icon: <SiRazorpay size={20} />, color: "#0C2451" },
-  "API": { icon: <SiPostman size={20} />, color: "#FF6C37" },
-  "AI APIs": { icon: <IoLogoJavascript size={20} />, color: "#F7DF1E" },
-  "Hugging Face API": { icon: <IoLogoJavascript size={20} />, color: "#F7DF1E" },
-  "IoT": { icon: <FaNodeJs size={20} />, color: "#339933" },
 }
 
 const skillCategories: Record<string, string[]> = {
@@ -164,21 +166,8 @@ const skillCategories: Record<string, string[]> = {
   ]
 }
 
-// Default skills array as fallback
-const defaultSkills = [
-  "HTML", "CSS", "JavaScript", "TypeScript", "React", "Next.js", "Vue.js", "Angular", "Svelte",
-  "Node.js", "Express", "NestJS", "Django", "FastAPI", "Spring Boot", ".NET",
-  "MongoDB", "PostgreSQL", "MySQL", "Redis", "Firebase", "Supabase",
-  "Tailwind CSS", "Bootstrap", "Sass", "Material-UI", "Shadcn",
-  "Git", "GitHub", "Docker", "Kubernetes", "AWS", "Azure", "Google Cloud", "Vercel", "Cloudflare",
-  "Python", "Java", "C", "C++", "Rust", "Go", "Kotlin", "Swift", "Dart", "PHP",
-  "GraphQL", "REST API", "WebSocket", "Prisma", "Redux", "Three.js", "WebGL", "Framer Motion",
-  "Jest", "Cypress", "Webpack", "Vite", "Postman", "Figma", "Nginx", "Jenkins",
-  "Flutter", "React Native", "WordPress", "Stripe", "Razorpay"
-]
-
 const SkillsContent = () => {
-  const [skills, setSkills] = useState<string[]>(defaultSkills)
+  const [skills, setSkills] = useState<Skill[]>([])
   const [loading, setLoading] = useState<boolean>(true)
   const [error, setError] = useState<string | null>(null)
   const [isGridView, setIsGridView] = useState<boolean>(true)
@@ -198,7 +187,7 @@ const SkillsContent = () => {
 
   const fetchSkills = async () => {
     try {
-      const response = await fetch(`${API_URL}/api/public/skills`, {
+      const response = await fetch(`${BACKEND_URL}/public/skills`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -210,27 +199,23 @@ const SkillsContent = () => {
       }
       
       const data = await response.json()
+      console.log('Skills data fetched:', data)
       
       if (data && Array.isArray(data) && data.length > 0) {
         if (data[0].s && Array.isArray(data[0].s) && data[0].s.length > 0) {
-          const skillNames = data[0].s.map((skill: any) => {
-            if (typeof skill === 'object' && skill.name) {
-              return skill.name
-            }
-            return skill
-          })
-          setSkills(skillNames)
+          setSkills(data[0].s)
         }
       }
     } catch (error) {
-      console.warn('Using default skills array as fallback', error)
+      console.error('Error fetching skills:', error)
+      setError('Failed to load skills')
     } finally {
       setLoading(false)
     }
   }
 
   const categorizeSkills = () => {
-    const categorized: Record<string, string[]> = {}
+    const categorized: Record<string, Skill[]> = {}
     
     Object.keys(skillCategories).forEach(category => {
       categorized[category] = []
@@ -242,7 +227,7 @@ const SkillsContent = () => {
       let categoryFound = false
       
       for (const [category, categorySkills] of Object.entries(skillCategories)) {
-        if (categorySkills.includes(skill)) {
+        if (categorySkills.includes(skill.name)) {
           categorized[category].push(skill)
           categoryFound = true
           break
@@ -264,6 +249,39 @@ const SkillsContent = () => {
   }
 
   const categorizedSkills = categorizeSkills()
+
+  if (loading) {
+    return (
+      <section id="skills" className="w-full py-20 relative bg-transparent">
+        <div className="w-full flex flex-col items-center justify-center gap-6 py-16">
+          <div className="flex items-center justify-center">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-white"></div>
+          </div>
+          <p className="text-gray-400">Loading skills...</p>
+        </div>
+      </section>
+    )
+  }
+
+  if (error) {
+    return (
+      <section id="skills" className="w-full py-20 relative bg-transparent">
+        <div className="w-full flex flex-col items-center justify-center gap-6 py-16">
+          <p className="text-red-500">{error}</p>
+        </div>
+      </section>
+    )
+  }
+
+  if (skills.length === 0) {
+    return (
+      <section id="skills" className="w-full py-20 relative bg-transparent">
+        <div className="w-full flex flex-col items-center justify-center gap-6 py-16">
+          <p className="text-gray-400">No skills data available</p>
+        </div>
+      </section>
+    )
+  }
 
   return (
     <section id="skills" className="w-full py-20 relative bg-transparent">
@@ -307,34 +325,66 @@ const SkillsContent = () => {
                 : 'bg-gray-800/50 border-gray-600 text-gray-300 hover:border-gray-500'
             }`}
           >
-            Normal View
+            Category View
           </button>
         </div>
 
-        {loading ? (
-          <div className="flex items-center justify-center">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-white"></div>
-          </div>
-        ) : error ? (
-          <div className="text-red-500">{error}</div>
-        ) : (
-          <IconContext.Provider value={{ className: "icon" }}>
-            <div className="w-full max-w-7xl px-4">
-              {isGridView ? (
-                <div className="mb-12">
+        <IconContext.Provider value={{ className: "icon" }}>
+          <div className="w-full max-w-7xl px-4">
+            {isGridView ? (
+              <div className="mb-12">
+                <div className="flex flex-wrap gap-3 justify-center">
+                  {skills.map((skill, index) => {
+                    const skillInfo = skillIconsMap[skill.name] ?? {
+                      icon: <span>•</span>,
+                      color: "#FFFFFF",
+                    }
+
+                    return (
+                      <motion.div
+                        key={`grid-skill-${index}`}
+                        initial={{ opacity: 0, scale: 0.8 }}
+                        whileInView={{ opacity: 1, scale: 1 }}
+                        transition={{ duration: 0.3, delay: index * 0.02 }}
+                        viewport={{ once: true }}
+                        whileHover={{ y: -5, scale: 1.05 }}
+                        style={{ '--skill-color': skillInfo.color } as React.CSSProperties}
+                        className="relative group flex items-center justify-center gap-2 px-4 py-2 rounded-full bg-black border border-zinc-800 text-white transition-all duration-300 hover:border-[var(--skill-color)] hover:shadow-[0_0_15px_var(--skill-color)]"
+                      >
+                        <span className="group-hover:animate-bounce" style={{ color: skillInfo.color }}>
+                          {skillInfo.icon}
+                        </span>
+                        <span className="group-hover:text-white text-sm">{skill.name}</span>
+                      </motion.div>
+                    )
+                  })}
+                </div>
+              </div>
+            ) : (
+              Object.entries(categorizedSkills).map(([category, categorySkills]) => (
+                <div key={category} className="mb-12">
+                  <div className="relative mb-8">
+                    <div className="absolute inset-0 bg-gradient-to-r from-blue-600/10 via-purple-600/10 to-pink-600/10 rounded-lg blur-xl"></div>
+                    <div className="relative bg-gradient-to-r from-gray-900/50 via-gray-800/30 to-gray-900/50 backdrop-blur-sm border border-gray-700/30 rounded-lg p-4">
+                      <h3 className="text-white text-2xl font-bold text-left bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">
+                        {category}
+                      </h3>
+                      <div className="h-0.5 w-16 bg-gradient-to-r from-blue-500 to-purple-500 mt-2 rounded-full"></div>
+                    </div>
+                  </div>
                   <div className="flex flex-wrap gap-3 justify-center">
-                    {skills.map((skill, index) => {
-                      const skillInfo = skillIconsMap[skill] ?? {
+                    {categorySkills.map((skill, index) => {
+                      const skillInfo = skillIconsMap[skill.name] ?? {
                         icon: <span>•</span>,
                         color: "#FFFFFF",
                       }
 
                       return (
                         <motion.div
-                          key={`grid-skill-${index}`}
+                          key={`${category}-${index}`}
                           initial={{ opacity: 0, scale: 0.8 }}
                           whileInView={{ opacity: 1, scale: 1 }}
-                          transition={{ duration: 0.3, delay: index * 0.02 }}
+                          transition={{ duration: 0.3, delay: index * 0.05 }}
                           viewport={{ once: true }}
                           whileHover={{ y: -5, scale: 1.05 }}
                           style={{ '--skill-color': skillInfo.color } as React.CSSProperties}
@@ -343,56 +393,16 @@ const SkillsContent = () => {
                           <span className="group-hover:animate-bounce" style={{ color: skillInfo.color }}>
                             {skillInfo.icon}
                           </span>
-                          <span className="group-hover:text-white text-sm">{skill}</span>
+                          <span className="group-hover:text-white text-sm">{skill.name}</span>
                         </motion.div>
                       )
                     })}
                   </div>
                 </div>
-              ) : (
-                Object.entries(categorizedSkills).map(([category, categorySkills]) => (
-                  <div key={category} className="mb-12">
-                    <div className="relative mb-8">
-                      <div className="absolute inset-0 bg-gradient-to-r from-blue-600/10 via-purple-600/10 to-pink-600/10 rounded-lg blur-xl"></div>
-                      <div className="relative bg-gradient-to-r from-gray-900/50 via-gray-800/30 to-gray-900/50 backdrop-blur-sm border border-gray-700/30 rounded-lg p-4">
-                        <h3 className="text-white text-2xl font-bold text-left bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">
-                          {category}
-                        </h3>
-                        <div className="h-0.5 w-16 bg-gradient-to-r from-blue-500 to-purple-500 mt-2 rounded-full"></div>
-                      </div>
-                    </div>
-                    <div className="flex flex-wrap gap-3 justify-center">
-                      {categorySkills.map((skill, index) => {
-                        const skillInfo = skillIconsMap[skill] ?? {
-                          icon: <span>•</span>,
-                          color: "#FFFFFF",
-                        }
-
-                        return (
-                          <motion.div
-                            key={`${category}-${index}`}
-                            initial={{ opacity: 0, scale: 0.8 }}
-                            whileInView={{ opacity: 1, scale: 1 }}
-                            transition={{ duration: 0.3, delay: index * 0.05 }}
-                            viewport={{ once: true }}
-                            whileHover={{ y: -5, scale: 1.05 }}
-                            style={{ '--skill-color': skillInfo.color } as React.CSSProperties}
-                            className="relative group flex items-center justify-center gap-2 px-4 py-2 rounded-full bg-black border border-zinc-800 text-white transition-all duration-300 hover:border-[var(--skill-color)] hover:shadow-[0_0_15px_var(--skill-color)]"
-                          >
-                            <span className="group-hover:animate-bounce" style={{ color: skillInfo.color }}>
-                              {skillInfo.icon}
-                            </span>
-                            <span className="group-hover:text-white text-sm">{skill}</span>
-                          </motion.div>
-                        )
-                      })}
-                    </div>
-                  </div>
-                ))
-              )}
-            </div>
-          </IconContext.Provider>
-        )}
+              ))
+            )}
+          </div>
+        </IconContext.Provider>
       </div>
     </section>
   )
