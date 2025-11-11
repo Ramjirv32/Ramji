@@ -1,7 +1,8 @@
 import { type NextRequest } from 'next/server'
+import { supabase } from '@/lib/supabase'
 
-// Static skills data for fast response
-const skillsData = [
+// Fallback skills data in case database is unavailable
+const fallbackSkillsData = [
   {
     id: 1,
     created_at: new Date().toISOString(),
@@ -20,40 +21,95 @@ const skillsData = [
 ]
 
 export async function GET(request: NextRequest) {
-  // Get country for personalized greeting
-  const country = request.headers.get('x-vercel-ip-country') || 'unknown'
-  const region = request.headers.get('x-vercel-ip-country-region') || 'unknown'
-  const city = request.headers.get('x-vercel-ip-city') || 'unknown'
+  try {
+    // Get country for personalized greeting
+    const country = request.headers.get('x-vercel-ip-country') || 'unknown'
+    const region = request.headers.get('x-vercel-ip-country-region') || 'unknown'
+    const city = request.headers.get('x-vercel-ip-city') || 'unknown'
 
-  let greeting = "Welcome to my tech stack!"
-  
-  if (country === 'IN') {
-    if (region === 'TN' || city.toLowerCase().includes('chennai')) {
-      greeting = "Vanakkam! Here's my tech stack 🇮🇳"
-    } else {
-      greeting = `Namaste from ${region}! Here's my tech stack 🇮🇳`
+    let greeting = "Welcome to my tech stack!"
+    
+    if (country === 'IN') {
+      if (region === 'TN' || city.toLowerCase().includes('chennai')) {
+        greeting = "Vanakkam! Here's my tech stack 🇮🇳"
+      } else {
+        greeting = `Namaste from ${region}! Here's my tech stack 🇮🇳`
+      }
+    } else if (country === 'US') {
+      greeting = "Hello from the United States! Here's my tech stack 🇺🇸"
+    } else if (country === 'GB') {
+      greeting = "Hello from the United Kingdom! Here's my tech stack 🇬🇧"
+    } else if (country !== 'unknown') {
+      greeting = `Hello from ${country}! Here's my tech stack 🌍`
     }
-  } else if (country === 'US') {
-    greeting = "Hello from the United States! Here's my tech stack 🇺🇸"
-  } else if (country === 'GB') {
-    greeting = "Hello from the United Kingdom! Here's my tech stack 🇬🇧"
-  } else if (country !== 'unknown') {
-    greeting = `Hello from ${country}! Here's my tech stack 🌍`
-  }
 
-  const response = {
-    ...skillsData[0],
-    greeting,
-    location: { country, region, city }
-  }
+    // Fetch from the existing skills data (same as admin route but public access)
+    const { data: skills, error } = await supabase
+      .from('Skills')
+      .select('id, created_at, s')
+      .order('created_at', { ascending: false })
+      .limit(1)
 
-  return Response.json([response], {
-    status: 200,
-    headers: {
-      'Cache-Control': 'public, s-maxage=3600, stale-while-revalidate=86400',
-      'CDN-Cache-Control': 'public, s-maxage=86400',
-      'Vercel-CDN-Cache-Control': 'public, s-maxage=86400',
-      'Vary': 'X-Vercel-IP-Country, X-Vercel-IP-Country-Region, X-Vercel-IP-City',
-    },
-  })
+    if (error) {
+      console.error('Supabase error:', error)
+      // Use fallback data if database fails
+      const response = {
+        ...fallbackSkillsData[0],
+        greeting,
+        location: { country, region, city }
+      }
+
+      return Response.json([response], {
+        status: 200,
+        headers: {
+          'Cache-Control': 'public, s-maxage=300, stale-while-revalidate=3600',
+        },
+      })
+    }
+
+    if (!skills || skills.length === 0) {
+      console.log('No skills found, using fallback data')
+      const response = {
+        ...fallbackSkillsData[0],
+        greeting,
+        location: { country, region, city }
+      }
+
+      return Response.json([response], { status: 200 })
+    }
+
+    // Use the existing skills data format
+    const skillsData = skills[0]
+    const response = {
+      ...skillsData,
+      greeting,
+      location: { country, region, city }
+    }
+
+    return Response.json([response], {
+      status: 200,
+      headers: {
+        'Cache-Control': 'public, s-maxage=3600, stale-while-revalidate=86400',
+        'CDN-Cache-Control': 'public, s-maxage=86400',
+        'Vercel-CDN-Cache-Control': 'public, s-maxage=86400',
+        'Vary': 'X-Vercel-IP-Country, X-Vercel-IP-Country-Region, X-Vercel-IP-City',
+      },
+    })
+  } catch (error) {
+    console.error('Skills API error:', error)
+    
+    // Return fallback data in case of any error
+    const response = {
+      ...fallbackSkillsData[0],
+      greeting: "Welcome to my tech stack!",
+      location: { country: 'unknown', region: 'unknown', city: 'unknown' }
+    }
+
+    return Response.json([response], {
+      status: 200,
+      headers: {
+        'Cache-Control': 'public, s-maxage=300, stale-while-revalidate=3600',
+      },
+    })
+  }
 }
