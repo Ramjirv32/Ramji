@@ -33,8 +33,8 @@ import 'aos/dist/aos.css'
 
 // Backend server URL
 const BACKEND_URL = process.env.NODE_ENV === 'development' 
-  ? 'http://localhost:9000' 
-  : 'https://your-backend-domain.com' // Replace with your actual backend domain
+  ? 'https://ramji-etht.vercel.app' 
+  : 'http://localhost:9000'; // Replace with your actual backend domain
 
 interface Skill {
   name: string
