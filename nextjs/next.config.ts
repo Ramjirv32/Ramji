@@ -12,6 +12,39 @@ const nextConfig: NextConfig = {
   // Production optimization (SWC minification enabled by default in Next.js 16+)
   productionBrowserSourceMaps: false,
   
+  // Cache control headers for better performance
+  async headers() {
+    return [
+      {
+        source: '/',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, s-maxage=1, stale-while-revalidate=59',
+          },
+        ],
+      },
+      {
+        source: '/((?!api).*)',
+        headers: [
+          {
+            key: 'Cache-Control', 
+            value: 'public, max-age=3600, s-maxage=86400',
+          },
+        ],
+      },
+      {
+        source: '/favicon.svg',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=31536000, immutable',
+          },
+        ],
+      },
+    ];
+  },
+  
   // Image optimization
   images: {
     formats: ['image/avif', 'image/webp'],
