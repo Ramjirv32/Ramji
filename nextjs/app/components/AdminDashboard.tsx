@@ -19,8 +19,6 @@ import {
 } from 'react-icons/fa';
 import toast, { Toaster } from 'react-hot-toast';
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:9000';
-
 interface AdminDashboardProps {
   onLogout: () => void;
 }
@@ -49,12 +47,101 @@ interface Contact {
 
 interface Skill {
   id: number;
-  s: Array<{
-    name: string;
-    icon?: string;
-  }>;
-  created_at: string;
+  name: string;
+  icon: string;
 }
+
+// Static data - no backend required
+const staticProjectsData: Project[] = [
+  {
+    id: 1,
+    created_at: "2025-07-08T10:40:29.654538+00:00",
+    title: "Vehicle Rental System",
+    p1: "Developed a comprehensive vehicle rental management system in C",
+    p2: "Implemented user authentication and booking functionality using file handling",
+    p3: "Created efficient data structures and memory management",
+    p4: "",
+    Tech: ["C", "Data Structures", "File I/O", "Memory Management"],
+    github: "https://github.com/Ramjirv32/Vehicle-Rental-System",
+    livedemo: "https://github.com/Ramjirv32/Vehicle-Rental-System",
+    image: "/assets/grs.webp"
+  },
+  {
+    id: 3,
+    created_at: "2023-04-01T00:00:00+00:00",
+    title: "Smart Parking System",
+    p1: "Led development of a full-stack parking system website",
+    p2: "Implemented real-time parking space tracking with IoT",
+    p3: "Designed booking and reservation management system",
+    p4: "",
+    Tech: ["React", "Node.js", "IoT", "PostgreSQL"],
+    github: "https://github.com/Ramjirv32/Smart-Parking-System",
+    livedemo: "https://parking-orcin-tau.vercel.app/",
+    image: "/assets/aadhya.webp"
+  },
+  {
+    id: 4,
+    created_at: "2023-09-01T00:00:00+00:00",
+    title: "FocusAI Productive Assistant",
+    p1: "Trained a custom AI model for behavior classification in collaboration with Navaneethalkrishnan",
+    p2: "Captured real-time behavioral data with Node.js and Python backend, stored in MongoDB",
+    p3: "Designed interactive dashboards with visual summaries for daily, weekly, and category-wise usage",
+    p4: "",
+    Tech: ["TSX", "Node.js", "MongoDB", "Machine Learning", "Docker", "FastAPI"],
+    github: "#",
+    livedemo: "#",
+    image: "/personal/focus.webp"
+  },
+  {
+    id: 5,
+    created_at: "2023-10-01T00:00:00+00:00",
+    title: "NebulX",
+    p1: "Building advanced AI features and integrations",
+    p2: "Implementing modern UI/UX design principles",
+    p3: "Developing scalable backend architecture",
+    p4: "",
+    Tech: ["React", "AI APIs", "Node.js", "Express", "Tailwind CSS"],
+    github: "https://github.com/Ramjirv32/nebulx",
+    livedemo: "https://nebulx.vercel.app/",
+    image: "/assets/nebulx.webp"
+  }
+];
+
+const staticSkillsData: Skill[] = [
+  { id: 1, name: "JavaScript", icon: "SiJavascript" },
+  { id: 2, name: "TypeScript", icon: "SiTypescript" },
+  { id: 3, name: "React", icon: "SiReact" },
+  { id: 4, name: "Next.js", icon: "SiNextdotjs" },
+  { id: 5, name: "Node.js", icon: "SiNodedotjs" },
+  { id: 6, name: "Python", icon: "SiPython" },
+  { id: 7, name: "Java", icon: "SiJava" },
+  { id: 8, name: "C++", icon: "SiCplusplus" },
+  { id: 9, name: "C", icon: "SiC" },
+  { id: 10, name: "HTML5", icon: "SiHtml5" },
+  { id: 11, name: "CSS3", icon: "SiCss3" },
+  { id: 12, name: "Tailwind CSS", icon: "SiTailwindcss" },
+  { id: 13, name: "Bootstrap", icon: "SiBootstrap" },
+  { id: 14, name: "Sass", icon: "SiSass" },
+  { id: 15, name: "jQuery", icon: "SiJquery" },
+  { id: 16, name: "Vue.js", icon: "SiVuedotjs" },
+  { id: 17, name: "Angular", icon: "SiAngular" },
+  { id: 18, name: "Express.js", icon: "SiExpress" },
+  { id: 19, name: "Django", icon: "SiDjango" },
+  { id: 20, name: "Flask", icon: "SiFlask" },
+  { id: 21, name: "FastAPI", icon: "SiFastapi" },
+  { id: 22, name: "MongoDB", icon: "SiMongodb" },
+  { id: 23, name: "PostgreSQL", icon: "SiPostgresql" },
+  { id: 24, name: "MySQL", icon: "SiMysql" },
+  { id: 25, name: "Redis", icon: "SiRedis" },
+  { id: 26, name: "Git", icon: "SiGit" },
+  { id: 27, name: "Docker", icon: "SiDocker" },
+  { id: 28, name: "Kubernetes", icon: "SiKubernetes" },
+  { id: 29, name: "AWS", icon: "SiAmazonaws" },
+  { id: 30, name: "Google Cloud", icon: "SiGooglecloud" },
+  { id: 31, name: "Firebase", icon: "SiFirebase" },
+  { id: 32, name: "Vercel", icon: "SiVercel" },
+  { id: 33, name: "Linux", icon: "SiLinux" }
+];
 
 // Enhanced Modal Component
 interface ModalProps {
@@ -100,108 +187,66 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, title, children, size = 
   );
 };
 
-// Loading Spinner Component
-const LoadingSpinner = () => (
-  <div className="flex items-center justify-center py-12">
-    <FaSpinner className="animate-spin text-4xl text-[#00BFFF]" />
-    <span className="ml-3 text-white text-lg">Loading...</span>
-  </div>
-);
-
-// Empty State Component
-const EmptyState = ({ icon: Icon, title, description, actionText, onAction }: {
-  icon: any;
-  title: string;
-  description: string;
-  actionText?: string;
-  onAction?: () => void;
-}) => (
-  <div className="text-center py-12">
-    <Icon className="mx-auto h-16 w-16 text-gray-400 mb-4" />
-    <h3 className="text-xl font-medium text-white mb-2">{title}</h3>
-    <p className="text-gray-400 mb-6">{description}</p>
-    {actionText && onAction && (
-      <button
-        onClick={onAction}
-        className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-lg text-white bg-[#00BFFF] hover:bg-[#0096FF] transition-colors"
-      >
-        <FaPlus className="mr-2" />
-        {actionText}
-      </button>
-    )}
-  </div>
-);
-
-export default function AdminDashboard({ onLogout }: AdminDashboardProps) {
+const AdminDashboard: React.FC<AdminDashboardProps> = ({ onLogout }) => {
   const [activeTab, setActiveTab] = useState<'projects' | 'contacts' | 'skills'>('projects');
   const [projects, setProjects] = useState<Project[]>([]);
   const [contacts, setContacts] = useState<Contact[]>([]);
   const [skills, setSkills] = useState<Skill[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
   
   // Modal states
-  const [showProjectModal, setShowProjectModal] = useState(false);
-  const [showSkillModal, setShowSkillModal] = useState(false);
-  const [showContactModal, setShowContactModal] = useState(false);
-  const [editingProject, setEditingProject] = useState<Project | null>(null);
-  const [editingSkill, setEditingSkill] = useState<Skill | null>(null);
-  const [viewingContact, setViewingContact] = useState<Contact | null>(null);
+  const [isProjectModalOpen, setIsProjectModalOpen] = useState(false);
+  const [isSkillModalOpen, setIsSkillModalOpen] = useState(false);
+  const [isViewModalOpen, setIsViewModalOpen] = useState(false);
+  const [selectedItem, setSelectedItem] = useState<any>(null);
+  const [isEditing, setIsEditing] = useState(false);
   
   // Form states
-  const [projectForm, setProjectForm] = useState<Partial<Project>>({
+  const [projectForm, setProjectForm] = useState({
     title: '',
     p1: '',
     p2: '',
     p3: '',
     p4: '',
-    Tech: [],
+    Tech: [] as string[],
     github: '',
     livedemo: '',
-    image: '/assets/default-project.webp'
+    image: ''
   });
   
-  const [skillsArray, setSkillsArray] = useState<Array<{name: string, icon: string}>>([
-    { name: '', icon: '' }
-  ]);
-
-  const [skillJsonInput, setSkillJsonInput] = useState('');
+  const [skillForm, setSkillForm] = useState({
+    name: '',
+    icon: ''
+  });
 
   useEffect(() => {
-    fetchData();
-  }, [activeTab]);
+    loadData();
+  }, []);
 
-  const fetchData = async () => {
+  const loadData = async () => {
     setLoading(true);
     try {
-      if (activeTab === 'projects') {
-        const response = await fetch(`${API_URL}/api/admin/projects`);
-        if (response.ok) {
-          const data = await response.json();
-          setProjects(Array.isArray(data) ? data : []);
-        }
-      } else if (activeTab === 'contacts') {
-        const response = await fetch(`${API_URL}/api/admin/contacts`);
-        if (response.ok) {
-          const data = await response.json();
-          setContacts(Array.isArray(data) ? data : []);
-        }
-      } else if (activeTab === 'skills') {
-        const response = await fetch(`${API_URL}/api/admin/skills`);
-        if (response.ok) {
-          const data = await response.json();
-          setSkills(Array.isArray(data) ? data : []);
-        }
-      }
+      // Use static data instead of API calls
+      setProjects(staticProjectsData);
+      setSkills(staticSkillsData);
+      setContacts([]); // No static contacts data provided
+      toast.success('Data loaded successfully!');
     } catch (error) {
-      console.error('Error fetching data:', error);
-      toast.error('Failed to fetch data');
+      toast.error('Failed to load data');
     } finally {
       setLoading(false);
     }
   };
 
-  const resetForms = () => {
+  // Project CRUD operations (local state management)
+  const handleCreateProject = () => {
+    const newProject: Project = {
+      id: Math.max(...projects.map(p => p.id), 0) + 1,
+      ...projectForm,
+      created_at: new Date().toISOString()
+    };
+    setProjects([...projects, newProject]);
     setProjectForm({
       title: '',
       p1: '',
@@ -211,822 +256,723 @@ export default function AdminDashboard({ onLogout }: AdminDashboardProps) {
       Tech: [],
       github: '',
       livedemo: '',
-      image: '/assets/default-project.webp'
+      image: ''
     });
-    setSkillsArray([{ name: '', icon: '' }]);
-    setSkillJsonInput('');
-    setEditingProject(null);
-    setEditingSkill(null);
-    setViewingContact(null);
+    setIsProjectModalOpen(false);
+    toast.success('Project added successfully!');
   };
 
+  const handleUpdateProject = () => {
+    if (!selectedItem) return;
+    
+    const updatedProjects = projects.map(project =>
+      project.id === selectedItem.id
+        ? { ...project, ...projectForm }
+        : project
+    );
+    setProjects(updatedProjects);
+    setIsProjectModalOpen(false);
+    setIsEditing(false);
+    setSelectedItem(null);
+    toast.success('Project updated successfully!');
+  };
+
+  const handleDeleteProject = (id: number) => {
+    const updatedProjects = projects.filter(project => project.id !== id);
+    setProjects(updatedProjects);
+    toast.success('Project deleted successfully!');
+  };
+
+  // Skill CRUD operations (local state management)
+  const handleCreateSkill = () => {
+    const newSkill: Skill = {
+      id: Math.max(...skills.map(s => s.id), 0) + 1,
+      ...skillForm
+    };
+    setSkills([...skills, newSkill]);
+    setSkillForm({ name: '', icon: '' });
+    setIsSkillModalOpen(false);
+    toast.success('Skill added successfully!');
+  };
+
+  const handleUpdateSkill = () => {
+    if (!selectedItem) return;
+    
+    const updatedSkills = skills.map(skill =>
+      skill.id === selectedItem.id
+        ? { ...skill, ...skillForm }
+        : skill
+    );
+    setSkills(updatedSkills);
+    setIsSkillModalOpen(false);
+    setIsEditing(false);
+    setSelectedItem(null);
+    toast.success('Skill updated successfully!');
+  };
+
+  const handleDeleteSkill = (id: number) => {
+    const updatedSkills = skills.filter(skill => skill.id !== id);
+    setSkills(updatedSkills);
+    toast.success('Skill deleted successfully!');
+  };
+
+  // Modal handlers
   const openProjectModal = (project?: Project) => {
     if (project) {
-      setEditingProject(project);
-      setProjectForm(project);
+      setSelectedItem(project);
+      setProjectForm({
+        title: project.title,
+        p1: project.p1,
+        p2: project.p2,
+        p3: project.p3,
+        p4: project.p4,
+        Tech: project.Tech,
+        github: project.github,
+        livedemo: project.livedemo,
+        image: project.image
+      });
+      setIsEditing(true);
     } else {
-      resetForms();
+      setSelectedItem(null);
+      setProjectForm({
+        title: '',
+        p1: '',
+        p2: '',
+        p3: '',
+        p4: '',
+        Tech: [],
+        github: '',
+        livedemo: '',
+        image: ''
+      });
+      setIsEditing(false);
     }
-    setShowProjectModal(true);
+    setIsProjectModalOpen(true);
   };
 
   const openSkillModal = (skill?: Skill) => {
     if (skill) {
-      setEditingSkill(skill);
-      setSkillsArray(skill.s.map(s => ({ name: s.name, icon: s.icon || '' })));
-      setSkillJsonInput(JSON.stringify(skill.s, null, 2));
+      setSelectedItem(skill);
+      setSkillForm({
+        name: skill.name,
+        icon: skill.icon
+      });
+      setIsEditing(true);
     } else {
-      resetForms();
+      setSelectedItem(null);
+      setSkillForm({ name: '', icon: '' });
+      setIsEditing(false);
     }
-    setShowSkillModal(true);
+    setIsSkillModalOpen(true);
   };
 
-  const openContactModal = (contact: Contact) => {
-    setViewingContact(contact);
-    setShowContactModal(true);
-  };
-
-  const closeModals = () => {
-    setShowProjectModal(false);
-    setShowSkillModal(false);
-    setShowContactModal(false);
-    resetForms();
-  };
-
-  // Project CRUD operations
-  const handleSaveProject = async () => {
-    try {
-      const isEditing = editingProject !== null;
-      const url = isEditing 
-        ? `${API_URL}/api/admin/projects/${editingProject.id}`
-        : `${API_URL}/api/admin/projects`;
-      
-      const response = await fetch(url, {
-        method: isEditing ? 'PUT' : 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(projectForm),
-      });
-      
-      if (response.ok) {
-        const data = await response.json();
-        if (isEditing) {
-          setProjects(projects.map(p => p.id === editingProject.id ? data.data[0] : p));
-          toast.success('Project updated successfully!');
-        } else {
-          setProjects([data.data[0], ...projects]);
-          toast.success('Project created successfully!');
-        }
-        closeModals();
-        fetchData(); // Refresh data
-      } else {
-        toast.error('Failed to save project');
-      }
-    } catch (error) {
-      console.error('Error saving project:', error);
-      toast.error('Failed to save project');
-    }
-  };
-
-  const handleDeleteProject = async (id: number) => {
-    if (!confirm('Are you sure you want to delete this project?')) return;
-    
-    try {
-      const response = await fetch(`${API_URL}/api/admin/projects/${id}`, {
-        method: 'DELETE',
-      });
-      
-      if (response.ok) {
-        setProjects(projects.filter(p => p.id !== id));
-        toast.success('Project deleted successfully!');
-      } else {
-        toast.error('Failed to delete project');
-      }
-    } catch (error) {
-      console.error('Error deleting project:', error);
-      toast.error('Failed to delete project');
-    }
-  };
-
-  const handleDeleteContact = async (id: number) => {
-    if (!confirm('Are you sure you want to delete this contact?')) return;
-    
-    try {
-      const response = await fetch(`${API_URL}/api/admin/contacts/${id}`, {
-        method: 'DELETE',
-      });
-      
-      if (response.ok) {
-        setContacts(contacts.filter(c => c.id !== id));
-        toast.success('Contact deleted successfully!');
-        closeModals();
-      } else {
-        toast.error('Failed to delete contact');
-      }
-    } catch (error) {
-      console.error('Error deleting contact:', error);
-      toast.error('Failed to delete contact');
-    }
-  };
-
-  // Skills CRUD operations
-  const handleSaveSkill = async () => {
-    try {
-      let skillData;
-      
-      if (skillJsonInput.trim()) {
-        // Use JSON input
-        try {
-          skillData = { s: JSON.parse(skillJsonInput) };
-        } catch (e) {
-          toast.error('Invalid JSON format');
-          return;
-        }
-      } else {
-        // Use individual skills array
-        skillData = { 
-          s: skillsArray.filter(skill => skill.name.trim() !== '')
-        };
-      }
-
-      const isEditing = editingSkill !== null;
-      const url = isEditing 
-        ? `${API_URL}/api/admin/skills/${editingSkill.id}`
-        : `${API_URL}/api/admin/skills`;
-      
-      const response = await fetch(url, {
-        method: isEditing ? 'PUT' : 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(skillData),
-      });
-      
-      if (response.ok) {
-        const data = await response.json();
-        if (isEditing) {
-          setSkills(skills.map(s => s.id === editingSkill.id ? data.data[0] : s));
-          toast.success('Skills updated successfully!');
-        } else {
-          setSkills([data.data[0], ...skills]);
-          toast.success('Skills created successfully!');
-        }
-        closeModals();
-        fetchData(); // Refresh data
-      } else {
-        toast.error('Failed to save skills');
-      }
-    } catch (error) {
-      console.error('Error saving skills:', error);
-      toast.error('Failed to save skills');
-    }
-  };
-
-  const handleDeleteSkill = async (id: number) => {
-    if (!confirm('Are you sure you want to delete this skill set?')) return;
-    
-    try {
-      const response = await fetch(`${API_URL}/api/admin/skills/${id}`, {
-        method: 'DELETE',
-      });
-      
-      if (response.ok) {
-        setSkills(skills.filter(s => s.id !== id));
-        toast.success('Skills deleted successfully!');
-      } else {
-        toast.error('Failed to delete skills');
-      }
-    } catch (error) {
-      console.error('Error deleting skills:', error);
-      toast.error('Failed to delete skills');
-    }
-  };
-
-  const addSkillRow = () => {
-    setSkillsArray([...skillsArray, { name: '', icon: '' }]);
-  };
-
-  const removeSkillRow = (index: number) => {
-    setSkillsArray(skillsArray.filter((_, i) => i !== index));
-  };
-
-  const updateSkillRow = (index: number, field: 'name' | 'icon', value: string) => {
-    const updated = [...skillsArray];
-    updated[index][field] = value;
-    setSkillsArray(updated);
+  const openViewModal = (item: any) => {
+    setSelectedItem(item);
+    setIsViewModalOpen(true);
   };
 
   // Filter functions
   const filteredProjects = projects.filter(project =>
     project.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    project.p1.toLowerCase().includes(searchTerm.toLowerCase()) ||
     project.Tech.some(tech => tech.toLowerCase().includes(searchTerm.toLowerCase()))
+  );
+
+  const filteredSkills = skills.filter(skill =>
+    skill.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   const filteredContacts = contacts.filter(contact =>
     contact.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    contact.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    contact.message.toLowerCase().includes(searchTerm.toLowerCase())
+    contact.email.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  return (
-    <div className="min-h-screen bg-[#050816]">
-      {/* Toast Notifications */}
-      <Toaster
-        position="top-right"
-        toastOptions={{
-          duration: 3000,
-          style: {
-            background: '#151030',
-            color: '#fff',
-            border: '1px solid #00BFFF',
-          },
-        }}
-      />
-
-      {/* Header */}
-      <header className="bg-[#151030] border-b border-gray-700 sticky top-0 z-40">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center py-4">
-            <div>
-              <h1 className="text-2xl font-bold text-white">Admin Dashboard</h1>
-              <p className="text-gray-400 text-sm">Manage your portfolio content</p>
-            </div>
-            
-            <button
-              onClick={onLogout}
-              className="flex items-center gap-2 bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg transition-colors"
-            >
-              <FaSignOutAlt />
-              Logout
-            </button>
-          </div>
-        </div>
-      </header>
-
-      {/* Navigation Tabs */}
-      <nav className="bg-[#151030] border-b border-gray-700">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex space-x-8">
-            {[
-              { key: 'projects', label: 'Projects', icon: FaProjectDiagram },
-              { key: 'contacts', label: 'Contacts', icon: FaEnvelope },
-              { key: 'skills', label: 'Skills', icon: FaCode },
-            ].map(({ key, label, icon: Icon }) => (
-              <button
-                key={key}
-                onClick={() => setActiveTab(key as any)}
-                className={`flex items-center gap-2 py-4 border-b-2 font-medium text-sm transition-colors ${
-                  activeTab === key
-                    ? 'border-[#00BFFF] text-[#00BFFF]'
-                    : 'border-transparent text-gray-400 hover:text-white'
-                }`}
-              >
-                <Icon />
-                {label}
-              </button>
-            ))}
-          </div>
-        </div>
-      </nav>
-
-      {/* Main Content */}
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Search and Actions Bar */}
-        <div className="flex flex-col sm:flex-row gap-4 justify-between items-start sm:items-center mb-8">
-          <div className="flex-1 max-w-md">
-            <div className="relative">
-              <FaSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
-              <input
-                type="text"
-                placeholder={`Search ${activeTab}...`}
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full pl-10 pr-4 py-2 bg-[#151030] border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:border-[#00BFFF] focus:outline-none"
-              />
-            </div>
-          </div>
-          
-          <div className="flex gap-3">
-            {activeTab === 'projects' && (
+  const renderTabContent = () => {
+    switch (activeTab) {
+      case 'projects':
+        return (
+          <div>
+            <div className="flex justify-between items-center mb-6">
+              <div className="flex items-center space-x-4">
+                <h2 className="text-2xl font-bold text-white">Projects</h2>
+                <div className="relative">
+                  <FaSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+                  <input
+                    type="text"
+                    placeholder="Search projects..."
+                    className="pl-10 pr-4 py-2 bg-[#1a1a2e] border border-gray-600 rounded-lg text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                  />
+                </div>
+              </div>
               <button
                 onClick={() => openProjectModal()}
-                className="flex items-center gap-2 bg-[#00BFFF] hover:bg-[#0096FF] text-white px-4 py-2 rounded-lg transition-colors"
+                className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition-colors flex items-center space-x-2"
               >
                 <FaPlus />
-                Add Project
+                <span>Add Project</span>
               </button>
-            )}
-            
-            {activeTab === 'skills' && (
-              <button
-                onClick={() => openSkillModal()}
-                className="flex items-center gap-2 bg-[#00BFFF] hover:bg-[#0096FF] text-white px-4 py-2 rounded-lg transition-colors"
-              >
-                <FaPlus />
-                Add Skills
-              </button>
-            )}
-          </div>
-        </div>
+            </div>
 
-        {loading ? (
-          <LoadingSpinner />
-        ) : (
-          <>
-            {/* Projects Tab */}
-            {activeTab === 'projects' && (
-              <div className="space-y-6">
-                {filteredProjects.length === 0 ? (
-                  <EmptyState
-                    icon={FaProjectDiagram}
-                    title="No projects found"
-                    description="Start building your portfolio by adding your first project"
-                    actionText="Add Project"
-                    onAction={() => openProjectModal()}
-                  />
-                ) : (
-                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    {filteredProjects.map((project) => (
-                      <div
-                        key={project.id}
-                        className="bg-[#151030] rounded-xl p-6 border border-gray-700 hover:border-gray-600 transition-colors group"
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {filteredProjects.map((project) => (
+                <div key={project.id} className="bg-[#1a1a2e] border border-gray-600 rounded-lg overflow-hidden hover:border-blue-500 transition-colors">
+                  <div className="aspect-video relative">
+                    <img
+                      src={project.image}
+                      alt={project.title}
+                      className="w-full h-full object-cover"
+                      onError={(e) => {
+                        const target = e.target as HTMLImageElement;
+                        target.src = '/personal/focus.webp';
+                      }}
+                    />
+                    <div className="absolute top-2 right-2 flex space-x-2">
+                      <button
+                        onClick={() => openViewModal(project)}
+                        className="p-2 bg-black bg-opacity-50 text-white rounded-full hover:bg-opacity-75 transition-all"
                       >
-                        <div className="aspect-video bg-gray-800 rounded-lg mb-4 overflow-hidden">
-                          {project.image ? (
-                            <img
-                              src={project.image}
-                              alt={project.title}
-                              className="w-full h-full object-cover"
-                              onError={(e) => {
-                                const target = e.target as HTMLImageElement;
-                                target.style.display = 'none';
-                              }}
-                            />
-                          ) : (
-                            <div className="w-full h-full flex items-center justify-center text-gray-500">
-                              <FaProjectDiagram size={48} />
-                            </div>
-                          )}
-                        </div>
-                        
-                        <h3 className="text-xl font-bold text-white mb-2 group-hover:text-[#00BFFF] transition-colors">
-                          {project.title}
-                        </h3>
-                        
-                        <p className="text-gray-400 text-sm mb-4 line-clamp-2">
-                          {project.p1}
-                        </p>
-                        
-                        <div className="flex flex-wrap gap-2 mb-4">
-                          {project.Tech?.slice(0, 3).map((tech, idx) => (
-                            <span
-                              key={idx}
-                              className="bg-[#00BFFF]/20 text-[#00BFFF] px-2 py-1 rounded-full text-xs"
-                            >
-                              {tech}
-                            </span>
-                          ))}
-                          {project.Tech?.length > 3 && (
-                            <span className="text-gray-400 text-xs px-2 py-1">
-                              +{project.Tech.length - 3} more
-                            </span>
-                          )}
-                        </div>
-                        
-                        <div className="flex items-center gap-2">
-                          {project.github && (
-                            <a
-                              href={project.github}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="p-2 bg-gray-700 hover:bg-gray-600 rounded-lg transition-colors"
-                            >
-                              <FaGithub className="text-white" />
-                            </a>
-                          )}
-                          
-                          {project.livedemo && (
-                            <a
-                              href={project.livedemo}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="p-2 bg-gray-700 hover:bg-gray-600 rounded-lg transition-colors"
-                            >
-                              <FaExternalLinkAlt className="text-white" />
-                            </a>
-                          )}
-                          
-                          <div className="ml-auto flex gap-2">
-                            <button
-                              onClick={() => openProjectModal(project)}
-                              className="p-2 bg-blue-500 hover:bg-blue-600 rounded-lg transition-colors"
-                            >
-                              <FaEdit className="text-white" />
-                            </button>
-                            
-                            <button
-                              onClick={() => handleDeleteProject(project.id)}
-                              className="p-2 bg-red-500 hover:bg-red-600 rounded-lg transition-colors"
-                            >
-                              <FaTrash className="text-white" />
-                            </button>
-                          </div>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                )}
-              </div>
-            )}
-
-            {/* Contacts Tab */}
-            {activeTab === 'contacts' && (
-              <div className="space-y-6">
-                {filteredContacts.length === 0 ? (
-                  <EmptyState
-                    icon={FaEnvelope}
-                    title="No contact messages"
-                    description="Contact messages from your portfolio will appear here"
-                  />
-                ) : (
-                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                    {filteredContacts.map((contact) => (
-                      <div
-                        key={contact.id}
-                        className="bg-[#151030] rounded-xl p-6 border border-gray-700 hover:border-gray-600 transition-colors cursor-pointer"
-                        onClick={() => openContactModal(contact)}
+                        <FaEye size={14} />
+                      </button>
+                      <button
+                        onClick={() => openProjectModal(project)}
+                        className="p-2 bg-black bg-opacity-50 text-white rounded-full hover:bg-opacity-75 transition-all"
                       >
-                        <div className="flex justify-between items-start mb-4">
-                          <div>
-                            <h3 className="text-lg font-bold text-white">{contact.name}</h3>
-                            <p className="text-[#00BFFF] text-sm">{contact.email}</p>
-                            <p className="text-gray-500 text-xs">
-                              {new Date(contact.created_at).toLocaleString()}
-                            </p>
-                          </div>
-                          
-                          <div className="flex gap-2">
-                            <button
-                              onClick={(e) => {
-                                e.stopPropagation();
-                                openContactModal(contact);
-                              }}
-                              className="p-2 bg-blue-500 hover:bg-blue-600 rounded-lg transition-colors"
-                            >
-                              <FaEye className="text-white" />
-                            </button>
-                            
-                            <button
-                              onClick={(e) => {
-                                e.stopPropagation();
-                                handleDeleteContact(contact.id);
-                              }}
-                              className="p-2 bg-red-500 hover:bg-red-600 rounded-lg transition-colors"
-                            >
-                              <FaTrash className="text-white" />
-                            </button>
-                          </div>
-                        </div>
-                        
-                        <p className="text-gray-400 text-sm line-clamp-3">
-                          {contact.message}
-                        </p>
-                      </div>
-                    ))}
-                  </div>
-                )}
-              </div>
-            )}
-
-            {/* Skills Tab */}
-            {activeTab === 'skills' && (
-              <div className="space-y-6">
-                {skills.length === 0 ? (
-                  <EmptyState
-                    icon={FaCode}
-                    title="No skills found"
-                    description="Add your technical skills to showcase your expertise"
-                    actionText="Add Skills"
-                    onAction={() => openSkillModal()}
-                  />
-                ) : (
-                  <div className="space-y-6">
-                    {skills.map((skillSet) => (
-                      <div
-                        key={skillSet.id}
-                        className="bg-[#151030] rounded-xl p-6 border border-gray-700"
+                        <FaEdit size={14} />
+                      </button>
+                      <button
+                        onClick={() => handleDeleteProject(project.id)}
+                        className="p-2 bg-black bg-opacity-50 text-red-400 rounded-full hover:bg-opacity-75 transition-all"
                       >
-                        <div className="flex justify-between items-start mb-6">
-                          <div>
-                            <h3 className="text-lg font-bold text-white">
-                              Skill Set #{skillSet.id}
-                            </h3>
-                            <p className="text-gray-500 text-sm">
-                              {skillSet.s.length} skills • Created {new Date(skillSet.created_at).toLocaleDateString()}
-                            </p>
-                          </div>
-                          
-                          <div className="flex gap-2">
-                            <button
-                              onClick={() => openSkillModal(skillSet)}
-                              className="p-2 bg-blue-500 hover:bg-blue-600 rounded-lg transition-colors"
-                            >
-                              <FaEdit className="text-white" />
-                            </button>
-                            
-                            <button
-                              onClick={() => handleDeleteSkill(skillSet.id)}
-                              className="p-2 bg-red-500 hover:bg-red-600 rounded-lg transition-colors"
-                            >
-                              <FaTrash className="text-white" />
-                            </button>
-                          </div>
-                        </div>
-                        
-                        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-3">
-                          {skillSet.s.map((skill, idx) => (
-                            <div
-                              key={idx}
-                              className="bg-[#1a1443] p-3 rounded-lg text-center hover:bg-[#221b5e] transition-colors"
-                            >
-                              {skill.icon && (
-                                <div className="w-8 h-8 mx-auto mb-2 bg-gray-700 rounded flex items-center justify-center">
-                                  <span className="text-xs">🔧</span>
-                                </div>
-                              )}
-                              <p className="text-white font-medium text-sm">{skill.name}</p>
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-                    ))}
+                        <FaTrash size={14} />
+                      </button>
+                    </div>
                   </div>
-                )}
-              </div>
-            )}
-          </>
-        )}
-      </main>
-
-      {/* Project Modal */}
-      <Modal
-        isOpen={showProjectModal}
-        onClose={closeModals}
-        title={editingProject ? 'Edit Project' : 'Create New Project'}
-        size="lg"
-      >
-        <div className="space-y-6">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div>
-              <label className="block text-gray-300 text-sm font-medium mb-2">
-                Project Title *
-              </label>
-              <input
-                type="text"
-                value={projectForm.title}
-                onChange={(e) => setProjectForm({ ...projectForm, title: e.target.value })}
-                className="w-full px-4 py-2 bg-[#1a1443] border border-gray-600 rounded-lg text-white focus:border-[#00BFFF] focus:outline-none"
-                placeholder="Enter project title"
-              />
-            </div>
-            
-            <div>
-              <label className="block text-gray-300 text-sm font-medium mb-2">
-                Image URL
-              </label>
-              <input
-                type="text"
-                value={projectForm.image}
-                onChange={(e) => setProjectForm({ ...projectForm, image: e.target.value })}
-                className="w-full px-4 py-2 bg-[#1a1443] border border-gray-600 rounded-lg text-white focus:border-[#00BFFF] focus:outline-none"
-                placeholder="https://example.com/image.jpg"
-              />
-            </div>
-          </div>
-          
-          <div>
-            <label className="block text-gray-300 text-sm font-medium mb-2">
-              Description 1 *
-            </label>
-            <textarea
-              value={projectForm.p1}
-              onChange={(e) => setProjectForm({ ...projectForm, p1: e.target.value })}
-              rows={3}
-              className="w-full px-4 py-2 bg-[#1a1443] border border-gray-600 rounded-lg text-white focus:border-[#00BFFF] focus:outline-none"
-              placeholder="Brief project description"
-            />
-          </div>
-          
-          <div>
-            <label className="block text-gray-300 text-sm font-medium mb-2">
-              Description 2
-            </label>
-            <textarea
-              value={projectForm.p2}
-              onChange={(e) => setProjectForm({ ...projectForm, p2: e.target.value })}
-              rows={3}
-              className="w-full px-4 py-2 bg-[#1a1443] border border-gray-600 rounded-lg text-white focus:border-[#00BFFF] focus:outline-none"
-              placeholder="Additional details"
-            />
-          </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div>
-              <label className="block text-gray-300 text-sm font-medium mb-2">
-                GitHub URL
-              </label>
-              <input
-                type="text"
-                value={projectForm.github}
-                onChange={(e) => setProjectForm({ ...projectForm, github: e.target.value })}
-                className="w-full px-4 py-2 bg-[#1a1443] border border-gray-600 rounded-lg text-white focus:border-[#00BFFF] focus:outline-none"
-                placeholder="https://github.com/username/repo"
-              />
-            </div>
-            
-            <div>
-              <label className="block text-gray-300 text-sm font-medium mb-2">
-                Live Demo URL
-              </label>
-              <input
-                type="text"
-                value={projectForm.livedemo}
-                onChange={(e) => setProjectForm({ ...projectForm, livedemo: e.target.value })}
-                className="w-full px-4 py-2 bg-[#1a1443] border border-gray-600 rounded-lg text-white focus:border-[#00BFFF] focus:outline-none"
-                placeholder="https://yourproject.com"
-              />
-            </div>
-          </div>
-          
-          <div>
-            <label className="block text-gray-300 text-sm font-medium mb-2">
-              Technologies
-            </label>
-            <input
-              type="text"
-              value={projectForm.Tech?.join(', ')}
-              onChange={(e) => setProjectForm({ ...projectForm, Tech: e.target.value.split(',').map(t => t.trim()).filter(t => t) })}
-              className="w-full px-4 py-2 bg-[#1a1443] border border-gray-600 rounded-lg text-white focus:border-[#00BFFF] focus:outline-none"
-              placeholder="React, Node.js, MongoDB, etc. (comma separated)"
-            />
-          </div>
-          
-          <div className="flex justify-end gap-3 pt-4">
-            <button
-              onClick={closeModals}
-              className="px-4 py-2 bg-gray-600 hover:bg-gray-700 text-white rounded-lg transition-colors"
-            >
-              Cancel
-            </button>
-            <button
-              onClick={handleSaveProject}
-              className="px-4 py-2 bg-[#00BFFF] hover:bg-[#0096FF] text-white rounded-lg transition-colors"
-            >
-              {editingProject ? 'Update Project' : 'Create Project'}
-            </button>
-          </div>
-        </div>
-      </Modal>
-
-      {/* Contact Detail Modal */}
-      <Modal
-        isOpen={showContactModal}
-        onClose={closeModals}
-        title="Contact Details"
-        size="md"
-      >
-        {viewingContact && (
-          <div className="space-y-6">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div>
-                <label className="block text-gray-300 text-sm font-medium mb-2">Name</label>
-                <p className="text-white bg-[#1a1443] px-4 py-2 rounded-lg">{viewingContact.name}</p>
-              </div>
-              <div>
-                <label className="block text-gray-300 text-sm font-medium mb-2">Email</label>
-                <p className="text-[#00BFFF] bg-[#1a1443] px-4 py-2 rounded-lg">{viewingContact.email}</p>
-              </div>
-            </div>
-            
-            <div>
-              <label className="block text-gray-300 text-sm font-medium mb-2">Date</label>
-              <p className="text-gray-400 bg-[#1a1443] px-4 py-2 rounded-lg">
-                {new Date(viewingContact.created_at).toLocaleString()}
-              </p>
-            </div>
-            
-            <div>
-              <label className="block text-gray-300 text-sm font-medium mb-2">Message</label>
-              <div className="bg-[#1a1443] px-4 py-4 rounded-lg">
-                <p className="text-white whitespace-pre-wrap">{viewingContact.message}</p>
-              </div>
-            </div>
-            
-            <div className="flex justify-end gap-3 pt-4">
-              <button
-                onClick={() => handleDeleteContact(viewingContact.id)}
-                className="px-4 py-2 bg-red-500 hover:bg-red-600 text-white rounded-lg transition-colors"
-              >
-                Delete Contact
-              </button>
-              <button
-                onClick={closeModals}
-                className="px-4 py-2 bg-gray-600 hover:bg-gray-700 text-white rounded-lg transition-colors"
-              >
-                Close
-              </button>
-            </div>
-          </div>
-        )}
-      </Modal>
-
-      {/* Skills Modal */}
-      <Modal
-        isOpen={showSkillModal}
-        onClose={closeModals}
-        title={editingSkill ? 'Edit Skills' : 'Create Skills'}
-        size="lg"
-      >
-        <div className="space-y-6">
-          <div className="bg-yellow-900/20 border border-yellow-600 rounded-lg p-4">
-            <p className="text-yellow-300 text-sm">
-              You can either use the individual skill editor below or paste a JSON array in the text area.
-            </p>
-          </div>
-          
-          {/* Individual Skills Editor */}
-          <div>
-            <div className="flex justify-between items-center mb-4">
-              <h4 className="text-lg font-medium text-white">Individual Skills</h4>
-              <button
-                onClick={addSkillRow}
-                className="flex items-center gap-2 px-3 py-1 bg-[#00BFFF] hover:bg-[#0096FF] text-white rounded-lg transition-colors text-sm"
-              >
-                <FaPlus />
-                Add Skill
-              </button>
-            </div>
-            
-            <div className="space-y-3 max-h-60 overflow-y-auto">
-              {skillsArray.map((skill, index) => (
-                <div key={index} className="flex gap-3 items-center">
-                  <input
-                    type="text"
-                    value={skill.name}
-                    onChange={(e) => updateSkillRow(index, 'name', e.target.value)}
-                    placeholder="Skill name (e.g., React)"
-                    className="flex-1 px-3 py-2 bg-[#1a1443] border border-gray-600 rounded-lg text-white focus:border-[#00BFFF] focus:outline-none"
-                  />
-                  <input
-                    type="text"
-                    value={skill.icon}
-                    onChange={(e) => updateSkillRow(index, 'icon', e.target.value)}
-                    placeholder="Icon URL (optional)"
-                    className="flex-1 px-3 py-2 bg-[#1a1443] border border-gray-600 rounded-lg text-white focus:border-[#00BFFF] focus:outline-none"
-                  />
-                  <button
-                    onClick={() => removeSkillRow(index)}
-                    className="p-2 bg-red-500 hover:bg-red-600 text-white rounded-lg transition-colors"
-                  >
-                    <FaTrash />
-                  </button>
+                  <div className="p-4">
+                    <h3 className="text-lg font-semibold text-white mb-2">{project.title}</h3>
+                    <p className="text-gray-400 text-sm mb-3 line-clamp-2">{project.p1}</p>
+                    <div className="flex flex-wrap gap-2 mb-3">
+                      {project.Tech.slice(0, 3).map((tech, idx) => (
+                        <span key={idx} className="px-2 py-1 bg-blue-600 bg-opacity-20 text-blue-400 rounded text-xs">
+                          {tech}
+                        </span>
+                      ))}
+                      {project.Tech.length > 3 && (
+                        <span className="px-2 py-1 bg-gray-600 bg-opacity-20 text-gray-400 rounded text-xs">
+                          +{project.Tech.length - 3} more
+                        </span>
+                      )}
+                    </div>
+                    <div className="flex space-x-2">
+                      {project.github !== '#' && (
+                        <a
+                          href={project.github}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-gray-400 hover:text-white transition-colors"
+                        >
+                          <FaGithub size={16} />
+                        </a>
+                      )}
+                      {project.livedemo !== '#' && (
+                        <a
+                          href={project.livedemo}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-gray-400 hover:text-white transition-colors"
+                        >
+                          <FaExternalLinkAlt size={16} />
+                        </a>
+                      )}
+                    </div>
+                  </div>
                 </div>
               ))}
             </div>
           </div>
-          
-          <div className="border-t border-gray-600 pt-6">
-            <h4 className="text-lg font-medium text-white mb-4">Or use JSON Format</h4>
-            <textarea
-              value={skillJsonInput}
-              onChange={(e) => setSkillJsonInput(e.target.value)}
-              rows={8}
-              className="w-full px-4 py-3 bg-[#1a1443] border border-gray-600 rounded-lg text-white font-mono text-sm focus:border-[#00BFFF] focus:outline-none"
-              placeholder={`[
-  {"name": "React", "icon": "/icons/react.svg"},
-  {"name": "Node.js", "icon": "/icons/nodejs.svg"},
-  {"name": "TypeScript", "icon": "/icons/typescript.svg"}
-]`}
-            />
-            <p className="text-gray-400 text-xs mt-2">
-              Enter skills as a JSON array. Each skill should have a "name" field and optionally an "icon" field.
-            </p>
+        );
+
+      case 'skills':
+        return (
+          <div>
+            <div className="flex justify-between items-center mb-6">
+              <div className="flex items-center space-x-4">
+                <h2 className="text-2xl font-bold text-white">Skills</h2>
+                <div className="relative">
+                  <FaSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+                  <input
+                    type="text"
+                    placeholder="Search skills..."
+                    className="pl-10 pr-4 py-2 bg-[#1a1a2e] border border-gray-600 rounded-lg text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                  />
+                </div>
+              </div>
+              <button
+                onClick={() => openSkillModal()}
+                className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition-colors flex items-center space-x-2"
+              >
+                <FaPlus />
+                <span>Add Skill</span>
+              </button>
+            </div>
+
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-4">
+              {filteredSkills.map((skill) => (
+                <div key={skill.id} className="bg-[#1a1a2e] border border-gray-600 rounded-lg p-4 hover:border-blue-500 transition-colors group">
+                  <div className="flex flex-col items-center space-y-2">
+                    <div className="w-12 h-12 bg-blue-600 bg-opacity-20 rounded-lg flex items-center justify-center">
+                      <span className="text-blue-400 text-xl">{skill.icon}</span>
+                    </div>
+                    <span className="text-white text-sm font-medium text-center">{skill.name}</span>
+                    <div className="flex space-x-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                      <button
+                        onClick={() => openSkillModal(skill)}
+                        className="p-1 bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors"
+                      >
+                        <FaEdit size={12} />
+                      </button>
+                      <button
+                        onClick={() => handleDeleteSkill(skill.id)}
+                        className="p-1 bg-red-600 text-white rounded hover:bg-red-700 transition-colors"
+                      >
+                        <FaTrash size={12} />
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
-          
-          <div className="flex justify-end gap-3 pt-4">
+        );
+
+      case 'contacts':
+        return (
+          <div>
+            <div className="flex justify-between items-center mb-6">
+              <div className="flex items-center space-x-4">
+                <h2 className="text-2xl font-bold text-white">Contact Messages</h2>
+                <div className="relative">
+                  <FaSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+                  <input
+                    type="text"
+                    placeholder="Search messages..."
+                    className="pl-10 pr-4 py-2 bg-[#1a1a2e] border border-gray-600 rounded-lg text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                  />
+                </div>
+              </div>
+            </div>
+
+            {filteredContacts.length === 0 ? (
+              <div className="text-center py-12">
+                <FaEnvelope className="mx-auto h-12 w-12 text-gray-400" />
+                <h3 className="mt-2 text-sm font-medium text-gray-300">No messages</h3>
+                <p className="mt-1 text-sm text-gray-500">No contact messages available.</p>
+              </div>
+            ) : (
+              <div className="space-y-4">
+                {filteredContacts.map((contact) => (
+                  <div key={contact.id} className="bg-[#1a1a2e] border border-gray-600 rounded-lg p-4 hover:border-blue-500 transition-colors">
+                    <div className="flex justify-between items-start">
+                      <div className="flex-1">
+                        <div className="flex items-center space-x-3">
+                          <h3 className="text-lg font-semibold text-white">{contact.name}</h3>
+                          <span className="text-sm text-gray-400">{contact.email}</span>
+                        </div>
+                        <p className="mt-2 text-gray-300 line-clamp-2">{contact.message}</p>
+                        <p className="mt-2 text-sm text-gray-500">
+                          {new Date(contact.created_at).toLocaleDateString()}
+                        </p>
+                      </div>
+                      <button
+                        onClick={() => openViewModal(contact)}
+                        className="p-2 text-gray-400 hover:text-white transition-colors"
+                      >
+                        <FaEye size={16} />
+                      </button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        );
+
+      default:
+        return null;
+    }
+  };
+
+  return (
+    <div className="min-h-screen bg-[#0a0a0a] text-white">
+      <Toaster 
+        position="top-right"
+        toastOptions={{
+          style: {
+            background: '#1a1a2e',
+            color: '#fff',
+            border: '1px solid #374151'
+          },
+        }}
+      />
+      
+      {/* Header */}
+      <div className="bg-[#151030] border-b border-gray-700">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex justify-between items-center h-16">
+            <h1 className="text-2xl font-bold text-white">Admin Dashboard</h1>
             <button
-              onClick={closeModals}
-              className="px-4 py-2 bg-gray-600 hover:bg-gray-700 text-white rounded-lg transition-colors"
+              onClick={onLogout}
+              className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg transition-colors flex items-center space-x-2"
+            >
+              <FaSignOutAlt />
+              <span>Logout</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      {/* Navigation */}
+      <div className="bg-[#1a1a2e] border-b border-gray-600">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <nav className="flex space-x-8">
+            <button
+              onClick={() => setActiveTab('projects')}
+              className={`py-4 px-1 border-b-2 font-medium text-sm ${
+                activeTab === 'projects'
+                  ? 'border-blue-500 text-blue-400'
+                  : 'border-transparent text-gray-300 hover:text-white'
+              } transition-colors flex items-center space-x-2`}
+            >
+              <FaProjectDiagram />
+              <span>Projects ({projects.length})</span>
+            </button>
+            <button
+              onClick={() => setActiveTab('skills')}
+              className={`py-4 px-1 border-b-2 font-medium text-sm ${
+                activeTab === 'skills'
+                  ? 'border-blue-500 text-blue-400'
+                  : 'border-transparent text-gray-300 hover:text-white'
+              } transition-colors flex items-center space-x-2`}
+            >
+              <FaCode />
+              <span>Skills ({skills.length})</span>
+            </button>
+            <button
+              onClick={() => setActiveTab('contacts')}
+              className={`py-4 px-1 border-b-2 font-medium text-sm ${
+                activeTab === 'contacts'
+                  ? 'border-blue-500 text-blue-400'
+                  : 'border-transparent text-gray-300 hover:text-white'
+              } transition-colors flex items-center space-x-2`}
+            >
+              <FaEnvelope />
+              <span>Messages ({contacts.length})</span>
+            </button>
+          </nav>
+        </div>
+      </div>
+
+      {/* Main Content */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        {loading ? (
+          <div className="flex justify-center items-center py-20">
+            <FaSpinner className="animate-spin h-8 w-8 text-blue-500" />
+          </div>
+        ) : (
+          renderTabContent()
+        )}
+      </div>
+
+      {/* Project Modal */}
+      <Modal
+        isOpen={isProjectModalOpen}
+        onClose={() => setIsProjectModalOpen(false)}
+        title={isEditing ? 'Edit Project' : 'Add New Project'}
+        size="lg"
+      >
+        <div className="space-y-6">
+          <div>
+            <label className="block text-sm font-medium text-gray-300 mb-2">Title</label>
+            <input
+              type="text"
+              value={projectForm.title}
+              onChange={(e) => setProjectForm({ ...projectForm, title: e.target.value })}
+              className="w-full px-3 py-2 bg-[#1a1a2e] border border-gray-600 rounded-lg text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              placeholder="Project title..."
+            />
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label className="block text-sm font-medium text-gray-300 mb-2">GitHub URL</label>
+              <input
+                type="url"
+                value={projectForm.github}
+                onChange={(e) => setProjectForm({ ...projectForm, github: e.target.value })}
+                className="w-full px-3 py-2 bg-[#1a1a2e] border border-gray-600 rounded-lg text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                placeholder="https://github.com/..."
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-300 mb-2">Live Demo URL</label>
+              <input
+                type="url"
+                value={projectForm.livedemo}
+                onChange={(e) => setProjectForm({ ...projectForm, livedemo: e.target.value })}
+                className="w-full px-3 py-2 bg-[#1a1a2e] border border-gray-600 rounded-lg text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                placeholder="https://..."
+              />
+            </div>
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-gray-300 mb-2">Image URL</label>
+            <input
+              type="url"
+              value={projectForm.image}
+              onChange={(e) => setProjectForm({ ...projectForm, image: e.target.value })}
+              className="w-full px-3 py-2 bg-[#1a1a2e] border border-gray-600 rounded-lg text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              placeholder="/path/to/image.jpg"
+            />
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-gray-300 mb-2">Description 1</label>
+            <textarea
+              value={projectForm.p1}
+              onChange={(e) => setProjectForm({ ...projectForm, p1: e.target.value })}
+              rows={3}
+              className="w-full px-3 py-2 bg-[#1a1a2e] border border-gray-600 rounded-lg text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              placeholder="First description..."
+            />
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-gray-300 mb-2">Description 2</label>
+            <textarea
+              value={projectForm.p2}
+              onChange={(e) => setProjectForm({ ...projectForm, p2: e.target.value })}
+              rows={3}
+              className="w-full px-3 py-2 bg-[#1a1a2e] border border-gray-600 rounded-lg text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              placeholder="Second description..."
+            />
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-gray-300 mb-2">Description 3</label>
+            <textarea
+              value={projectForm.p3}
+              onChange={(e) => setProjectForm({ ...projectForm, p3: e.target.value })}
+              rows={3}
+              className="w-full px-3 py-2 bg-[#1a1a2e] border border-gray-600 rounded-lg text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              placeholder="Third description..."
+            />
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-gray-300 mb-2">Description 4 (Optional)</label>
+            <textarea
+              value={projectForm.p4}
+              onChange={(e) => setProjectForm({ ...projectForm, p4: e.target.value })}
+              rows={3}
+              className="w-full px-3 py-2 bg-[#1a1a2e] border border-gray-600 rounded-lg text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              placeholder="Fourth description (optional)..."
+            />
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-gray-300 mb-2">Technologies (comma-separated)</label>
+            <input
+              type="text"
+              value={projectForm.Tech.join(', ')}
+              onChange={(e) => setProjectForm({ 
+                ...projectForm, 
+                Tech: e.target.value.split(',').map(tech => tech.trim()).filter(tech => tech !== '')
+              })}
+              className="w-full px-3 py-2 bg-[#1a1a2e] border border-gray-600 rounded-lg text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              placeholder="React, Node.js, MongoDB, etc..."
+            />
+          </div>
+
+          <div className="flex justify-end space-x-3 pt-4 border-t border-gray-600">
+            <button
+              onClick={() => setIsProjectModalOpen(false)}
+              className="px-4 py-2 text-gray-300 hover:text-white transition-colors"
             >
               Cancel
             </button>
             <button
-              onClick={handleSaveSkill}
-              className="px-4 py-2 bg-[#00BFFF] hover:bg-[#0096FF] text-white rounded-lg transition-colors"
+              onClick={isEditing ? handleUpdateProject : handleCreateProject}
+              className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg transition-colors flex items-center space-x-2"
             >
-              {editingSkill ? 'Update Skills' : 'Create Skills'}
+              <FaSave />
+              <span>{isEditing ? 'Update' : 'Create'}</span>
             </button>
           </div>
         </div>
       </Modal>
+
+      {/* Skill Modal */}
+      <Modal
+        isOpen={isSkillModalOpen}
+        onClose={() => setIsSkillModalOpen(false)}
+        title={isEditing ? 'Edit Skill' : 'Add New Skill'}
+        size="md"
+      >
+        <div className="space-y-6">
+          <div>
+            <label className="block text-sm font-medium text-gray-300 mb-2">Skill Name</label>
+            <input
+              type="text"
+              value={skillForm.name}
+              onChange={(e) => setSkillForm({ ...skillForm, name: e.target.value })}
+              className="w-full px-3 py-2 bg-[#1a1a2e] border border-gray-600 rounded-lg text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              placeholder="e.g., React, Python, etc."
+            />
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-gray-300 mb-2">Icon (Simple Icons)</label>
+            <input
+              type="text"
+              value={skillForm.icon}
+              onChange={(e) => setSkillForm({ ...skillForm, icon: e.target.value })}
+              className="w-full px-3 py-2 bg-[#1a1a2e] border border-gray-600 rounded-lg text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              placeholder="e.g., SiReact, SiPython, etc."
+            />
+            <p className="text-sm text-gray-500 mt-1">
+              Use Simple Icons naming convention (Si + PascalCase). Examples: SiReact, SiJavascript, SiPython
+            </p>
+          </div>
+
+          <div className="flex justify-end space-x-3 pt-4 border-t border-gray-600">
+            <button
+              onClick={() => setIsSkillModalOpen(false)}
+              className="px-4 py-2 text-gray-300 hover:text-white transition-colors"
+            >
+              Cancel
+            </button>
+            <button
+              onClick={isEditing ? handleUpdateSkill : handleCreateSkill}
+              className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg transition-colors flex items-center space-x-2"
+            >
+              <FaSave />
+              <span>{isEditing ? 'Update' : 'Create'}</span>
+            </button>
+          </div>
+        </div>
+      </Modal>
+
+      {/* View Modal */}
+      <Modal
+        isOpen={isViewModalOpen}
+        onClose={() => setIsViewModalOpen(false)}
+        title={selectedItem?.title || selectedItem?.name || 'View Details'}
+        size="lg"
+      >
+        {selectedItem && (
+          <div className="space-y-4">
+            {/* Project View */}
+            {selectedItem.Tech && (
+              <div className="space-y-4">
+                <div className="aspect-video relative rounded-lg overflow-hidden">
+                  <img
+                    src={selectedItem.image}
+                    alt={selectedItem.title}
+                    className="w-full h-full object-cover"
+                    onError={(e) => {
+                      const target = e.target as HTMLImageElement;
+                      target.src = '/personal/focus.webp';
+                    }}
+                  />
+                </div>
+                <div className="space-y-3">
+                  <p className="text-gray-300">{selectedItem.p1}</p>
+                  <p className="text-gray-300">{selectedItem.p2}</p>
+                  <p className="text-gray-300">{selectedItem.p3}</p>
+                  {selectedItem.p4 && <p className="text-gray-300">{selectedItem.p4}</p>}
+                </div>
+                <div>
+                  <h4 className="text-white font-medium mb-2">Technologies:</h4>
+                  <div className="flex flex-wrap gap-2">
+                    {selectedItem.Tech.map((tech: string, idx: number) => (
+                      <span key={idx} className="px-3 py-1 bg-blue-600 bg-opacity-20 text-blue-400 rounded-full text-sm">
+                        {tech}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+                <div className="flex space-x-4 pt-4">
+                  {selectedItem.github !== '#' && (
+                    <a
+                      href={selectedItem.github}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="bg-gray-700 hover:bg-gray-600 text-white px-4 py-2 rounded-lg transition-colors flex items-center space-x-2"
+                    >
+                      <FaGithub />
+                      <span>View Code</span>
+                    </a>
+                  )}
+                  {selectedItem.livedemo !== '#' && (
+                    <a
+                      href={selectedItem.livedemo}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition-colors flex items-center space-x-2"
+                    >
+                      <FaExternalLinkAlt />
+                      <span>Live Demo</span>
+                    </a>
+                  )}
+                </div>
+              </div>
+            )}
+
+            {/* Contact View */}
+            {selectedItem.email && (
+              <div className="space-y-4">
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <h4 className="text-white font-medium mb-1">Name:</h4>
+                    <p className="text-gray-300">{selectedItem.name}</p>
+                  </div>
+                  <div>
+                    <h4 className="text-white font-medium mb-1">Email:</h4>
+                    <p className="text-gray-300">{selectedItem.email}</p>
+                  </div>
+                </div>
+                <div>
+                  <h4 className="text-white font-medium mb-2">Message:</h4>
+                  <p className="text-gray-300 whitespace-pre-wrap">{selectedItem.message}</p>
+                </div>
+                <div>
+                  <h4 className="text-white font-medium mb-1">Received:</h4>
+                  <p className="text-gray-300">{new Date(selectedItem.created_at).toLocaleString()}</p>
+                </div>
+              </div>
+            )}
+
+            {/* Skill View */}
+            {selectedItem.icon && !selectedItem.email && (
+              <div className="space-y-4">
+                <div className="text-center">
+                  <div className="w-20 h-20 bg-blue-600 bg-opacity-20 rounded-lg flex items-center justify-center mx-auto mb-4">
+                    <span className="text-blue-400 text-3xl">{selectedItem.icon}</span>
+                  </div>
+                  <h3 className="text-xl font-semibold text-white">{selectedItem.name}</h3>
+                </div>
+              </div>
+            )}
+          </div>
+        )}
+      </Modal>
     </div>
   );
-}
+};
+
+export default AdminDashboard;

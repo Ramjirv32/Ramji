@@ -30,21 +30,146 @@ import { DiJqueryLogo } from "react-icons/di"
 import AOS from 'aos'
 import 'aos/dist/aos.css'
 
-
-const BACKEND_URL = process.env.NODE_ENV === 'development' 
-  ? 'https://ramji-etht.vercel.app' 
-  : 'http://localhost:9000'; 
-
 interface Skill {
   name: string
   icon: string
 }
 
-interface SkillsData {
-  id: number
-  created_at: string
-  s: Skill[]
-}
+// Static skills data - no backend needed
+const staticSkillsData: Skill[] = [
+  {
+    "name": "HTML",
+    "icon": "/icons/html.svg"
+  },
+  {
+    "name": "CSS",
+    "icon": "/icons/css.svg"
+  },
+  {
+    "name": "JavaScript",
+    "icon": "/icons/javascript.svg"
+  },
+  {
+    "name": "TypeScript",
+    "icon": "/icons/typescript.svg"
+  },
+  {
+    "name": "ReactJS",
+    "icon": "/icons/reactjs.svg"
+  },
+  {
+    "name": "C",
+    "icon": "/icons/c.svg"
+  },
+  {
+    "name": "Java",
+    "icon": "/icons/java.svg"
+  },
+  {
+    "name": "Tailwind CSS",
+    "icon": "/icons/tailwind-css.svg"
+  },
+  {
+    "name": "Framer Motion",
+    "icon": "/icons/framer-motion.svg"
+  },
+  {
+    "name": "Shadcn",
+    "icon": "/icons/shadcn.svg"
+  },
+  {
+    "name": "NodeJS",
+    "icon": "/icons/nodejs.svg"
+  },
+  {
+    "name": "ExpressJS",
+    "icon": "/icons/expressjs.svg"
+  },
+  {
+    "name": "MongoDB",
+    "icon": "/icons/mongodb.svg"
+  },
+  {
+    "name": "PostgreSQL",
+    "icon": "/icons/postgresql.svg"
+  },
+  {
+    "name": "Prisma",
+    "icon": "/icons/prisma.svg"
+  },
+  {
+    "name": "Git",
+    "icon": "/icons/git.svg"
+  },
+  {
+    "name": "GitHub",
+    "icon": "/icons/github.svg"
+  },
+  {
+    "name": "Vercel",
+    "icon": "/icons/vercel.svg"
+  },
+  {
+    "name": "Postman",
+    "icon": "/icons/postman.svg"
+  },
+  {
+    "name": "Linux",
+    "icon": "/icons/linux.svg"
+  },
+  {
+    "name": "Supabase",
+    "icon": "/icons/supabase.svg"
+  },
+  {
+    "name": "NextJS",
+    "icon": "/icons/nextjs.svg"
+  },
+  {
+    "name": "Python",
+    "icon": "/icons/python.svg"
+  },
+  {
+    "name": "fastapi",
+    "icon": "/icons/fastapi.svg"
+  },
+  {
+    "name": "Docker",
+    "icon": "/icons/docker.svg"
+  },
+  {
+    "name": "Cloudflare",
+    "icon": "/icons/cloudflare.svg"
+  },
+  {
+    "name": "WordPress",
+    "icon": "/icons/wordpress.svg"
+  },
+  {
+    "name": "Figma",
+    "icon": "/icons/figma.svg"
+  },
+  {
+    "name": "Firebase",
+    "icon": "/icons/firebase.svg"
+  },
+  {
+    "name": "AWS",
+    "icon": "/icons/aws.svg"
+  },
+  {
+    "name": "Redux",
+    "icon": "/icons/redux.svg"
+  },
+  {
+    "name": "Jenkins",
+    "icon": "/icons/jenkins.svg"
+  },
+  {
+    "name": "Azure",
+    "icon": "/icons/azure.svg"
+  }
+];
 
 const skillIconsMap: Record<string, { icon: React.ReactElement; color: string }> = {
   "HTML": { icon: <FaHtml5 size={20} />, color: "#E44D26" },
@@ -168,10 +293,10 @@ const skillCategories: Record<string, string[]> = {
 const SkillsContent = () => {
   const [skills, setSkills] = useState<Skill[]>([])
   const [loading, setLoading] = useState<boolean>(true)
-  const [error, setError] = useState<string | null>(null)
   const [isGridView, setIsGridView] = useState<boolean>(true)
 
   useEffect(() => {
+    // Dynamically import AOS to reduce initial bundle size
     import('aos').then((AOS) => {
       AOS.default.init({
         duration: 1000,
@@ -180,37 +305,10 @@ const SkillsContent = () => {
       })
     })
     
-    fetchSkills()
+    // Set static skills data immediately
+    setSkills(staticSkillsData)
+    setLoading(false)
   }, [])
-
-  const fetchSkills = async () => {
-    try {
-      const response = await fetch(`${BACKEND_URL}/public/skills`, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      })
-      
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`)
-      }
-      
-      const data = await response.json()
-      console.log('Skills data fetched:', data)
-      
-      if (data && Array.isArray(data) && data.length > 0) {
-        if (data[0].s && Array.isArray(data[0].s) && data[0].s.length > 0) {
-          setSkills(data[0].s)
-        }
-      }
-    } catch (error) {
-      console.error('Error fetching skills:', error)
-      setError('Failed to load skills')
-    } finally {
-      setLoading(false)
-    }
-  }
 
   const categorizeSkills = () => {
     const categorized: Record<string, Skill[]> = {}
@@ -256,26 +354,6 @@ const SkillsContent = () => {
             <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-white"></div>
           </div>
           <p className="text-gray-400">Loading skills...</p>
-        </div>
-      </section>
-    )
-  }
-
-  if (error) {
-    return (
-      <section id="skills" className="w-full py-20 relative bg-transparent">
-        <div className="w-full flex flex-col items-center justify-center gap-6 py-16">
-          <p className="text-red-500">{error}</p>
-        </div>
-      </section>
-    )
-  }
-
-  if (skills.length === 0) {
-    return (
-      <section id="skills" className="w-full py-20 relative bg-transparent">
-        <div className="w-full flex flex-col items-center justify-center gap-6 py-16">
-          <p className="text-gray-400">No skills data available</p>
         </div>
       </section>
     )

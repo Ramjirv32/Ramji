@@ -1,7 +1,6 @@
 "use client"
 
-import React from "react"
-import { useState, useEffect } from "react"
+import React, { useEffect, useState } from "react"
 import { FaExternalLinkAlt, FaGithub } from "react-icons/fa"
 
 interface Project {
@@ -11,97 +10,94 @@ interface Project {
   p1: string;
   p2: string;
   p3: string;
-  p4: string;
   Tech: string[];
   github: string;
   livedemo: string;
-  image?: string;
+  image: string;
 }
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:9000';
-
 const Projects: React.FC = () => {
-  const [projects, setProjects] = useState<Project[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState<string | null>(null);
+  const [isClient, setIsClient] = useState(false);
 
   useEffect(() => {
-    const fetchProjects = async () => {
-      try {
-        const response = await fetch(`${API_URL}/demo`);
-        
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        const data = await response.json();
-        const projectsWithImages = data.map((project: Project) => {
-          let imagePath = '/personal/focus.webp'; // Default
-          let livedemoUrl = project.livedemo; // Keep original livedemo URL
-
-          if (project.title === "Vehicle Rental System") {
-            imagePath = "/assets/grs.webp";
-          } else if (project.title === "Smart Parking System") {
-            imagePath = "/assets/aadhya.webp";
-          } else if (project.title === "NebulX") {
-            imagePath = "/assets/nebulx.webp";
-          } else if (project.title === "AI Image Generator") {
-            imagePath = "/assets/wistravel.webp";
-            livedemoUrl = "#";
-            project.title = "Wistravel";
-          } else if (project.title === "FocusAI – Productive Assistant") {
-            imagePath = "/assets/focusai-dashboard.webp";
-            livedemoUrl = "https://focusai-dashboard.vercel.app";
-          } else if (project.title === "Weather API Integration") {
-            imagePath = "/assets/api.webp";
-          }
-
-          return {
-            ...project,
-            title: project.title,
-            image: imagePath,
-            livedemo: livedemoUrl,
-            description: [project.p1, project.p2, project.p3, project.p4]
-          };
-        });
-        setProjects(projectsWithImages);
-      } catch (error) {
-        setError('Failed to fetch projects');
-        console.error('Error fetching projects:', error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchProjects();
+    setIsClient(true);
   }, []);
 
+  // Hardcoded project data
+  const projects: Project[] = [
+    {
+      id: 1,
+      title: "Vehicle Rental System",
+      created_at: "2025-07-08T10:40:29.654538+00:00",
+      p1: "Developed a comprehensive vehicle rental management system in C",
+      p2: "Implemented user authentication and booking functionality using file handling",
+      p3: "Created efficient data structures and memory management",
+      Tech: ["C", "Data Structures", "File I/O", "Memory Management"],
+      github: "https://github.com/Ramjirv32/Vehicle-Rental-System",
+      livedemo: "https://github.com/Ramjirv32/Vehicle-Rental-System",
+      image: "/assets/grs.webp"
+    },
+    {
+      id: 3,
+      title: "Smart Parking System",
+      created_at: "2023-04-01T00:00:00+00:00",
+      p1: "Led development of a full-stack parking system website",
+      p2: "Implemented real-time parking space tracking with IoT",
+      p3: "Designed booking and reservation management system",
+      Tech: ["React", "Node.js", "IoT", "PostgreSQL"],
+      github: "https://github.com/Ramjirv32/Smart-Parking-System",
+      livedemo: "https://parking-orcin-tau.vercel.app/",
+      image: "/assets/aadhya.webp"
+    },
+    {
+      id: 4,
+      title: "FocusAI Productive Assistant",
+      created_at: "2023-09-01T00:00:00+00:00",
+      p1: "Trained a custom AI model for behavior classification in collaboration with Navaneethalkrishnan",
+      p2: "Captured real-time behavioral data with Node.js and Python backend, stored in MongoDB",
+      p3: "Designed interactive dashboards with visual summaries for daily, weekly, and category-wise usage",
+      Tech: ["TSX", "Node.js", "MongoDB", "Machine Learning", "Docker", "FastAPI"],
+      github: "hh",
+      livedemo: "hhh",
+      image: "/personal/focus.webp"
+    },
+    {
+      id: 5,
+      title: "NebulX",
+      created_at: "2023-10-01T00:00:00+00:00",
+      p1: "Building advanced AI features and integrations",
+      p2: "Implementing modern UI/UX design principles",
+      p3: "Developing scalable backend architecture",
+      Tech: ["React", "AI APIs", "Node.js", "Express", "Tailwind CSS"],
+      github: "https://github.com/Ramjirv32/nebulx",
+      livedemo: "https://nebulx.vercel.app/",
+      image: "/assets/nebulx.webp"
+    }
+  ];
+
   const getProjectIcon = (technologies: string[], title: string): string => {
-    if (title === "wistravel") return "🧳";
-    if (title === "FocusAI Productive Assistant") return "🎯";
     if (title === "Vehicle Rental System") return "🚗";
     if (title === "Smart Parking System") return "🅿️";
+    if (title === "FocusAI Productive Assistant") return "🎯";
     if (title === "NebulX") return "⚡";
-    if (title === "Weather API Integration") return "🌤️";
     
     if (technologies.includes("C")) return "💻";
     if (technologies.includes(".NET") || technologies.includes("ASP.NET")) return "🔷";
-    if (technologies.includes("AI APIs") || technologies.includes("Hugging Face API")) return "🤖";
+    if (technologies.includes("AI APIs") || technologies.includes("Machine Learning")) return "🤖";
     if (technologies.includes("IoT")) return "📱";
     if (technologies.includes("API")) return "🔌";
     return "💼";
   };
 
   const getProjectColor = (technologies: string[], title: string): string => {
-    if (title === "Wistravel") return "#FF6B6B";
-    if (title === "FocusAI – Productive Assistant") return "#4ECDC4";
     if (title === "Vehicle Rental System") return "#FFA500";
     if (title === "Smart Parking System") return "#00BFFF";
+    if (title === "FocusAI Productive Assistant") return "#4ECDC4";
     if (title === "NebulX") return "#8A2BE2";
-    if (title === "Weather API Integration") return "#9FE2BF";
     
     if (technologies.includes(".NET") || technologies.includes("ASP.NET") || technologies.includes("C#")) 
       return "#512BD4";
-    if (technologies.includes("AI APIs") || technologies.includes("Hugging Face API")) 
+    if (technologies.includes("AI APIs") || technologies.includes("Machine Learning")) 
       return "#FF69B4";
     if (technologies.includes("IoT")) 
       return "#6495ED";
@@ -111,7 +107,7 @@ const Projects: React.FC = () => {
       return "#3C873A";
     if (technologies.includes("MongoDB")) 
       return "#4DB33D";
-    if (technologies.includes("TypeScript")) 
+    if (technologies.includes("TypeScript") || technologies.includes("TSX")) 
       return "#007ACC";
     if (technologies.includes("C")) 
       return "#A8B9CC";
@@ -131,14 +127,9 @@ const Projects: React.FC = () => {
           </h1>
         </div>
 
-        {loading ? (
+        {!isClient ? (
           <div className="flex justify-center items-center h-64">
             <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-[#00BFFF]"></div>
-          </div>
-        ) : error ? (
-          <div className="text-red-500 text-center py-10">
-            {error}
-            <p className="mt-2">Please check your API connection</p>
           </div>
         ) : (
           <div className="relative">
@@ -215,12 +206,18 @@ const Projects: React.FC = () => {
                       </div>
                       <h3 className="text-white font-bold text-xl mb-2 relative z-0">{project.title}</h3>
                       <ul className="text-gray-400 text-sm space-y-2 mb-4 relative z-0">
-                        {[project.p1, project.p2, project.p3].map((item, idx) => (
-                          <li key={idx} className="flex items-start">
-                            <span className="text-[var(--card-color)] mr-2 mt-1">•</span>
-                            <span>{item}</span>
-                          </li>
-                        ))}
+                        <li className="flex items-start">
+                          <span className="text-[var(--card-color)] mr-2 mt-1">•</span>
+                          <span>{project.p1}</span>
+                        </li>
+                        <li className="flex items-start">
+                          <span className="text-[var(--card-color)] mr-2 mt-1">•</span>
+                          <span>{project.p2}</span>
+                        </li>
+                        <li className="flex items-start">
+                          <span className="text-[var(--card-color)] mr-2 mt-1">•</span>
+                          <span>{project.p3}</span>
+                        </li>
                       </ul>
                       <div className="flex flex-wrap gap-2 mb-4 relative z-0">
                         {project.Tech.map((tech, idx) => (
@@ -230,7 +227,7 @@ const Projects: React.FC = () => {
                         ))}
                       </div>
                       <div className="flex gap-3 mt-4 relative z-30">
-                        {project.title === "Wistravel" || project.title === "FocusAI – Productive Assistant" ? (
+                        {project.github === "#" ? (
                           <>
                             <div className="flex items-center px-4 py-2 bg-gray-800 text-white/80 rounded-full text-sm cursor-not-allowed opacity-90">
                               <FaGithub className="mr-2" /> Coming Soon

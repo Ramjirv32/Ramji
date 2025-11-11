@@ -48,11 +48,44 @@ html {
 
 body {
   font-family: "Momo Trust Display", sans-serif;
-  background-color: #030014 !important;
-  overflow-x: hidden;
-  max-width: 100vw;
-  position: relative;
-  min-height: 100vh;
+  background-color: #000000;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Project Carousel Animations */
+@keyframes slideInBottom {
+  from {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideInTop {
+  from {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideInFromBottom {
+  0% {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
 }
 
 /* Add missing keyframes for pulseGlow animation */
