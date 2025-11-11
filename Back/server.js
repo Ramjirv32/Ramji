@@ -10,16 +10,10 @@ dotenv.config();
 const app = express();
 
 app.use(cors({ 
-  origin: [
-    'http://localhost:5173',
-    'http://localhost:3000',
-    'https://ramji-b.in',
-    'https://ramjimainport.vercel.app/',
-    process.env.FRONTEND_URL
-  ],
+  origin: '*', // Allow all origins
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  credentials: true,
-  allowedHeaders: ['Content-Type', 'Authorization']
+  credentials: false, // Set to false when using wildcard origin
+  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'Accept']
 }));
 
 app.use(express.json());

@@ -5,7 +5,6 @@ import Image from "next/image"
 import { motion } from "framer-motion"
 import { IconContext } from "react-icons"
 
-// Import only necessary icons - split by library to enable better tree shaking
 import { 
   FaHtml5, FaCss3Alt, FaJs, FaReact, FaNodeJs, FaGit, FaGithub, 
   FaJava, FaLinux, FaPython, FaDocker, FaAws, FaAngular, FaVuejs, 
@@ -31,10 +30,10 @@ import { DiJqueryLogo } from "react-icons/di"
 import AOS from 'aos'
 import 'aos/dist/aos.css'
 
-// Backend server URL
+
 const BACKEND_URL = process.env.NODE_ENV === 'development' 
   ? 'https://ramji-etht.vercel.app' 
-  : 'http://localhost:9000'; // Replace with your actual backend domain
+  : 'http://localhost:9000'; 
 
 interface Skill {
   name: string
@@ -173,7 +172,6 @@ const SkillsContent = () => {
   const [isGridView, setIsGridView] = useState<boolean>(true)
 
   useEffect(() => {
-    // Dynamically import AOS to reduce initial bundle size
     import('aos').then((AOS) => {
       AOS.default.init({
         duration: 1000,

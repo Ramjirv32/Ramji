@@ -69,7 +69,7 @@ const Hero = () => {
           variants={slideInFromRight(0.8)}
           className="w-full relative flex justify-center items-center mb-16"
         >
-          <div className="relative w-full h-[20rem] md:h-[30rem] mt-[100px]">
+          <div className="relative w-full h-[25rem] md:h-[35rem] mt-[100px]">
             <div
               className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 rounded-full blur-3xl z-10 w-64 h-64 md:w-80 md:h-80"
               style={{
