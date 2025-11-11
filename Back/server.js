@@ -353,6 +353,25 @@ app.get('/api/skills', async (req, res) => {
   }
 });
 
+// Public skills route
+app.get('/public/skills', async (req, res) => {
+  try {
+    const { data, error } = await supabase
+      .from('skills')
+      .select('*')
+      .order('created_at', { ascending: false });
+    
+    if (error) {
+      console.error('Supabase error:', error);
+      return res.json([]);
+    }
+    res.json(data || []);
+  } catch (error) {
+    console.error('Error fetching skills:', error.message);
+    res.json([]);
+  }
+});
+
 const PORT = 9000;
 
 app.listen(PORT, () => {

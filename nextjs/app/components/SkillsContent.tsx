@@ -198,7 +198,7 @@ const SkillsContent = () => {
 
   const fetchSkills = async () => {
     try {
-      const response = await fetch(`${API_URL}/api/skills`, {
+      const response = await fetch(`${API_URL}/api/public/skills`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
