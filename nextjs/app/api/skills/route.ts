@@ -43,45 +43,39 @@ export async function GET(request: NextRequest) {
       greeting = `Hello from ${country}! Here's my tech stack 🌍`
     }
 
-    // Fetch from the existing skills data (same as admin route but public access)
-    const { data: skills, error } = await supabase
-      .from('Skills')
-      .select('id, created_at, s')
-      .order('created_at', { ascending: false })
-      .limit(1)
+    // Since the admin skills API is working, fetch from it internally
+    try {
+      const adminResponse = await fetch('https://ramji-etht.vercel.app/api/admin/skills')
+      
+      if (adminResponse.ok) {
+        const adminData = await adminResponse.json()
+        
+        if (adminData && Array.isArray(adminData) && adminData.length > 0) {
+          const skillsData = adminData[0]
+          const response = {
+            ...skillsData,
+            greeting,
+            location: { country, region, city }
+          }
 
-    if (error) {
-      console.error('Supabase error:', error)
-      // Use fallback data if database fails
-      const response = {
-        ...fallbackSkillsData[0],
-        greeting,
-        location: { country, region, city }
+          return Response.json([response], {
+            status: 200,
+            headers: {
+              'Cache-Control': 'public, s-maxage=3600, stale-while-revalidate=86400',
+              'CDN-Cache-Control': 'public, s-maxage=86400',
+              'Vercel-CDN-Cache-Control': 'public, s-maxage=86400',
+              'Vary': 'X-Vercel-IP-Country, X-Vercel-IP-Country-Region, X-Vercel-IP-City',
+            },
+          })
+        }
       }
-
-      return Response.json([response], {
-        status: 200,
-        headers: {
-          'Cache-Control': 'public, s-maxage=300, stale-while-revalidate=3600',
-        },
-      })
+    } catch (fetchError) {
+      console.log('Failed to fetch from admin route, using fallback:', fetchError)
     }
 
-    if (!skills || skills.length === 0) {
-      console.log('No skills found, using fallback data')
-      const response = {
-        ...fallbackSkillsData[0],
-        greeting,
-        location: { country, region, city }
-      }
-
-      return Response.json([response], { status: 200 })
-    }
-
-    // Use the existing skills data format
-    const skillsData = skills[0]
+    // Fallback to static data if admin route fails
     const response = {
-      ...skillsData,
+      ...fallbackSkillsData[0],
       greeting,
       location: { country, region, city }
     }
@@ -89,12 +83,10 @@ export async function GET(request: NextRequest) {
     return Response.json([response], {
       status: 200,
       headers: {
-        'Cache-Control': 'public, s-maxage=3600, stale-while-revalidate=86400',
-        'CDN-Cache-Control': 'public, s-maxage=86400',
-        'Vercel-CDN-Cache-Control': 'public, s-maxage=86400',
-        'Vary': 'X-Vercel-IP-Country, X-Vercel-IP-Country-Region, X-Vercel-IP-City',
+        'Cache-Control': 'public, s-maxage=300, stale-while-revalidate=3600',
       },
     })
+
   } catch (error) {
     console.error('Skills API error:', error)
     
