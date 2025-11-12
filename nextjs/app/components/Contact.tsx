@@ -32,6 +32,23 @@ export default function Contact() {
     message: ''
   });
 
+  // Auto-hide error messages after 2 seconds
+  useEffect(() => {
+    const hasErrors = Object.values(formErrors).some(error => error !== '');
+    
+    if (hasErrors) {
+      const timer = setTimeout(() => {
+        setFormErrors({
+          user_name: '',
+          user_email: '',
+          message: ''
+        });
+      }, 2000);
+      
+      return () => clearTimeout(timer);
+    }
+  }, [formErrors]);
+
   // Enhanced input validation
   const validateInput = (name: string, value: string) => {
     let error = '';
