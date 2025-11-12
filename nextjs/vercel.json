@@ -3,10 +3,9 @@
   "buildCommand": "pnpm run build",
   "installCommand": "pnpm install --frozen-lockfile",
   "framework": "nextjs",
+  "$schema": "https://openapi.vercel.sh/vercel.json",
   "regions": ["bom1", "maa1"],
-  "env": {
-    "NODE_ENV": "production"
-  },
+  "functionFailoverRegions": ["sfo1", "iad1"],
   "headers": [
     {
       "source": "/assets/:path*",
