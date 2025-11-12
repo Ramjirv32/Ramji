@@ -4,25 +4,28 @@
   "installCommand": "pnpm install --frozen-lockfile",
   "framework": "nextjs",
   "$schema": "https://openapi.vercel.sh/vercel.json",
-  "regions": ["bom1", "maa1"],
-  "functionFailoverRegions": ["sfo1", "iad1"],
+  "regions": ["sin1"],
+  "functionFailoverRegions": ["iad1", "sfo1"],
   "headers": [
     {
       "source": "/assets/:path*",
       "headers": [
-        { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }
+        { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" },
+        { "key": "x-vercel-cache-region", "value": "bom1, maa1" }
       ]
     },
     {
       "source": "/h/:path*",
       "headers": [
-        { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }
+        { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" },
+        { "key": "x-vercel-cache-region", "value": "bom1, maa1" }
       ]
     },
     {
       "source": "/com/:path*",
       "headers": [
-        { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }
+        { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" },
+        { "key": "x-vercel-cache-region", "value": "bom1, maa1" }
       ]
     },
     {
