@@ -107,6 +107,7 @@ const Hero = () => {
                 height={236}
                 priority
                 quality={85}
+                fetchPriority="high"
                 className="w-full h-full object-cover relative z-10 rounded-full"
                 sizes="(max-width: 768px) 128px, 256px"
               />
