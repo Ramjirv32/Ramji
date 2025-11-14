@@ -5,7 +5,6 @@
   "framework": "nextjs",
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "regions": ["sin1"],
-  "functionFailoverRegions": ["iad1", "sfo1"],
   "headers": [
     {
       "source": "/assets/:path*",
