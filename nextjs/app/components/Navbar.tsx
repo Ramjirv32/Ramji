@@ -38,15 +38,38 @@ export default function Navbar({
     }
   }, [activeSection])
 
+  // Detect which section is in view on scroll
   useEffect(() => {
     const handleScroll = () => {
       const scrollTop = window.scrollY
+      const scrollHeight = window.innerHeight
+
       setScrolled(scrollTop > 100)
+
+      // Find which section is currently in view
+      let currentSection = "home"
+
+      for (const item of navItems) {
+        const element = document.getElementById(item.id)
+        if (element) {
+          const rect = element.getBoundingClientRect()
+          // If section is in upper half of viewport
+          if (rect.top <= scrollHeight / 2 && rect.bottom > 0) {
+            currentSection = item.id
+          }
+        }
+      }
+
+      const activeItem = navItems.find((item) => item.id === currentSection)
+      if (activeItem && activeItem.name !== active) {
+        setActive(activeItem.name)
+        setActiveSection(currentSection)
+      }
     }
 
     window.addEventListener("scroll", handleScroll, { passive: true })
     return () => window.removeEventListener("scroll", handleScroll)
-  }, [])
+  }, [active, setActiveSection])
 
   const handleNavClick = (navItem: { name: string; link: string; id?: string }) => {
     const { name, link, id } = navItem
