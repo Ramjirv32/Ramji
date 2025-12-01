@@ -33,18 +33,6 @@ const Projects: React.FC = () => {
       image: "/assets/grs.webp"
     },
     {
-      id: 3,
-      title: "Smart Parking System",
-      created_at: "2023-04-01T00:00:00+00:00",
-      p1: "Led development of a full-stack parking system website",
-      p2: "Implemented real-time parking space tracking with IoT",
-      p3: "Designed booking and reservation management system",
-      Tech: ["React", "Node.js", "IoT", "PostgreSQL"],
-      github: "https://github.com/Ramjirv32/Smart-Parking-System",
-      livedemo: "https://parking-orcin-tau.vercel.app/",
-      image: "/assets/aadhya.webp"
-    },
-    {
       id: 4,
       title: "FocusAI Productive Assistant",
       created_at: "2023-09-01T00:00:00+00:00",
@@ -57,24 +45,25 @@ const Projects: React.FC = () => {
       image: "/personal/focus.webp"
     },
     {
-      id: 5,
-      title: "NebulX",
-      created_at: "2023-10-01T00:00:00+00:00",
-      p1: "Building advanced AI features and integrations",
-      p2: "Implementing modern UI/UX design principles",
-      p3: "Developing scalable backend architecture",
-      Tech: ["React", "AI APIs", "Node.js", "Express", "Tailwind CSS"],
-      github: "https://github.com/Ramjirv32/nebulx",
-      livedemo: "https://nebulx.vercel.app/",
-      image: "/assets/nebulx.webp"
+      id: 6,
+      title: "Atmospheric Water Generator (AWG)",
+      created_at: "2025-01-15T00:00:00+00:00",
+      p1: "Designed IoT-enabled device to extract clean drinking water from atmospheric humidity using Peltier thermoelectric cooling",
+      p2: "Integrated ESP32 microcontroller with DHT22, Ultrasonic, pH, TDS sensors for real-time monitoring and AI-based predictions",
+      p3: "Built web/mobile dashboard for performance analytics, water quality tracking, and emergency alerts with UV purification",
+      Tech: ["ESP32", "IoT", "Python", "React", "Machine Learning", "Sensors", "UV Purification"],
+      github: "https://www.linkedin.com/feed/update/urn:li:activity:7401172181214416897/",
+      livedemo: "https://www.linkedin.com/feed/update/urn:li:activity:7401172181214416897/",
+      image: "/personal/awg.webp"
     }
   ];
 
+
+  
   const getProjectIcon = (technologies: string[], title: string): string => {
     if (title === "Vehicle Rental System") return "🚗";
-    if (title === "Smart Parking System") return "🅿️";
     if (title === "FocusAI Productive Assistant") return "🎯";
-    if (title === "NebulX") return "⚡";
+    if (title === "Atmospheric Water Generator (AWG)") return "💧";
     
     if (technologies.includes("C")) return "💻";
     if (technologies.includes(".NET") || technologies.includes("ASP.NET")) return "🔷";
@@ -84,11 +73,12 @@ const Projects: React.FC = () => {
     return "💼";
   };
 
+
+
   const getProjectColor = (technologies: string[], title: string): string => {
     if (title === "Vehicle Rental System") return "#FFA500";
-    if (title === "Smart Parking System") return "#00BFFF";
     if (title === "FocusAI Productive Assistant") return "#4ECDC4";
-    if (title === "NebulX") return "#8A2BE2";
+    if (title === "Atmospheric Water Generator (AWG)") return "#00CED1";
     
     if (technologies.includes(".NET") || technologies.includes("ASP.NET") || technologies.includes("C#")) 
       return "#512BD4";
@@ -107,7 +97,7 @@ const Projects: React.FC = () => {
     if (technologies.includes("C")) 
       return "#A8B9CC";
   
-    return "#00BFFF";
+    return "#8B5CF6";
   }
 
   return (

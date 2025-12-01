@@ -158,7 +158,7 @@ export default function Navbar({
         <div
           className={`${
             isMenuOpen ? "translate-x-0 opacity-100" : "translate-x-full opacity-0"
-          } lg:hidden fixed inset-0 z-40 bg-black/95 backdrop-blur-md transition-all duration-300 ease-in-out`}
+          } lg:hidden fixed inset-0 z-40 bg-black transition-all duration-300 ease-in-out`}
         >
           <div className="flex items-center justify-between px-4 py-4 border-b border-gray-800">
             <div className="text-2xl font-bold text-white">Ramji</div>

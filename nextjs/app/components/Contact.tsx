@@ -25,15 +25,19 @@ export default function Contact() {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  // Add form validation state
+  // Add form validation state - only show errors on submit attempt
   const [formErrors, setFormErrors] = useState({
     user_name: '',
     user_email: '',
     message: ''
   });
+  
+  const [attemptedSubmit, setAttemptedSubmit] = useState(false);
 
-  // Auto-hide error messages after 2 seconds
+  // Auto-hide error messages after 2 seconds only if submission was attempted
   useEffect(() => {
+    if (!attemptedSubmit) return;
+    
     const hasErrors = Object.values(formErrors).some(error => error !== '');
     
     if (hasErrors) {
@@ -47,11 +51,16 @@ export default function Contact() {
       
       return () => clearTimeout(timer);
     }
-  }, [formErrors]);
+  }, [formErrors, attemptedSubmit]);
 
   // Enhanced input validation
   const validateInput = (name: string, value: string) => {
     let error = '';
+    
+    // Only validate if user has attempted to submit
+    if (!attemptedSubmit) {
+      return true;
+    }
     
     switch(name) {
       case 'user_name':
@@ -91,21 +100,24 @@ export default function Contact() {
       [name]: value
     });
     
-    // Validate on change after initial submission attempt
-    if (isSubmitting) {
+    // Only validate on change if user has already attempted to submit
+    if (attemptedSubmit) {
       validateInput(name, value);
     }
   };
 
   // Enhanced blur handler for validation
   const handleBlur = (e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value } = e.target;
-    validateInput(name, value);
+    // Don't validate on blur - only validate on submit
+    // This prevents showing errors during normal typing
   };
 
   // Handle form submission
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    // Mark that user has attempted to submit
+    setAttemptedSubmit(true);
     
     // Validate all fields before submission
     const isNameValid = validateInput('user_name', formData.user_name);
@@ -161,6 +173,9 @@ export default function Contact() {
           user_email: '',
           message: ''
         });
+        
+        // Reset submission attempt flag
+        setAttemptedSubmit(false);
       } else {
         throw new Error(data.error || 'Something went wrong sending your message');
       }
@@ -244,12 +259,12 @@ export default function Contact() {
     <>
       <section id="contact" className="relative bg-none py-8 md:py-16 lg:py-20 w-full min-h-screen flex items-center justify-center overflow-hidden">
         {/* Optional background effect */}
-        <div className="absolute inset-0 bg-gradient-to-b from-[#00BFFF]/5 to-transparent opacity-40 pointer-events-none"></div>
+        <div className="absolute inset-0 bg-gradient-to-b from-[#8B5CF6]/5 to-transparent opacity-40 pointer-events-none"></div>
         
         <div className="container relative mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl z-20">
           {/* Section Title */}
           <h2 className="text-center text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-8 md:mb-12 lg:mb-16">
-            Contact <span className="text-[#00BFFF]">Me</span>
+            Contact <span className="text-[#8B5CF6]">Me</span>
           </h2>
           
           {/* Main Content Container */}
@@ -276,7 +291,7 @@ export default function Contact() {
               {/* Contact Details */}
               <div className="flex flex-col space-y-3 md:space-y-4 lg:space-y-6" data-aos="fade-up">
                 <div className="flex items-center justify-center lg:justify-start space-x-3 md:space-x-4">
-                  <FaEnvelope className="text-[#00BFFF] text-lg sm:text-xl md:text-2xl lg:text-3xl flex-shrink-0" />
+                  <FaEnvelope className="text-[#8B5CF6] text-lg sm:text-xl md:text-2xl lg:text-3xl flex-shrink-0" />
                   <span className="text-xs sm:text-sm md:text-base lg:text-lg xl:text-xl 2xl:text-2xl text-gray-300 break-all">
                     {EMAIL_TO}
                   </span>
@@ -288,7 +303,7 @@ export default function Contact() {
             <div className="w-full lg:w-1/2 relative z-30 pointer-events-auto">
               <form 
                 onSubmit={handleSubmit} 
-                className="space-y-4 md:space-y-6 relative group backdrop-blur-sm bg-gray-900/30 p-4 sm:p-6 md:p-8 rounded-xl border border-[#00BFFF]/20 shadow-lg transition-all duration-300 hover:shadow-[0_0_30px_rgba(0,191,255,0.2)]"
+                className="space-y-4 md:space-y-6 relative group backdrop-blur-sm bg-gray-900/30 p-4 sm:p-6 md:p-8 rounded-xl border border-[#8B5CF6]/20 shadow-lg transition-all duration-300 hover:shadow-[0_0_30px_rgba(139,92,246,0.2)]"
               >
                 {/* Form Title */}
                 <h3 className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-semibold text-white mb-4 md:mb-6 text-center lg:text-left">
@@ -306,10 +321,10 @@ export default function Contact() {
                     onChange={handleInputChange}
                     onBlur={handleBlur}
                     className={`w-full bg-gray-900/60 text-white placeholder-gray-400 text-sm sm:text-base md:text-lg px-3 sm:px-4 py-2.5 sm:py-3 md:py-4 rounded-lg border ${
-                      formErrors.user_name ? 'border-red-500 focus:border-red-500 focus:ring-red-500' : 'border-[#00BFFF]/30 focus:border-[#00BFFF] focus:ring-[#00BFFF]'
+                      attemptedSubmit && formErrors.user_name ? 'border-red-500 focus:border-red-500 focus:ring-red-500' : 'border-[#8B5CF6]/30 focus:border-[#8B5CF6] focus:ring-[#8B5CF6]'
                     } focus:outline-none focus:ring-1 relative z-30 transition-all duration-300`}
                   />
-                  {formErrors.user_name && (
+                  {attemptedSubmit && formErrors.user_name && (
                     <p className="text-red-500 text-xs sm:text-sm mt-1">{formErrors.user_name}</p>
                   )}
                   <div className="absolute inset-0 bg-gradient-to-r from-[#00BFFF]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-lg -z-10"></div>
@@ -326,10 +341,10 @@ export default function Contact() {
                     onChange={handleInputChange}
                     onBlur={handleBlur}
                     className={`w-full bg-gray-900/60 text-white placeholder-gray-400 text-sm sm:text-base md:text-lg px-3 sm:px-4 py-2.5 sm:py-3 md:py-4 rounded-lg border ${
-                      formErrors.user_email ? 'border-red-500 focus:border-red-500 focus:ring-red-500' : 'border-[#00BFFF]/30 focus:border-[#00BFFF] focus:ring-[#00BFFF]'
+                      attemptedSubmit && formErrors.user_email ? 'border-red-500 focus:border-red-500 focus:ring-red-500' : 'border-[#8B5CF6]/30 focus:border-[#8B5CF6] focus:ring-[#8B5CF6]'
                     } focus:outline-none focus:ring-1 relative z-30 transition-all duration-300`}
                   />
-                  {formErrors.user_email && (
+                  {attemptedSubmit && formErrors.user_email && (
                     <p className="text-red-500 text-xs sm:text-sm mt-1">{formErrors.user_email}</p>
                   )}
                 </div>
@@ -345,10 +360,10 @@ export default function Contact() {
                     onChange={handleInputChange}
                     onBlur={handleBlur}
                     className={`w-full bg-gray-900/60 text-white placeholder-gray-400 text-sm sm:text-base md:text-lg px-3 sm:px-4 py-2.5 sm:py-3 md:py-4 rounded-lg border ${
-                      formErrors.message ? 'border-red-500 focus:border-red-500 focus:ring-red-500' : 'border-[#00BFFF]/30 focus:border-[#00BFFF] focus:ring-[#00BFFF]'
+                      attemptedSubmit && formErrors.message ? 'border-red-500 focus:border-red-500 focus:ring-red-500' : 'border-[#8B5CF6]/30 focus:border-[#8B5CF6] focus:ring-[#8B5CF6]'
                     } focus:outline-none focus:ring-1 resize-none relative z-30 transition-all duration-300 min-h-[100px] sm:min-h-[120px] md:min-h-[140px]`}
                   ></textarea>
-                  {formErrors.message && (
+                  {attemptedSubmit && formErrors.message && (
                     <p className="text-red-500 text-xs sm:text-sm mt-1">{formErrors.message}</p>
                   )}
                   <div className="absolute bottom-2 right-2 text-xs sm:text-sm text-gray-400 z-40">
@@ -359,11 +374,11 @@ export default function Contact() {
                 {/* Submit Button */}
                 <button 
                   type="submit"
-                  disabled={isSubmitting || !!formErrors.user_name || !!formErrors.user_email || !!formErrors.message || formData.message.length < 10}
-                  className={`w-full bg-gradient-to-r from-[#00BFFF] to-[#1E90FF] text-white text-sm sm:text-base md:text-lg px-4 sm:px-6 py-3 sm:py-4 rounded-lg font-semibold transition-all duration-300 transform hover:scale-105 relative z-30 ${
-                    (isSubmitting || !!formErrors.user_name || !!formErrors.user_email || !!formErrors.message || formData.message.length < 10) 
+                  disabled={isSubmitting}
+                  className={`w-full bg-gradient-to-r from-[#8B5CF6] to-[#7C3AED] text-white text-sm sm:text-base md:text-lg px-4 sm:px-6 py-3 sm:py-4 rounded-lg font-semibold transition-all duration-300 transform hover:scale-105 relative z-30 ${
+                    isSubmitting
                     ? 'opacity-70 cursor-not-allowed' 
-                    : 'hover:shadow-[0_0_20px_rgba(30,144,255,0.4)]'
+                    : 'hover:shadow-[0_0_20px_rgba(139,92,246,0.4)]'
                   }`}
                 >
                   {isSubmitting ? (
@@ -388,8 +403,8 @@ export default function Contact() {
           </div>
           
           {/* Optional decorative elements - Hidden on mobile for cleaner look */}
-          <div className="absolute top-20 left-10 w-16 h-16 md:w-20 md:h-20 bg-[#00BFFF]/10 rounded-full blur-3xl pointer-events-none hidden sm:block"></div>
-          <div className="absolute bottom-20 right-10 w-32 h-32 md:w-40 md:h-40 bg-[#00BFFF]/5 rounded-full blur-3xl pointer-events-none hidden sm:block"></div>
+          <div className="absolute top-20 left-10 w-16 h-16 md:w-20 md:h-20 bg-[#8B5CF6]/10 rounded-full blur-3xl pointer-events-none hidden sm:block"></div>
+          <div className="absolute bottom-20 right-10 w-32 h-32 md:w-40 md:h-40 bg-[#8B5CF6]/5 rounded-full blur-3xl pointer-events-none hidden sm:block"></div>
         </div>
       </section>
     </>

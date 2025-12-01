@@ -166,97 +166,64 @@ const SectionWrapper = (Component: React.FC, idName: string) =>
 const CertificateCard = ({ cert, index, onImageClick }: { cert: typeof projects[0], index: number, onImageClick: (cert: typeof projects[0]) => void }) => {
   return (
     <div 
-      className="flex-shrink-0 w-full sm:w-[calc(50%-12px)] lg:w-[calc(33.333%-16px)] group"
+      className="relative group cursor-pointer h-auto"
       data-aos="fade-up"
-      data-aos-delay={index * 100}
+      data-aos-duration="1000"
+      data-aos-delay={`${index * 100}`}
+      onClick={() => onImageClick(cert)}
     >
-      <div 
-        className="relative rounded-2xl overflow-hidden h-full transition-all duration-300"
-        style={{
-          background: '#151030',
-          border: `2px solid rgba(255, 255, 255, 0.1)`,
-        }}
-        onMouseEnter={(e) => {
-          e.currentTarget.style.background = cert.gradient;
-          e.currentTarget.style.border = `2px solid ${cert.borderColor}`;
-        }}
-        onMouseLeave={(e) => {
-          e.currentTarget.style.background = '#151030';
-          e.currentTarget.style.border = `2px solid rgba(255, 255, 255, 0.1)`;
-        }}
-      >
-        {/* Certificate Image */}
-        <div className="relative h-48 overflow-hidden cursor-pointer" onClick={() => onImageClick(cert)}>
+      <div className="absolute inset-0 bg-gradient-to-r from-[#8B5CF6]/20 to-[#7C3AED]/20 rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition-all duration-500" />
+      
+      <div className="relative bg-white/5 backdrop-blur-lg border border-white/10 rounded-2xl overflow-hidden hover:border-[#8B5CF6]/50 transition-all duration-300 group-hover:shadow-xl group-hover:shadow-[#8B5CF6]/20 p-3 flex flex-col h-full">
+        {/* Certificate Image Container - Display Image */}
+        <div className="relative w-full h-[220px] sm:h-[240px] md:h-[260px] mb-4 overflow-hidden rounded-lg bg-black/20">
           <Image
             src={cert.image}
             alt={cert.name}
             fill
-            sizes="(max-width: 1024px) 90vw, 360px"
-            className="object-cover transition-transform duration-500 group-hover:scale-110"
+            className="object-cover w-full h-full group-hover:scale-105 transition-transform duration-500"
+            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
             priority={index === 0}
+            quality={85}
           />
-          <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-            <span className="text-white font-semibold">Click to view full certificate</span>
+          {/* Hover Overlay */}
+          <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-all duration-300 backdrop-blur-sm">
+            <div className="text-white text-center">
+              <FaAward className="text-2xl md:text-3xl mb-2 mx-auto" />
+              <p className="font-semibold text-xs md:text-sm">Click to Expand</p>
+            </div>
           </div>
         </div>
 
-        {/* Certificate Details */}
-        <div className="p-4 space-y-3">
-          <div className="flex items-start justify-between gap-2">
-            <h3 className="text-white text-lg font-bold leading-tight flex-1">
+        {/* Certificate Info */}
+        <div className="space-y-2 flex-grow">
+          <div>
+            <h3 className="text-white font-bold text-xs md:text-sm line-clamp-1 mb-1">
               {cert.name}
             </h3>
-            <FaMedal className="text-xl flex-shrink-0" style={{ color: cert.borderColor }} />
+            <p className="text-[#8B5CF6] font-semibold text-xs">{cert.issuer}</p>
+            <p className="text-gray-400 text-xs">{cert.date}</p>
           </div>
 
-          <div className="flex items-center gap-2 text-gray-300 text-xs">
-            <FaAward className="text-[#00BFFF]" />
-            <span>{cert.issuer}</span>
-            <span className="mx-1">•</span>
-            <span>{cert.date}</span>
-          </div>
-
-          <p className="text-gray-300 text-sm leading-relaxed line-clamp-2">
-            {cert.description}
-          </p>
-
-          {/* Tags */}
-          <div className="flex flex-wrap gap-2">
-            {cert.tags.map((tag) => (
+          {/* Tags - Reduced */}
+          <div className="flex flex-wrap gap-1">
+            {cert.tags?.slice(0, 2).map((tag: any) => (
               <span
                 key={tag.name}
-                className={`text-xs px-2 py-1 rounded-full bg-white/10 backdrop-blur-sm ${tag.color}`}
+                className="px-2 py-0.5 bg-[#8B5CF6]/20 border border-[#8B5CF6]/40 text-[#8B5CF6] text-xs rounded-full"
               >
                 #{tag.name}
               </span>
             ))}
           </div>
+        </div>
 
-          {/* Action Buttons */}
-          <div className="flex gap-2 pt-2">
-            {cert.source_code_link && (
-              <a
-                href={cert.source_code_link}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-2 px-3 py-1.5 bg-white/10 hover:bg-white/20 rounded-lg transition-colors text-white text-xs"
-              >
-                <FaFilePdf />
-                View Certificate
-              </a>
-            )}
-            {cert.live_demo_link && (
-              <a
-                href={cert.live_demo_link}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-2 px-3 py-1.5 bg-white/10 hover:bg-white/20 rounded-lg transition-colors text-white text-xs"
-              >
-                <FaExternalLinkAlt />
-                Learn More
-              </a>
-            )}
-          </div>
+        {/* Footer Action Button */}
+        <div className="mt-3 pt-2 border-t border-white/10">
+          <button className="w-full py-2 px-3 bg-gradient-to-r from-[#8B5CF6] to-[#7C3AED] text-white rounded-lg text-xs md:text-sm font-semibold hover:from-[#7C3AED] hover:to-[#6D28D9] transition-all duration-300 flex items-center justify-center gap-2">
+            <FaAward className="text-xs" />
+            View Full
+          </button>
         </div>
       </div>
     </div>
@@ -264,35 +231,32 @@ const CertificateCard = ({ cert, index, onImageClick }: { cert: typeof projects[
 };
 
 const Certificate = () => {
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [cardsPerView, setCardsPerView] = useState(3);
   const [selectedCert, setSelectedCert] = useState<typeof projects[0] | null>(null);
+  const [activeCategory, setActiveCategory] = useState("cloud");
 
   useEffect(() => {
-    const handleResize = () => {
-      if (window.innerWidth < 640) {
-        setCardsPerView(1);
-      } else if (window.innerWidth < 1024) {
-        setCardsPerView(2);
-      } else {
-        setCardsPerView(3);
-      }
-    };
+    AOS.init({
+      duration: 1000,
+      easing: 'ease-in-out',
+      once: false,
+      mirror: true,
+    })
+  }, [])
 
-    handleResize();
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
+  const categories = [
+    { id: "cloud", label: "Cloud & Infrastructure", count: projects.filter(p => p.issuer.includes("AWS") || p.issuer.includes("Red Hat")).length },
+    { id: "development", label: "Development", count: projects.filter(p => p.issuer.includes("Udemy") || p.issuer.includes("GitHub")).length },
+    { id: "database", label: "Database & Tools", count: projects.filter(p => p.issuer.includes("MongoDB")).length },
+    { id: "all", label: "All Certifications", count: projects.length }
+  ];
 
-  const maxIndex = Math.max(0, projects.length - cardsPerView);
-
-  const handlePrev = () => {
-    setCurrentIndex((prev) => Math.max(0, prev - 1));
-  };
-
-  const handleNext = () => {
-    setCurrentIndex((prev) => Math.min(maxIndex, prev + 1));
-  };
+  const filteredCerts = activeCategory === "all" 
+    ? projects 
+    : activeCategory === "cloud"
+    ? projects.filter(p => p.issuer.includes("AWS") || p.issuer.includes("Red Hat"))
+    : activeCategory === "development"
+    ? projects.filter(p => p.issuer.includes("Udemy") || p.issuer.includes("GitHub"))
+    : projects.filter(p => p.issuer.includes("MongoDB"));
 
   const openCertModal = (cert: typeof projects[0]) => {
     setSelectedCert(cert);
@@ -306,90 +270,74 @@ const Certificate = () => {
     <>
       <div className="relative">
         {/* Header section */}
-        <div className="relative z-10" data-aos="fade-right" data-aos-duration="1000">
+        <div className="relative z-10 mb-12" data-aos="fade-right" data-aos-duration="1000">
           <div className="flex items-center gap-3 mb-2">
-            <FaMedal className="text-2xl md:text-3xl text-[#00BFFF]" />
-            <p className="text-[#00BFFF] font-medium lg:text-[18px] sm:text-[16px] xs:text-[14px] text-[12px] uppercase tracking-wider">
+            <FaMedal className="text-2xl md:text-3xl text-[#8B5CF6]" />
+            <p className="text-[#8B5CF6] font-medium lg:text-[18px] sm:text-[16px] xs:text-[14px] text-[12px] uppercase tracking-wider">
               My achievements
             </p>
           </div>
           <h2 className="text-white font-black md:text-[60px] sm:text-[50px] xs:text-[40px] text-[30px]">
-            Certifications & <span className="text-[#00BFFF]">Credentials</span>
+            Certifications & <span className="text-[#8B5CF6]">Credentials</span>
           </h2>
         </div>
 
-        <div className="relative z-10 w-full flex" data-aos="fade-left" data-aos-duration="1000" data-aos-delay="200">
-          <p className="mt-3 text-gray-300 text-[17px] max-w-3xl leading-[30px]">
+        <div className="relative z-10 w-full mb-12" data-aos="fade-left" data-aos-duration="1000" data-aos-delay="200">
+          <p className="text-gray-300 text-[17px] max-w-3xl leading-[30px]">
             The following certifications validate my skills and expertise in various technologies and methodologies.
             Each certificate represents my commitment to continuous learning and professional growth in the rapidly evolving
             tech industry.
           </p>
         </div>
 
-        {/* Slider Container */}
-        <div className="mt-20 relative" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="400">
-          {/* Navigation Buttons */}
-          <button
-            onClick={handlePrev}
-            disabled={currentIndex === 0}
-            className={`absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 z-20 bg-[#00BFFF] hover:bg-[#0099CC] text-white p-4 rounded-full shadow-lg transition-all duration-300 ${
-              currentIndex === 0 ? 'opacity-50 cursor-not-allowed' : 'hover:scale-110'
-            }`}
-            aria-label="Previous certificates"
-          >
-            <FaChevronLeft className="text-xl" />
-          </button>
-
-          <button
-            onClick={handleNext}
-            disabled={currentIndex >= maxIndex}
-            className={`absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 z-20 bg-[#00BFFF] hover:bg-[#0099CC] text-white p-4 rounded-full shadow-lg transition-all duration-300 ${
-              currentIndex >= maxIndex ? 'opacity-50 cursor-not-allowed' : 'hover:scale-110'
-            }`}
-            aria-label="Next certificates"
-          >
-            <FaChevronRight className="text-xl" />
-          </button>
-
-          {/* Certificates Slider */}
-          <div className="overflow-hidden px-2">
-            <div 
-              className="flex gap-6 transition-transform duration-500 ease-out"
-              style={{
-                transform: `translateX(-${currentIndex * (100 / cardsPerView)}%)`,
-              }}
+        {/* Category Filter Tabs - Responsive */}
+        <div className="mb-12 flex flex-wrap gap-2 md:gap-3 lg:gap-4" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="300">
+          {categories.map((category) => (
+            <button
+              key={category.id}
+              onClick={() => setActiveCategory(category.id)}
+              className={`px-4 md:px-6 py-2 md:py-3 rounded-full font-semibold transition-all duration-300 border-2 text-xs md:text-sm lg:text-base ${
+                activeCategory === category.id
+                  ? "bg-[#8B5CF6] text-white border-[#8B5CF6] shadow-lg shadow-[#8B5CF6]/50"
+                  : "bg-white/5 text-gray-300 border-white/20 hover:border-[#8B5CF6]/50 hover:text-white"
+              }`}
             >
-              {projects.map((cert, index) => (
-                <CertificateCard key={cert.name} cert={cert} index={index} onImageClick={openCertModal} />
-              ))}
-            </div>
-          </div>
-
-          {/* Pagination Dots */}
-          <div className="flex justify-center gap-2 mt-8">
-            {Array.from({ length: maxIndex + 1 }).map((_, index) => (
-              <button
-                key={index}
-                onClick={() => setCurrentIndex(index)}
-                className={`h-2 rounded-full transition-all duration-300 ${
-                  index === currentIndex
-                    ? 'w-8 bg-[#00BFFF]'
-                    : 'w-2 bg-gray-500 hover:bg-gray-400'
-                }`}
-                aria-label={`Go to slide ${index + 1}`}
-              />
-            ))}
-          </div>
+              {category.label}
+              <span className={`ml-2 text-xs ${activeCategory === category.id ? "bg-white/30" : "bg-white/10"} px-2 py-0.5 rounded-full`}>
+                {category.count}
+              </span>
+            </button>
+          ))}
         </div>
-        
-        {/* Instruction tip */}
-        <div className="mt-10 flex justify-center">
-          {/* <div className="bg-[#151030]/80 p-4 rounded-lg backdrop-blur-sm border border-[#00BFFF]/30 inline-flex items-center gap-2">
-            <div className="w-2 h-2 bg-[#00BFFF] rounded-full animate-pulse"></div>
-            <p className="text-gray-300 text-sm">
-              Use navigation arrows or dots to explore certificates
-            </p>
-          </div> */}
+
+        {/* Certificates Grid - Responsive */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 lg:gap-8" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="400">
+          {filteredCerts.map((cert, index) => (
+            <CertificateCard key={cert.name} cert={cert} index={index} onImageClick={openCertModal} />
+          ))}
+        </div>
+
+        {/* Empty State */}
+        {filteredCerts.length === 0 && (
+          <div className="text-center py-12">
+            <p className="text-gray-400 text-lg">No certifications in this category yet.</p>
+          </div>
+        )}
+
+        {/* Stats Section - Responsive */}
+        <div className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="500">
+          <div className="bg-white/5 border border-white/10 rounded-2xl p-4 md:p-6 text-center hover:border-[#8B5CF6]/30 transition-all duration-300">
+            <div className="text-3xl md:text-4xl font-bold text-[#8B5CF6] mb-2">{projects.length}</div>
+            <p className="text-gray-300 text-sm md:text-base">Total Certifications</p>
+          </div>
+          <div className="bg-white/5 border border-white/10 rounded-2xl p-4 md:p-6 text-center hover:border-[#8B5CF6]/30 transition-all duration-300">
+            <div className="text-3xl md:text-4xl font-bold text-[#8B5CF6] mb-2">5+</div>
+            <p className="text-gray-300 text-sm md:text-base">Technology Domains</p>
+          </div>
+          <div className="bg-white/5 border border-white/10 rounded-2xl p-4 md:p-6 text-center hover:border-[#8B5CF6]/30 transition-all duration-300">
+            <div className="text-3xl md:text-4xl font-bold text-[#8B5CF6] mb-2">2024-25</div>
+            <p className="text-gray-300 text-sm md:text-base">Year of Achievement</p>
+          </div>
         </div>
       </div>
 
@@ -400,10 +348,10 @@ const Certificate = () => {
           onClick={closeCertModal}
         >
           <div 
-            className="relative bg-[#030014] border border-[#00BFFF]/30 rounded-2xl max-w-3xl w-full shadow-2xl scrollbar-hide"
+            className="relative bg-[#030014] border border-[#8B5CF6]/30 rounded-2xl max-w-3xl w-full shadow-2xl scrollbar-hide"
             onClick={(e) => e.stopPropagation()}
             style={{
-              boxShadow: "0 0 50px rgba(0, 191, 255, 0.3)"
+              boxShadow: "0 0 50px rgba(139, 92, 246, 0.3)"
             }}
           >
             {/* Close Button */}
@@ -432,7 +380,7 @@ const Certificate = () => {
                     href={selectedCert.source_code_link}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-[#00BFFF] to-[#0096FF] text-white rounded-lg hover:from-[#0096FF] hover:to-[#00BFFF] transition-all duration-300 font-medium"
+                    className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-[#8B5CF6] to-[#7C3AED] text-white rounded-lg hover:from-[#7C3AED] hover:to-[#8B5CF6] transition-all duration-300 font-medium"
                   >
                     <FaFilePdf />
                     Download Certificate PDF

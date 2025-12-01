@@ -42,26 +42,26 @@ const internships = [
     id: 2,
     title: "Full Stack Developer Intern",
     company: "Society for Cyber Intelligent Systems",
-    duration: "April 25- May 25 Deployment - [July]",
-    description: "Developed societycis.org website with Mathan M for cyber intelligence systems. Built responsive web platform with modern security features and intelligent system integration.",
+    duration: "April 2025 - May 2025",
+    description: "Developed societycis.org website with Mathan M for cyber intelligence systems. Built responsive web platform with modern security features and intelligent system integration. Received stipend of ₹10,000.",
     image: "/personal/Society.webp",
     skills: ["React", "Node.js", "Security", "AI Integration", "MongoDB"],
     route: "/work/society",
     bgColor: "from-blue-500/20 to-cyan-500/20",
-    current: true,
+    current: false,
     type: "internship"
   },
   {
     id: 3,
-    title: "Full Stack Developer",
+    title: "Freelance Full Stack Developer",
     company: "Luxor Holiday Homes",
-    duration: "July 2025 - Aug 2025",
-    description: "Freelanced complete homestay booking platform as freelancer. Built with WordPress, React frontend, Node.js backend, Razorpay integration, MongoDB, Cloudflare security and SSL.",
+    duration: "July 2025 - August 2025",
+    description: "Freelance consultation and development for homestay booking platform. Built with WordPress, React frontend, Node.js backend, Razorpay integration, MongoDB, Cloudflare security and SSL. Received ₹30,000 for development.",
     image: "/personal/Luxor.webp",
     skills: ["WordPress", "React", "Node.js", "MongoDB", "Razorpay", "Cloudflare"],
     route: "/work/luxor-holiday",
     bgColor: "from-yellow-500/20 to-amber-500/20",
-    current: true,
+    current: false,
     type: "freelance"
   }
 ];
