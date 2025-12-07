@@ -23,13 +23,13 @@ interface InternshipCardProps {
 }
 
 const cardVariants = {
-  initial: { 
-    y: 50, 
+  initial: {
+    y: 50,
     opacity: 0,
     rotateX: 10,
   },
-  animate: { 
-    y: 0, 
+  animate: {
+    y: 0,
     opacity: 1,
     rotateX: 0,
     transition: {
@@ -78,7 +78,7 @@ export const InternshipCard: React.FC<InternshipCardProps> = ({ internship, inde
       className="group relative w-full max-w-sm mx-auto"
       style={{ perspective: "1000px" }}
     >
-      <div 
+      <div
         className={`relative bg-gradient-to-br ${internship.bgColor} backdrop-blur-md rounded-2xl overflow-hidden border border-white/10 shadow-2xl transition-all duration-500 group-hover:border-white/20`}
         style={{
           background: `linear-gradient(135deg, 
@@ -101,11 +101,10 @@ export const InternshipCard: React.FC<InternshipCardProps> = ({ internship, inde
 
         {/* Type badge */}
         <div className="absolute top-4 left-4 z-20">
-          <span className={`px-3 py-1 text-xs font-medium rounded-full ${
-            internship.type === 'freelance' 
-              ? 'bg-amber-500/20 text-amber-300 border border-amber-400/30' 
+          <span className={`px-3 py-1 text-xs font-medium rounded-full ${internship.type === 'freelance'
+              ? 'bg-amber-500/20 text-amber-300 border border-amber-400/30'
               : 'bg-blue-500/20 text-blue-300 border border-blue-400/30'
-          }`}>
+            }`}>
             {internship.type === 'freelance' ? 'Freelance' : 'Internship'}
           </span>
         </div>

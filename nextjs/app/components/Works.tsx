@@ -107,8 +107,8 @@ const Works = () => {
         {/* First Row - Two Cards */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 px-4 mb-16">
           {internships.slice(0, 2).map((internship, index) => (
-            <div 
-              key={internship.id} 
+            <div
+              key={internship.id}
               className="flex justify-center"
               data-aos="fade-up"
               data-aos-delay={index * 200}
@@ -130,7 +130,7 @@ const Works = () => {
 
         {/* Second Row - One Card Centered */}
         <div className="flex justify-center px-4">
-          <div 
+          <div
             className="w-full max-w-lg lg:max-w-xl"
             data-aos="fade-up"
             data-aos-delay="400"

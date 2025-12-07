@@ -7,7 +7,7 @@ import { gsap } from "gsap";
 const Research: React.FC = () => {
   const gridRef = useRef<HTMLDivElement>(null);
   const [isMobile, setIsMobile] = useState(false);
-  
+
   useEffect(() => {
     const checkMobile = () => setIsMobile(window.innerWidth <= 768);
     checkMobile();
@@ -288,24 +288,24 @@ const Research: React.FC = () => {
         <div className="bento-section" ref={gridRef}>
           {/* Patent Card with Magic Bento Style */}
           <div className="patent-highlight w-full h-full">
-            <div 
+            <div
               className="magic-card card--border-glow bg-[#060010] text-white border border-[#00BFFF]/30 rounded-2xl p-8 overflow-hidden transition-all duration-300 hover:-translate-y-1"
             >
               <div className="relative">
                 <div className="absolute top-0 right-0 bg-[#00BFFF]/80 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-medium shadow-lg border border-[#00BFFF]/30">
                   Patent
                 </div>
-                
+
                 <div className="flex flex-col md:flex-row gap-6">
                   <div className="md:w-1/3 flex justify-center">
                     <div className="w-40 h-40 md:w-full md:h-auto aspect-square bg-gradient-to-br from-blue-500/20 to-purple-500/20 rounded-2xl flex items-center justify-center overflow-hidden border border-[#00BFFF]/30 float">
                       <FaShieldAlt className="text-6xl text-[#00BFFF]" />
                     </div>
                   </div>
-                  
+
                   <div className="md:w-2/3">
                     <h2 className="text-2xl font-bold text-white mb-3">AI-Powered Smart Parking System Enhancing Convenience and Security with Web IoT and Cloud Technologies</h2>
-                    
+
                     <div className="flex flex-wrap gap-3 mb-4">
                       <div className="bg-[#00BFFF]/10 px-3 py-1 rounded-full text-sm border border-[#00BFFF]/30">
                         <span className="text-gray-400">Patent #: </span>
@@ -320,14 +320,14 @@ const Research: React.FC = () => {
                         <span className="text-white">December 6, 2024</span>
                       </div>
                     </div>
-                    
+
                     <div className="mb-4">
                       <p className="text-gray-400 mb-2">
                         <span className="text-[#00BFFF]">Inventors: </span>
                         Dr. Premkumar D, Munirathinam T, S. Ramasami, Karthik S, Pranav V M, Navaneethakrishnan M V, Ramji B
                       </p>
                     </div>
-                    
+
                     <div className="flex flex-wrap gap-2 mb-6">
                       <span className="bg-[#00BFFF]/20 text-[#00BFFF] text-xs px-3 py-1 rounded-full">
                         Smart Parking
@@ -342,17 +342,17 @@ const Research: React.FC = () => {
                         OCR
                       </span>
                     </div>
-                    
+
                     <div className="flex justify-start gap-3">
-                      <a 
-                        href="/assets/research/smart-parking-patent.pdf" 
+                      <a
+                        href="/assets/research/smart-parking-patent.pdf"
                         className="flex items-center px-4 py-2 bg-[#00BFFF] hover:bg-[#1E90FF] text-white rounded-full text-sm transition-colors duration-300"
                       >
                         <FaDownload className="mr-2" /> Download Patent
                       </a>
-                      <a 
-                        href="https://ipindiaservices.gov.in/publicsearch" 
-                        target="_blank" 
+                      <a
+                        href="https://ipindiaservices.gov.in/publicsearch"
+                        target="_blank"
                         rel="noopener noreferrer"
                         className="flex items-center px-4 py-2 bg-gray-800 hover:bg-gray-700 text-white rounded-full text-sm transition-colors duration-300"
                       >
@@ -364,7 +364,7 @@ const Research: React.FC = () => {
               </div>
             </div>
           </div>
-          
+
           {/* Patent Description */}
           <div className="patent-highlight">
             <div className="magic-card card--border-glow bg-[#060010] text-white border border-[#00BFFF]/30 rounded-2xl p-8 overflow-hidden transition-all duration-300 hover:-translate-y-1">
@@ -374,15 +374,15 @@ const Research: React.FC = () => {
                   <h4 className="text-lg font-semibold text-white">Abstract</h4>
                 </div>
                 <p className="text-gray-300 leading-relaxed">
-                  A smart parking system leveraging AI, IoT, cloud, and web technologies to optimize parking efficiency and security. 
-                  The system integrates React.js (frontend) and Node.js (backend), with Firebase authentication and FastAPI-based microservices. 
-                  Key innovations include number plate recognition using Tesseract OCR and automated gate access, creating a secure and 
+                  A smart parking system leveraging AI, IoT, cloud, and web technologies to optimize parking efficiency and security.
+                  The system integrates React.js (frontend) and Node.js (backend), with Firebase authentication and FastAPI-based microservices.
+                  Key innovations include number plate recognition using Tesseract OCR and automated gate access, creating a secure and
                   user-friendly parking experience.
                 </p>
               </div>
-              
+
               <h4 className="text-lg font-semibold text-white mb-3">System Architecture</h4>
-              
+
               <div className="bg-[#151030]/80 backdrop-blur-sm rounded-lg p-4 mb-6">
                 <h5 className="font-medium text-[#00BFFF] mb-2">Stage 1: User Interface</h5>
                 <p className="text-sm text-gray-300 mb-2">React.js frontend with Firebase authentication allowing users to search and book parking spots.</p>
@@ -392,7 +392,7 @@ const Research: React.FC = () => {
                   <span className="bg-white/10 text-gray-300 text-xs px-2 py-1 rounded-full">Node.js</span>
                 </div>
               </div>
-              
+
               <div className="bg-[#151030]/80 backdrop-blur-sm rounded-lg p-4 mb-6">
                 <h5 className="font-medium text-[#00BFFF] mb-2">Stage 2: Backend Services</h5>
                 <p className="text-sm text-gray-300 mb-2">Node.js backend with FastAPI-based microservices for handling bookings and payments.</p>
@@ -402,7 +402,7 @@ const Research: React.FC = () => {
                   <span className="bg-white/10 text-gray-300 text-xs px-2 py-1 rounded-full">Cloud Integration</span>
                 </div>
               </div>
-              
+
               <div className="bg-[#151030]/80 backdrop-blur-sm rounded-lg p-4">
                 <h5 className="font-medium text-[#00BFFF] mb-2">Stage 3: AI & IoT Integration</h5>
                 <p className="text-sm text-gray-300 mb-2">Tesseract OCR-powered number plate recognition system with automated gate access control.</p>
@@ -415,10 +415,10 @@ const Research: React.FC = () => {
             </div>
           </div>
         </div>
-        
+
         <div className="text-center mt-16 max-w-3xl mx-auto">
           <p className="text-gray-300 text-lg leading-relaxed">
-            This patent represents a significant innovation in the field of smart parking systems, 
+            This patent represents a significant innovation in the field of smart parking systems,
             combining AI, web technologies, and IoT to enhance convenience and security in parking facilities.
           </p>
         </div>

@@ -55,14 +55,14 @@ const About = () => {
 
   const handleTouchMove = (e: React.TouchEvent) => {
     if (!containerRef.current || !isDragging) return
-    
+
     const touch = e.touches[0]
     const deltaX = touch.clientX - startXRef.current
     const newRotation = rotationRef.current + deltaX * 0.8
-    
+
     rotationY.set(newRotation)
     currentRotationRef.current = newRotation
-    
+
     e.preventDefault()
   }
 
@@ -76,14 +76,14 @@ const About = () => {
 
     document.body.style.userSelect = "none"
   }
-  
+
   const handleTouchStart = (e: React.TouchEvent) => {
     if (!containerRef.current) return
-    
+
     setIsDragging(true)
     startXRef.current = e.touches[0].clientX
     rotationRef.current = currentRotationRef.current
-    
+
     document.body.style.userSelect = "none"
   }
 
@@ -91,7 +91,7 @@ const About = () => {
     setIsDragging(false)
     document.body.style.userSelect = ""
   }
-  
+
   const handleTouchEnd = () => {
     setIsDragging(false)
     document.body.style.userSelect = ""
@@ -110,7 +110,7 @@ const About = () => {
         document.body.style.userSelect = ""
       }
     }
-    
+
     const handleGlobalTouchEnd = () => {
       if (isDragging) {
         setIsDragging(false)
@@ -120,7 +120,7 @@ const About = () => {
 
     window.addEventListener("mouseup", handleGlobalMouseUp)
     window.addEventListener("touchend", handleGlobalTouchEnd)
-    
+
     return () => {
       window.removeEventListener("mouseup", handleGlobalMouseUp)
       window.removeEventListener("touchend", handleGlobalTouchEnd)
@@ -173,7 +173,7 @@ const About = () => {
                 >
                   Get In Touch
                 </motion.a>
-                
+
                 <motion.a
                   href="#projects"
                   whileHover={{ scale: 1.05 }}
@@ -244,38 +244,23 @@ const About = () => {
               >
                 <motion.div className="w-full h-full relative">
                   <div className="relative w-full h-full max-w-[400px] max-h-[400px] mx-auto">
-                    <div 
-                      className="absolute -inset-3 sm:-inset-4 rounded-full blur-xl -z-10"
-                      style={{
-                        background: "radial-gradient(circle, rgba(0,191,255,0.4) 0%, rgba(0,100,255,0.1) 60%, transparent 80%)",
-                        boxShadow: "0 0 40px rgba(0,191,255,0.3)",
-                      }}
-                    ></div>
-                    
-                    <div 
-                      className="absolute -inset-2 rounded-full blur-2xl -z-20"
-                      style={{
-                        background: "radial-gradient(circle, rgba(0,30,60,0.6) 0%, transparent 70%)",
-                        transform: "translateY(10px)",
-                      }}
-                    ></div>
 
-                    <div className="absolute inset-0 rounded-full bg-black"></div>
-                    
-                    <div 
-                      className="absolute inset-0 rounded-full -z-5"
+                    <div className="absolute inset-0 rounded-full bg-black z-0"></div>
+
+                    <div
+                      className="absolute inset-0 rounded-full z-10 pointer-events-none"
                       style={{
                         border: "3px solid rgba(0,191,255,0.5)",
                         boxShadow: "inset 0 0 20px rgba(0,191,255,0.5), 0 0 15px rgba(0,191,255,0.5)",
                         filter: "brightness(1.2)"
                       }}
                     ></div>
-                    
-                    <div className="absolute inset-[12px] overflow-hidden rounded-full border-[4px] border-black">
+
+                    <div className="absolute inset-[12px] overflow-hidden rounded-full border-[4px] border-black z-20">
                       <div className="w-full h-full relative">
                         <Image
                           src="/h/r3.webp"
-                          alt="Ramji - Full Stack Developer" 
+                          alt="Ramji - Full Stack Developer"
                           width={400}
                           height={400}
                           quality={85}
@@ -288,39 +273,38 @@ const About = () => {
                         />
                       </div>
                     </div>
-                    
-                    <div 
-                      className="absolute -inset-1 rounded-full z-5 opacity-75"
+
+                    <div
+                      className="absolute -inset-1 rounded-full z-30 opacity-75 pointer-events-none"
                       style={{
                         border: "2px solid rgba(0,191,255,0.7)",
-                        filter: "blur(3px)",
-                        animation: "pulseGlow 3s infinite"
+                        filter: "blur(3px)"
                       }}
                     ></div>
                   </div>
 
                   <div
                     className="absolute inset-0 w-full h-full"
-                    style={{ 
-                      transform: "translateZ(-50px)", 
+                    style={{
+                      transform: "translateZ(-50px)",
                       opacity: 0.5,
-                      backfaceVisibility: "hidden" 
+                      backfaceVisibility: "hidden"
                     }}
                   >
                   </div>
                 </motion.div>
 
                 <div
-                  className="absolute inset-0 rounded-full blur-3xl -z-10 transition-all duration-300"
+                  className="absolute inset-0 rounded-full blur-3xl -z-10 transition-all duration-300 hidden"
                   style={{
-                    background: isDragging 
+                    background: isDragging
                       ? "rgba(0, 191, 255, 0.25)"
-                      : hovering 
+                      : hovering
                         ? "rgba(0, 191, 255, 0.2)"
                         : "rgba(0, 191, 255, 0.15)",
-                    transform: isDragging 
+                    transform: isDragging
                       ? "scale(1.3)"
-                      : hovering 
+                      : hovering
                         ? "scale(1.2)"
                         : "scale(1)"
                   }}
@@ -338,7 +322,7 @@ const About = () => {
               )}
 
               <motion.div
-                className="absolute cursor-pointer z-10"
+                className="absolute cursor-pointer z-50"
                 style={{ top: "35%", right: "35%" }}
                 animate={{ y: [0, -8, 0] }}
                 transition={{
@@ -347,7 +331,7 @@ const About = () => {
                   ease: "easeInOut",
                 }}
                 onClick={(e) => {
-                  e.stopPropagation() 
+                  e.stopPropagation()
                   setShowLocation(!showLocation)
                 }}
               >

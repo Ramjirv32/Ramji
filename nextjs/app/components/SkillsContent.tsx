@@ -5,21 +5,21 @@ import Image from "next/image"
 import { motion } from "framer-motion"
 import { IconContext } from "react-icons"
 
-import { 
-  FaHtml5, FaCss3Alt, FaJs, FaReact, FaNodeJs, FaGit, FaGithub, 
-  FaJava, FaLinux, FaPython, FaDocker, FaAws, FaAngular, FaVuejs, 
-  FaPhp, FaSass, FaBootstrap, FaFigma, FaJenkins, FaStripe, 
+import {
+  FaHtml5, FaCss3Alt, FaJs, FaReact, FaNodeJs, FaGit, FaGithub,
+  FaJava, FaLinux, FaPython, FaDocker, FaAws, FaAngular, FaVuejs,
+  FaPhp, FaSass, FaBootstrap, FaFigma, FaJenkins, FaStripe,
   FaWordpress, FaSlack, FaTrello, FaDiscord, FaDigitalOcean
 } from "react-icons/fa"
 
-import { 
-  SiTypescript, SiTailwindcss, SiExpress, SiMongodb, SiPostgresql, 
-  SiVercel, SiPostman, SiPrisma, SiC, SiRust, SiGo, SiKotlin, 
-  SiSwift, SiDart, SiFlutter, SiFirebase, SiRedis, SiMysql, 
-  SiGraphql, SiElasticsearch, SiKubernetes, SiTerraform, SiDjango, 
-  SiCloudflare, SiNextdotjs, SiNestjs, SiSpring, SiDotnet, SiSvelte, 
-  SiJest, SiCypress, SiWebpack, SiVite, SiSupabase, SiRedux, 
-  SiWebgl, SiFastapi, SiGooglecloud, SiRazorpay, SiSocketdotio, 
+import {
+  SiTypescript, SiTailwindcss, SiExpress, SiMongodb, SiPostgresql,
+  SiVercel, SiPostman, SiPrisma, SiC, SiRust, SiGo, SiKotlin,
+  SiSwift, SiDart, SiFlutter, SiFirebase, SiRedis, SiMysql,
+  SiGraphql, SiElasticsearch, SiKubernetes, SiTerraform, SiDjango,
+  SiCloudflare, SiNextdotjs, SiNestjs, SiSpring, SiDotnet, SiSvelte,
+  SiJest, SiCypress, SiWebpack, SiVite, SiSupabase, SiRedux,
+  SiWebgl, SiFastapi, SiGooglecloud, SiRazorpay, SiSocketdotio,
   SiNginx, SiJira, SiNotion, SiFramer, SiThreedotjs
 } from "react-icons/si"
 
@@ -259,19 +259,19 @@ const skillIconsMap: Record<string, { icon: React.ReactElement; color: string }>
 
 const skillCategories: Record<string, string[]> = {
   "Frontend": [
-    "HTML", "CSS", "ReactJS", "React", "NextJS", "NextJs", 
-    "Angular", "Vue.js", "Svelte", "jQuery", "Tailwind CSS", "TailwindCSS", "Bootstrap", 
+    "HTML", "CSS", "ReactJS", "React", "NextJS", "NextJs",
+    "Angular", "Vue.js", "Svelte", "jQuery", "Tailwind CSS", "TailwindCSS", "Bootstrap",
     "Sass", "Redux", "WebGL", "Framer Motion", "Framer", "Three.js", "Shadcn"
   ],
   "Backend": [
-    "NodeJS", "Node.js", "Express", "ExpressJS", "PHP", "Django", "NestJS", "Spring", 
+    "NodeJS", "Node.js", "Express", "ExpressJS", "PHP", "Django", "NestJS", "Spring",
     ".NET", "fastapi", "FastAPI", "Socket.io", "Nginx"
   ],
   "Languages": [
     "C", "Java", "Python", "Rust", "Go", "Kotlin", "Swift", "Dart", "JavaScript", "TypeScript"
   ],
   "Database": [
-    "MongoDB", "PostgreSQL", "MySQL", "Redis", "Elasticsearch", "Prisma", "Supabase", 
+    "MongoDB", "PostgreSQL", "MySQL", "Redis", "Elasticsearch", "Prisma", "Supabase",
     "Firebase", "GraphQL"
   ],
   "Tools": [
@@ -279,7 +279,7 @@ const skillCategories: Record<string, string[]> = {
     "Jira", "Notion", "Slack", "Discord", "Trello"
   ],
   "Cloud & Deployment": [
-    "AWS", "Azure", "Microsoft Azure", "GCP", "Google Cloud", "DigitalOcean", "Vercel", 
+    "AWS", "Azure", "Microsoft Azure", "GCP", "Google Cloud", "DigitalOcean", "Vercel",
     "Docker", "Kubernetes", "Jenkins", "Terraform", "Cloudflare"
   ],
   "CMS & Others": [
@@ -304,7 +304,7 @@ const SkillsContent = () => {
         once: false,
       })
     })
-    
+
     // Set static skills data immediately
     setSkills(staticSkillsData)
     setLoading(false)
@@ -312,16 +312,16 @@ const SkillsContent = () => {
 
   const categorizeSkills = () => {
     const categorized: Record<string, Skill[]> = {}
-    
+
     Object.keys(skillCategories).forEach(category => {
       categorized[category] = []
     })
-    
+
     categorized["Others"] = []
-    
+
     skills.forEach(skill => {
       let categoryFound = false
-      
+
       for (const [category, categorySkills] of Object.entries(skillCategories)) {
         if (categorySkills.includes(skill.name)) {
           categorized[category].push(skill)
@@ -329,18 +329,18 @@ const SkillsContent = () => {
           break
         }
       }
-      
+
       if (!categoryFound) {
         categorized["Others"].push(skill)
       }
     })
-    
+
     Object.keys(categorized).forEach(category => {
       if (categorized[category].length === 0) {
         delete categorized[category]
       }
     })
-    
+
     return categorized
   }
 
@@ -385,21 +385,19 @@ const SkillsContent = () => {
         <div className="flex gap-4 mb-6">
           <button
             onClick={() => setIsGridView(true)}
-            className={`px-6 py-2 rounded-full border transition-all duration-300 ${
-              isGridView
+            className={`px-6 py-2 rounded-full border transition-all duration-300 ${isGridView
                 ? 'bg-gradient-to-r from-blue-600 to-purple-600 border-blue-500 text-white shadow-lg'
                 : 'bg-gray-800/50 border-gray-600 text-gray-300 hover:border-gray-500'
-            }`}
+              }`}
           >
             Grid View
           </button>
           <button
             onClick={() => setIsGridView(false)}
-            className={`px-6 py-2 rounded-full border transition-all duration-300 ${
-              !isGridView
+            className={`px-6 py-2 rounded-full border transition-all duration-300 ${!isGridView
                 ? 'bg-gradient-to-r from-blue-600 to-purple-600 border-blue-500 text-white shadow-lg'
                 : 'bg-gray-800/50 border-gray-600 text-gray-300 hover:border-gray-500'
-            }`}
+              }`}
           >
             Category View
           </button>

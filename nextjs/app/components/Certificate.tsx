@@ -165,16 +165,16 @@ const SectionWrapper = (Component: React.FC, idName: string) =>
 
 const CertificateCard = ({ cert, index, onImageClick }: { cert: typeof projects[0], index: number, onImageClick: (cert: typeof projects[0]) => void }) => {
   return (
-    <div 
+    <div
       className="relative group cursor-pointer h-auto"
       data-aos="fade-up"
       data-aos-duration="1000"
       data-aos-delay={`${index * 100}`}
       onClick={() => onImageClick(cert)}
     >
-      <div className="absolute inset-0 bg-gradient-to-r from-[#8B5CF6]/20 to-[#7C3AED]/20 rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition-all duration-500" />
-      
-      <div className="relative bg-white/5 backdrop-blur-lg border border-white/10 rounded-2xl overflow-hidden hover:border-[#8B5CF6]/50 transition-all duration-300 group-hover:shadow-xl group-hover:shadow-[#8B5CF6]/20 p-3 flex flex-col h-full">
+      <div className="absolute inset-0 bg-gradient-to-r from-[#00BFFF]/20 to-[#1E90FF]/20 rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition-all duration-500" />
+
+      <div className="relative bg-white/5 backdrop-blur-lg border border-white/10 rounded-2xl overflow-hidden hover:border-[#00BFFF]/50 transition-all duration-300 group-hover:shadow-xl group-hover:shadow-[#00BFFF]/20 p-3 flex flex-col h-full">
         {/* Certificate Image Container - Display Image */}
         <div className="relative w-full h-[220px] sm:h-[240px] md:h-[260px] mb-4 overflow-hidden rounded-lg bg-black/20">
           <Image
@@ -201,7 +201,7 @@ const CertificateCard = ({ cert, index, onImageClick }: { cert: typeof projects[
             <h3 className="text-white font-bold text-xs md:text-sm line-clamp-1 mb-1">
               {cert.name}
             </h3>
-            <p className="text-[#8B5CF6] font-semibold text-xs">{cert.issuer}</p>
+            <p className="text-[#00BFFF] font-semibold text-xs">{cert.issuer}</p>
             <p className="text-gray-400 text-xs">{cert.date}</p>
           </div>
 
@@ -210,7 +210,7 @@ const CertificateCard = ({ cert, index, onImageClick }: { cert: typeof projects[
             {cert.tags?.slice(0, 2).map((tag: any) => (
               <span
                 key={tag.name}
-                className="px-2 py-0.5 bg-[#8B5CF6]/20 border border-[#8B5CF6]/40 text-[#8B5CF6] text-xs rounded-full"
+                className="px-2 py-0.5 bg-[#00BFFF]/20 border border-[#00BFFF]/40 text-[#00BFFF] text-xs rounded-full"
               >
                 #{tag.name}
               </span>
@@ -220,7 +220,7 @@ const CertificateCard = ({ cert, index, onImageClick }: { cert: typeof projects[
 
         {/* Footer Action Button */}
         <div className="mt-3 pt-2 border-t border-white/10">
-          <button className="w-full py-2 px-3 bg-gradient-to-r from-[#8B5CF6] to-[#7C3AED] text-white rounded-lg text-xs md:text-sm font-semibold hover:from-[#7C3AED] hover:to-[#6D28D9] transition-all duration-300 flex items-center justify-center gap-2">
+          <button className="w-full py-2 px-3 bg-gradient-to-r from-[#00BFFF] to-[#1E90FF] text-white rounded-lg text-xs md:text-sm font-semibold hover:from-[#1E90FF] hover:to-[#0096FF] transition-all duration-300 flex items-center justify-center gap-2">
             <FaAward className="text-xs" />
             View Full
           </button>
@@ -250,13 +250,13 @@ const Certificate = () => {
     { id: "all", label: "All Certifications", count: projects.length }
   ];
 
-  const filteredCerts = activeCategory === "all" 
-    ? projects 
+  const filteredCerts = activeCategory === "all"
+    ? projects
     : activeCategory === "cloud"
-    ? projects.filter(p => p.issuer.includes("AWS") || p.issuer.includes("Red Hat"))
-    : activeCategory === "development"
-    ? projects.filter(p => p.issuer.includes("Udemy") || p.issuer.includes("GitHub"))
-    : projects.filter(p => p.issuer.includes("MongoDB"));
+      ? projects.filter(p => p.issuer.includes("AWS") || p.issuer.includes("Red Hat"))
+      : activeCategory === "development"
+        ? projects.filter(p => p.issuer.includes("Udemy") || p.issuer.includes("GitHub"))
+        : projects.filter(p => p.issuer.includes("MongoDB"));
 
   const openCertModal = (cert: typeof projects[0]) => {
     setSelectedCert(cert);
@@ -272,13 +272,13 @@ const Certificate = () => {
         {/* Header section */}
         <div className="relative z-10 mb-12" data-aos="fade-right" data-aos-duration="1000">
           <div className="flex items-center gap-3 mb-2">
-            <FaMedal className="text-2xl md:text-3xl text-[#8B5CF6]" />
-            <p className="text-[#8B5CF6] font-medium lg:text-[18px] sm:text-[16px] xs:text-[14px] text-[12px] uppercase tracking-wider">
+            <FaMedal className="text-2xl md:text-3xl text-[#00BFFF]" />
+            <p className="text-[#00BFFF] font-medium lg:text-[18px] sm:text-[16px] xs:text-[14px] text-[12px] uppercase tracking-wider">
               My achievements
             </p>
           </div>
           <h2 className="text-white font-black md:text-[60px] sm:text-[50px] xs:text-[40px] text-[30px]">
-            Certifications & <span className="text-[#8B5CF6]">Credentials</span>
+            Certifications & <span className="text-[#00BFFF]">Credentials</span>
           </h2>
         </div>
 
@@ -296,11 +296,10 @@ const Certificate = () => {
             <button
               key={category.id}
               onClick={() => setActiveCategory(category.id)}
-              className={`px-4 md:px-6 py-2 md:py-3 rounded-full font-semibold transition-all duration-300 border-2 text-xs md:text-sm lg:text-base ${
-                activeCategory === category.id
-                  ? "bg-[#8B5CF6] text-white border-[#8B5CF6] shadow-lg shadow-[#8B5CF6]/50"
-                  : "bg-white/5 text-gray-300 border-white/20 hover:border-[#8B5CF6]/50 hover:text-white"
-              }`}
+              className={`px-4 md:px-6 py-2 md:py-3 rounded-full font-semibold transition-all duration-300 border-2 text-xs md:text-sm lg:text-base ${activeCategory === category.id
+                  ? "bg-[#00BFFF] text-white border-[#00BFFF] shadow-lg shadow-[#00BFFF]/50"
+                  : "bg-white/5 text-gray-300 border-white/20 hover:border-[#00BFFF]/50 hover:text-white"
+                }`}
             >
               {category.label}
               <span className={`ml-2 text-xs ${activeCategory === category.id ? "bg-white/30" : "bg-white/10"} px-2 py-0.5 rounded-full`}>
@@ -326,16 +325,16 @@ const Certificate = () => {
 
         {/* Stats Section - Responsive */}
         <div className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="500">
-          <div className="bg-white/5 border border-white/10 rounded-2xl p-4 md:p-6 text-center hover:border-[#8B5CF6]/30 transition-all duration-300">
-            <div className="text-3xl md:text-4xl font-bold text-[#8B5CF6] mb-2">{projects.length}</div>
+          <div className="bg-white/5 border border-white/10 rounded-2xl p-4 md:p-6 text-center hover:border-[#00BFFF]/30 transition-all duration-300">
+            <div className="text-3xl md:text-4xl font-bold text-[#00BFFF] mb-2">{projects.length}</div>
             <p className="text-gray-300 text-sm md:text-base">Total Certifications</p>
           </div>
-          <div className="bg-white/5 border border-white/10 rounded-2xl p-4 md:p-6 text-center hover:border-[#8B5CF6]/30 transition-all duration-300">
-            <div className="text-3xl md:text-4xl font-bold text-[#8B5CF6] mb-2">5+</div>
+          <div className="bg-white/5 border border-white/10 rounded-2xl p-4 md:p-6 text-center hover:border-[#00BFFF]/30 transition-all duration-300">
+            <div className="text-3xl md:text-4xl font-bold text-[#00BFFF] mb-2">5+</div>
             <p className="text-gray-300 text-sm md:text-base">Technology Domains</p>
           </div>
-          <div className="bg-white/5 border border-white/10 rounded-2xl p-4 md:p-6 text-center hover:border-[#8B5CF6]/30 transition-all duration-300">
-            <div className="text-3xl md:text-4xl font-bold text-[#8B5CF6] mb-2">2024-25</div>
+          <div className="bg-white/5 border border-white/10 rounded-2xl p-4 md:p-6 text-center hover:border-[#00BFFF]/30 transition-all duration-300">
+            <div className="text-3xl md:text-4xl font-bold text-[#00BFFF] mb-2">2024-25</div>
             <p className="text-gray-300 text-sm md:text-base">Year of Achievement</p>
           </div>
         </div>
@@ -343,12 +342,12 @@ const Certificate = () => {
 
       {/* Certificate Modal Popup */}
       {selectedCert && (
-        <div 
+        <div
           className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm p-4"
           onClick={closeCertModal}
         >
-          <div 
-            className="relative bg-[#030014] border border-[#8B5CF6]/30 rounded-2xl max-w-3xl w-full shadow-2xl scrollbar-hide"
+          <div
+            className="relative bg-[#030014] border border-[#00BFFF]/30 rounded-2xl max-w-3xl w-full shadow-2xl scrollbar-hide"
             onClick={(e) => e.stopPropagation()}
             style={{
               boxShadow: "0 0 50px rgba(139, 92, 246, 0.3)"
@@ -380,7 +379,7 @@ const Certificate = () => {
                     href={selectedCert.source_code_link}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-[#8B5CF6] to-[#7C3AED] text-white rounded-lg hover:from-[#7C3AED] hover:to-[#8B5CF6] transition-all duration-300 font-medium"
+                    className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-[#00BFFF] to-[#1E90FF] text-white rounded-lg hover:from-[#1E90FF] hover:to-[#00BFFF] transition-all duration-300 font-medium"
                   >
                     <FaFilePdf />
                     Download Certificate PDF
