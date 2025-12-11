@@ -129,7 +129,16 @@ export default function Navbar({
 
             {/* Right side buttons */}
             <div className="flex items-center space-x-2 sm:space-x-3 flex-shrink-0">
-              {/* Mobile menu button */}
+              {/* Resume Button */}
+              <a
+                href="/com/RamjiMain-Resume.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hidden sm:inline-flex px-3 md:px-4 py-2 bg-transparent border-2 border-[#8B5CF6] text-[#8B5CF6] rounded-lg text-xs md:text-sm font-medium hover:bg-[#8B5CF6]/10 transition-all duration-300"
+              >
+                Resume
+              </a>
+             
               <div className="flex lg:hidden">
                 <button
                   onClick={() => setIsMenuOpen(!isMenuOpen)}
@@ -189,11 +198,18 @@ export default function Navbar({
                 {item.name}
               </button>
             ))}
+            <a
+              href="/com/RamjiMain-Resume.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="block w-full text-left px-4 py-4 rounded-md text-base font-medium border-b-2 border-[#8B5CF6] text-[#8B5CF6] bg-transparent hover:bg-[#8B5CF6]/10 transition-all duration-300"
+            >
+              📄 View Resume
+            </a>
           </div>
+
         </div>
       </nav>
-
-
     </>
   )
 }
