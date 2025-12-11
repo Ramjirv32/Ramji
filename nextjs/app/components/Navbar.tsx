@@ -131,7 +131,7 @@ export default function Navbar({
             <div className="flex items-center space-x-2 sm:space-x-3 flex-shrink-0">
               {/* Resume Button */}
               <a
-                href="/com/RamjiMain-Resume.pdf"
+                href="/com/r.pdf"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="hidden sm:inline-flex px-3 md:px-4 py-2 bg-transparent border-2 border-[#8B5CF6] text-[#8B5CF6] rounded-lg text-xs md:text-sm font-medium hover:bg-[#8B5CF6]/10 transition-all duration-300"
