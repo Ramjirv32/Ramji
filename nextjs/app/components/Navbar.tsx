@@ -199,7 +199,7 @@ export default function Navbar({
               </button>
             ))}
             <a
-              href="/com/RamjiMain-Resume.pdf"
+              href="/com/r.pdf"
               target="_blank"
               rel="noopener noreferrer"
               className="block w-full text-left px-4 py-4 rounded-md text-base font-medium border-b-2 border-[#8B5CF6] text-[#8B5CF6] bg-transparent hover:bg-[#8B5CF6]/10 transition-all duration-300"
