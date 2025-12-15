@@ -136,7 +136,7 @@ export default function Navbar({
                 rel="noopener noreferrer"
                 className="hidden sm:inline-flex px-3 md:px-4 py-2 bg-transparent border-2 border-[#8B5CF6] text-[#8B5CF6] rounded-lg text-xs md:text-sm font-medium hover:bg-[#8B5CF6]/10 transition-all duration-300"
               >
-                Resume
+                CV
               </a>
              
               <div className="flex lg:hidden">
