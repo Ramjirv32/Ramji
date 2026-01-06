@@ -16,22 +16,22 @@ import RotatingTechIcons from "../rotating-tech-icons";
 
 const HeroSection = () => {
   return (
-    <section id="hero" className={cn("relative w-full h-screen")}>
-      <div className="grid md:grid-cols-2">
+    <section id="hero" className={cn("relative w-full min-h-fit md:min-h-screen md:h-screen md:mb-0")}>
+      <div className="grid grid-cols-1 md:grid-cols-2">
         <div
           className={cn(
-            "h-[calc(100dvh-3rem)] md:h-[calc(100dvh-4rem)] z-[2]",
+            "md:h-[calc(100dvh-3rem)] md:h-[calc(100dvh-4rem)] z-[2]",
             "col-span-1",
             "flex flex-col justify-start md:justify-center items-center md:items-start",
-            "pt-28 sm:pt-0 sm:pb-32 md:p-24 lg:p-40 xl:p-48"
+            "pt-16 sm:pt-20 md:pt-0 px-4 sm:px-8 md:px-24 pb-10 md:pb-32 lg:px-40 lg:pb-0 xl:px-48"
           )}
         >
           <div className="">
             <BlurIn delay={0.7} as="div">
               <p
                 className={cn(
-                  "md:self-start mt-4 font-thin text-md text-slate-500 dark:text-zinc-400 ml-3",
-                  "cursor-default font-display sm:text-xl md:text-xl whitespace-nowrap bg-clip-text "
+                  "md:self-start mt-2 sm:mt-4 font-thin text-xs sm:text-sm md:text-base text-slate-500 dark:text-zinc-400 ml-2 sm:ml-3",
+                  "cursor-default font-display bg-clip-text"
                 )}
               >
                 Hi, I am
@@ -43,8 +43,8 @@ const HeroSection = () => {
                 <TooltipTrigger asChild>
                   <h1
                     className={cn(
-                      "font-thin text-6xl text-transparent text-slate-800 ml-1 text-left",
-                      "cursor-default text-edge-outline font-display sm:text-7xl md:text-9xl whitespace-nowrap"
+                      "font-thin text-3xl sm:text-4xl md:text-7xl lg:text-8xl xl:text-9xl text-transparent text-slate-800 ml-1 text-left",
+                      "cursor-default text-edge-outline font-display"
                     )}
                   >
                     {config.author}
@@ -52,7 +52,7 @@ const HeroSection = () => {
                 </TooltipTrigger>
                 <TooltipContent
                   side="top"
-                  className="dark:bg-white dark:text-black"
+                  className="dark:bg-white dark:text-black text-xs md:text-sm"
                 >
                   theres something waiting for you in devtools
                 </TooltipContent>
@@ -62,80 +62,80 @@ const HeroSection = () => {
             <BlurIn delay={1.2} as="div">
               <p
                 className={cn(
-                  "md:self-start md:mt-4 font-thin text-md text-slate-500 dark:text-zinc-400 ml-3",
-                  "cursor-default font-display sm:text-xl md:text-xl whitespace-nowrap bg-clip-text "
+                  "md:self-start mt-1.5 sm:mt-3 font-thin text-xs sm:text-sm md:text-base text-slate-500 dark:text-zinc-400 ml-2 sm:ml-3",
+                  "cursor-default font-display bg-clip-text"
                 )}
               >
                 FullStack Developer | DevOps | AI Engineer
               </p>
             </BlurIn>
           </div>
-          <div className="mt-8 md:ml-2 flex flex-col gap-3">
+          <div className="mt-4 sm:mt-6 md:ml-2 flex flex-col items-center md:items-start gap-1.5 sm:gap-2 md:gap-3 w-full sm:w-auto">
             <Link
               href={
                 "/com/Ramji.pdf"
               }
               target="_blank"
-              className="flex-1"
+              className="w-fit"
             >
-              <BoxReveal delay={2} width="100%" >
-                <Button className="flex items-center gap-2 w-full">
-                  <File size={24} />
+              <BoxReveal delay={2} width="fit-content" >
+                <Button className="flex items-center justify-center gap-1.5 sm:gap-2 w-full sm:w-auto text-[11px] sm:text-xs md:text-sm px-4 sm:px-6 md:px-8 py-1.5 sm:py-2">
+                  <File size={14} className="sm:w-4 sm:h-4 md:w-6 md:h-6" />
                   <p>Resume</p>
                 </Button>
               </BoxReveal>
             </Link>
-            <div className="md:self-start flex gap-3">
+            <div className="md:self-start flex gap-1.5 sm:gap-2 md:gap-2 w-full justify-center md:justify-start">
               <Tooltip delayDuration={300}>
                 <TooltipTrigger asChild>
-                  <Link href={"#contact"}>
+                  <Link href={"#contact"} className="w-fit">
                     <Button
                       variant={"outline"}
-                      className="block w-full overflow-hidden"
+                      className="block w-full md:w-auto overflow-hidden text-[10px] sm:text-xs md:text-sm px-3 sm:px-4 md:px-6 py-1.5 sm:py-2"
                     >
                       Reach Me
                     </Button>
                   </Link>
                 </TooltipTrigger>
-                {/* <TooltipContent side="bottom">
-                      <p>pls 🥹 🙏</p>
-                    </TooltipContent> */}
               </Tooltip>
               <Link
                 href={config.social.github}
                 target="_blank"
+                className="w-fit"
               >
-                <Button variant={"outline"}>
-                  <SiGithub size={24} />
+                <Button variant={"outline"} className="w-full md:w-auto px-3 sm:px-3 md:px-4 py-1.5 sm:py-2">
+                  <SiGithub size={14} className="sm:w-4 sm:h-4 md:w-6 md:h-6" />
                 </Button>
               </Link>
               <Link
                 href={config.social.linkedin}
                 target="_blank"
+                className="w-fit"
               >
-                <Button variant={"outline"}>
-                  <SiLinkedin size={24} />
+                <Button variant={"outline"} className="w-full md:w-auto px-3 sm:px-3 md:px-4 py-1.5 sm:py-2">
+                  <SiLinkedin size={14} className="sm:w-4 sm:h-4 md:w-6 md:h-6" />
                 </Button>
               </Link>
               <Link
                 href={config.social.leetcode}
                 target="_blank"
+                className="w-fit"
               >
-                <Button variant={"outline"}>
-                  <SiLeetcode size={24} />
+                <Button variant={"outline"} className="w-full md:w-auto px-3 sm:px-3 md:px-4 py-1.5 sm:py-2">
+                  <SiLeetcode size={14} className="sm:w-4 sm:h-4 md:w-6 md:h-6" />
                 </Button>
               </Link>
             </div>
           </div>
         </div>
-        <div className="hidden md:flex col-span-1 items-center justify-center">
+        <div className="hidden md:flex col-span-1 w-full items-center justify-center mt-0 sm:mt-12 md:mt-0">
           <RotatingTechIcons />
         </div>
       </div>
-      <div className="absolute bottom-10 left-[50%] translate-x-[-50%]">
+      <div className="hidden md:block absolute bottom-10 left-[50%] translate-x-[-50%]">
         <ScrollDownIcon />
       </div>
-    </section>
+    </section >
   );
 };
 

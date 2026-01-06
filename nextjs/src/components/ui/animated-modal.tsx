@@ -111,7 +111,7 @@ export const ModalBody = ({
           <motion.div
             ref={modalRef}
             className={cn(
-              "min-h-[50%] max-h-[90%] md:max-w-[40%] bg-white dark:bg-neutral-950 border border-transparent dark:border-neutral-800 md:rounded-2xl relative z-50 flex flex-col flex-1 overflow-hidden",
+              "min-h-[30dvh] max-h-[90dvh] w-[95vw] sm:w-[90vw] md:w-auto md:max-w-lg bg-white dark:bg-neutral-950 border border-transparent dark:border-neutral-800 rounded-xl md:rounded-2xl relative z-50 flex flex-col flex-1 overflow-hidden",
               className
             )}
             initial={{
@@ -138,7 +138,7 @@ export const ModalBody = ({
             }}
           >
             <CloseIcon />
-            <ScrollArea className="h-[80dvh] w-full rounded-md border">
+            <ScrollArea className="h-[85dvh] w-full rounded-md border">
               {children}
             </ScrollArea>
           </motion.div>
@@ -156,7 +156,7 @@ export const ModalContent = ({
   className?: string;
 }) => {
   return (
-    <div className={cn("flex flex-col flex-1 p-3 md:p-10", className)}>
+    <div className={cn("flex flex-col flex-1 p-4 md:p-6", className)}>
       {children}
     </div>
   );

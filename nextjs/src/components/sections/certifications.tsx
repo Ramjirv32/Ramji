@@ -175,9 +175,9 @@ const CertificateCard = ({ cert, index, onImageClick }: { cert: typeof certifica
       className="relative group cursor-pointer h-auto"
       onClick={() => onImageClick(cert)}
     >
-      <div className="relative bg-zinc-950/50 backdrop-blur-lg border border-zinc-800 rounded-2xl overflow-hidden hover:border-zinc-700 transition-all duration-300 p-3 flex flex-col h-full">
+      <div className="relative bg-zinc-950/50 backdrop-blur-lg border border-zinc-800 rounded-lg sm:rounded-xl md:rounded-2xl overflow-hidden hover:border-zinc-700 transition-all duration-300 p-2 sm:p-3 md:p-4 flex flex-col h-full">
         {/* Certificate Image Container */}
-        <div className="relative w-full h-[220px] sm:h-[240px] md:h-[260px] mb-4 overflow-hidden rounded-lg bg-black/20">
+        <div className="relative w-full h-[160px] sm:h-[200px] md:h-[260px] mb-2 sm:mb-3 md:mb-4 overflow-hidden rounded-md sm:rounded-lg bg-black/20">
           <Image
             src={cert.image}
             alt={cert.name}
@@ -190,14 +190,14 @@ const CertificateCard = ({ cert, index, onImageClick }: { cert: typeof certifica
           {/* Hover Overlay */}
           <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-all duration-300 backdrop-blur-sm">
             <div className="text-white text-center">
-              <FaAward className="text-2xl md:text-3xl mb-2 mx-auto" />
-              <p className="font-semibold text-xs md:text-sm">Click to Expand</p>
+              <FaAward className="text-xl sm:text-2xl md:text-3xl mb-1 sm:mb-2 mx-auto" />
+              <p className="font-semibold text-[10px] sm:text-xs md:text-sm">Click to Expand</p>
             </div>
           </div>
         </div>
 
         {/* Certificate Info */}
-        <div className="space-y-2 flex-grow">
+        <div className="space-y-1 sm:space-y-2 flex-grow">
           <div>
             <h3 className="text-white font-bold text-xs md:text-sm line-clamp-1 mb-1">
               {cert.name}
@@ -361,11 +361,11 @@ const Certifications = () => {
       {/* Certificate Modal Popup */}
       {selectedCert && (
         <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm p-4"
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm p-3 sm:p-4"
           onClick={closeCertModal}
         >
           <div
-            className="relative bg-zinc-950 border border-zinc-800 rounded-2xl max-w-3xl w-full shadow-2xl"
+            className="relative bg-zinc-950 border border-zinc-800 rounded-xl sm:rounded-2xl max-w-[92vw] sm:max-w-md md:max-w-lg w-full max-h-[80vh] shadow-2xl overflow-auto"
             onClick={(e) => e.stopPropagation()}
             style={{
               boxShadow: "0 0 50px rgba(255, 255, 255, 0.1)"
@@ -374,33 +374,33 @@ const Certifications = () => {
             {/* Close Button */}
             <button
               onClick={closeCertModal}
-              className="absolute top-3 right-3 z-10 p-2 bg-red-500/20 hover:bg-red-500/40 rounded-full transition-colors border border-red-500/50"
+              className="sticky top-2 right-2 z-10 p-1.5 bg-red-500/20 hover:bg-red-500/40 rounded-full transition-colors border border-red-500/50 float-right mr-2 mt-2"
             >
-              <FaTimes className="text-red-400 text-lg" />
+              <FaTimes className="text-red-400 text-sm" />
             </button>
 
             {/* Certificate Image */}
-            <div className="p-4">
+            <div className="p-3 sm:p-4 md:p-5">
               <Image
                 src={selectedCert.image}
                 alt={selectedCert.name}
                 width={1280}
                 height={720}
                 className="h-auto w-full rounded-lg object-contain"
-                sizes="(max-width: 768px) 90vw, 60vw"
+                sizes="(max-width: 640px) 90vw, (max-width: 1024px) 80vw, 60vw"
               />
-              <div className="mt-4 text-center">
-                <h3 className="text-white text-xl font-bold mb-2">{selectedCert.name}</h3>
-                <p className="text-gray-300 text-sm mb-3">{selectedCert.issuer} • {selectedCert.date}</p>
+              <div className="mt-3 text-center">
+                <h3 className="text-white text-base sm:text-lg font-bold mb-1">{selectedCert.name}</h3>
+                <p className="text-gray-400 text-[11px] sm:text-xs mb-3">{selectedCert.issuer} • {selectedCert.date}</p>
                 {selectedCert.source_code_link && (
                   <a
                     href={selectedCert.source_code_link}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 px-4 py-2 bg-white text-black rounded-lg hover:bg-zinc-200 transition-all duration-300 font-medium"
+                    className="inline-flex items-center gap-2 px-3 py-1.5 bg-white text-black rounded-lg hover:bg-zinc-200 transition-all duration-300 font-medium text-[11px] sm:text-xs"
                   >
-                    <FaFilePdf />
-                    Download Certificate PDF
+                    <FaFilePdf size={12} />
+                    Download PDF
                   </a>
                 )}
               </div>
