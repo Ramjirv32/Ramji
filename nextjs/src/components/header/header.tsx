@@ -6,7 +6,7 @@ import { config } from "@/data/config";
 
 const navItems = [
   { name: "Home", link: "#hero", id: "hero" },
-  { name: "About", link: "#about", id: "about" },
+  // { name: "About", link: "#about", id: "about" },
   { name: "Skills", link: "#skills", id: "skills" },
   { name: "Projects", link: "#projects", id: "projects" },
   { name: "Works", link: "#works", id: "works" },

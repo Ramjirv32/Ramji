@@ -8,7 +8,7 @@ A modern, responsive, and beautifully designed portfolio website built with **Ne
 ![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)
 
 ## ✨ Features
-
+a
 - 🎨 **Modern Design** - Clean and professional UI with smooth animations
 - 📱 **Fully Responsive** - Optimized for mobile, tablet, and desktop
 - ⚡ **High Performance** - Built with Next.js 15 for optimal speed and SEO
@@ -253,6 +253,7 @@ This project is licensed under the **MIT License** - see the LICENSE file for de
 - 🌐 Website: [ramjiport.com](https://ramjiport.com)
 - 💼 LinkedIn: [linkedin.com/in/ramji](https://linkedin.com/in/ramji)
 - 🐙 GitHub: [@Ramjirv32](https://github.com/Ramjirv32)
+- 💻 LeetCode: [RAMJI____B](https://leetcode.com/u/RAMJI____B/)
 
 ## 🙏 Acknowledgments
 
