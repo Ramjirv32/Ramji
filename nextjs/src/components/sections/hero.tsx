@@ -43,7 +43,7 @@ const HeroSection = () => {
                 <TooltipTrigger asChild>
                   <h1
                     className={cn(
-                      "font-thin text-3xl sm:text-4xl md:text-7xl lg:text-8xl xl:text-9xl text-transparent text-slate-800 ml-1 text-left",
+                      "font-thin text-3xl sm:text-4xl md:text-7xl lg:text-8xl xl:text-9xl text-transparent text-slate-800 ml-1 text-left whitespace-nowrap",
                       "cursor-default text-edge-outline font-display"
                     )}
                   >
