@@ -263,97 +263,97 @@ const PROJECT_SKILLS = {
     title: "OpenAI",
     bg: "black",
     fg: "white",
-    icon: <img src="assets/icons/openai-svgrepo-com_white.svg" alt="OpenAI"/>,
+    icon: <img src="assets/icons/openai-svgrepo-com_white.svg" alt="OpenAI" />,
   },
   netlify: {
     title: "Netlify",
     bg: "black",
     fg: "white",
-    icon: <SiNetlify/>,
+    icon: <SiNetlify />,
   },
   html: {
     title: "HTML5",
     bg: "black",
     fg: "white",
-    icon: <SiHtml5/>,
+    icon: <SiHtml5 />,
   },
   css: {
     title: "CSS3",
     bg: "black",
     fg: "white",
-    icon: <SiCss3/>,
+    icon: <SiCss3 />,
   },
   bootstrap: {
     title: "Bootstrap",
     bg: "black",
     fg: "white",
-    icon: <SiBootstrap/>,
+    icon: <SiBootstrap />,
   },
   maven: {
     title: "Maven",
     bg: "black",
     fg: "white",
-    icon: <SiApachemaven/>,
+    icon: <SiApachemaven />,
   },
   java: {
     title: "Java",
     bg: "black",
     fg: "white",
-    icon: <img src="assets/icons/icons8-java.svg" alt="Java"/>,
+    icon: <img src="assets/icons/icons8-java.svg" alt="Java" />,
   },
   cplusplus: {
     title: "C++",
     bg: "black",
     fg: "white",
-    icon: <SiCplusplus/>,
+    icon: <SiCplusplus />,
   },
   arduino: {
     title: "Arduino",
     bg: "black",
     fg: "white",
-    icon: <SiArduino/>,
+    icon: <SiArduino />,
   },
   tensorflow: {
     title: "TensorFlow",
     bg: "black",
     fg: "white",
-    icon: <SiTensorflow/>,
+    icon: <SiTensorflow />,
   },
   pytorch: {
     title: "PyTorch",
     bg: "black",
     fg: "white",
-    icon: <SiPytorch/>,
+    icon: <SiPytorch />,
   },
   pandas: {
     title: "Pandas",
     bg: "black",
     fg: "white",
-    icon: <SiPandas/>,
+    icon: <SiPandas />,
   },
   numpy: {
     title: "NumPy",
     bg: "black",
     fg: "white",
-    icon: <SiNumpy/>,
+    icon: <SiNumpy />,
   },
   scikitlearn: {
     title: "Scikit-learn",
     bg: "black",
     fg: "white",
-    icon: <SiScikitlearn/>,
+    icon: <SiScikitlearn />,
   },
   opencv: {
     title: "OpenCV",
     bg: "black",
     fg: "white",
-    icon: <SiOpencv/>,
+    icon: <SiOpencv />,
   },
   jupyter: {
     title: "Jupyter",
     bg: "black",
     fg: "white",
-    icon: <SiJupyter/>,
+    icon: <SiJupyter />,
   },
   c: {
     title: "C",
@@ -389,7 +389,7 @@ const PROJECT_SKILLS = {
     title: "ESP32",
     bg: "black",
     fg: "white",
-    icon: <SiArduino/>,
+    icon: <SiArduino />,
   },
   iot: {
     title: "IoT",
@@ -440,8 +440,8 @@ const projects: Project[] = [
       return (
         <div>
           <TypographyP className="font-mono">
-            Developed a comprehensive vehicle rental management system in C with user authentication 
-            and booking functionality using file handling. The system implements efficient data 
+            Developed a comprehensive vehicle rental management system in C with user authentication
+            and booking functionality using file handling. The system implements efficient data
             structures and memory management for optimal performance.
           </TypographyP>
           <ProjectsLinks live={this.live} repo={this.github} />
@@ -473,8 +473,8 @@ const projects: Project[] = [
       return (
         <div>
           <TypographyP className="font-mono">
-            Trained a custom AI model for behavior classification in collaboration with Navaneethalkrishnan. 
-            The system captures real-time behavioral data with Node.js and Python backend, storing it in MongoDB. 
+            Trained a custom AI model for behavior classification in collaboration with Navaneethalkrishnan.
+            The system captures real-time behavioral data with Node.js and Python backend, storing it in MongoDB.
             Features interactive dashboards with visual summaries for daily, weekly, and category-wise usage tracking.
           </TypographyP>
           <ProjectsLinks live={this.live} repo={this.github} />
@@ -507,9 +507,9 @@ const projects: Project[] = [
       return (
         <div>
           <TypographyP className="font-mono">
-            Designed IoT-enabled device to extract clean drinking water from atmospheric humidity using Peltier 
-            thermoelectric cooling. Integrated ESP32 microcontroller with DHT22, Ultrasonic, pH, TDS sensors 
-            for real-time monitoring and AI-based predictions. Built web/mobile dashboard for performance 
+            Designed IoT-enabled device to extract clean drinking water from atmospheric humidity using Peltier
+            thermoelectric cooling. Integrated ESP32 microcontroller with DHT22, Ultrasonic, pH, TDS sensors
+            for real-time monitoring and AI-based predictions. Built web/mobile dashboard for performance
             analytics, water quality tracking, and emergency alerts with UV purification.
           </TypographyP>
           <ProjectsLinks live={this.live} repo={this.github} />
@@ -542,9 +542,9 @@ const projects: Project[] = [
       return (
         <div>
           <TypographyP className="font-mono">
-            Built a complete CI/CD pipeline for full-stack applications with automated testing, building, 
-            and deployment. Implements Jenkins for automation, Docker for containerization, Kubernetes for 
-            orchestration, and AWS for cloud deployment. Supports frontend (React), backend (Node.js), 
+            Built a complete CI/CD pipeline for full-stack applications with automated testing, building,
+            and deployment. Implements Jenkins for automation, Docker for containerization, Kubernetes for
+            orchestration, and AWS for cloud deployment. Supports frontend (React), backend (Node.js),
             and database (MongoDB) with Git-based version control.
           </TypographyP>
           <ProjectsLinks live={this.live} repo={this.github} />
@@ -578,9 +578,9 @@ const projects: Project[] = [
       return (
         <div>
           <TypographyP className="font-mono">
-            <span className="text-purple-500 font-bold">🚀 Coming Soon!</span> Complete DevOps automation 
-            solution featuring Kubernetes auto-scaling, microservices architecture, and full CI/CD pipeline 
-            integration. This project will demonstrate enterprise-level infrastructure automation with 
+            <span className="text-purple-500 font-bold">🚀 Coming Soon!</span> Complete DevOps automation
+            solution featuring Kubernetes auto-scaling, microservices architecture, and full CI/CD pipeline
+            integration. This project will demonstrate enterprise-level infrastructure automation with
             monitoring, logging, and security best practices.
           </TypographyP>
           <TypographyH3 className="my-4 mt-8">Planned Features</TypographyH3>

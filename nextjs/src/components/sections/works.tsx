@@ -62,6 +62,7 @@ const internships = [
     image: "/personal/OOdser.webp",
     skills: ["React", "Node.js", "MongoDB", "TypeScript", "REST APIs", "Backend Architecture"],
     route: "/work/oodser",
+    live: "Coming Soon",
     current: false,
     type: "internship"
   },
@@ -71,9 +72,10 @@ const internships = [
     company: "ICBMNT 2025 - International Conference",
     duration: "Jan 2025 - Feb 2025",
     description: "Developed conference website for International Conference on Business Management and New Technologies 2025. Built responsive platform for conference information, schedule, and attendee registration with modern web technologies.",
-    image: "/com/icbmnt.png",
+    image: "/personal/Society.webp",
     skills: ["React", "Node.js", "Conference Management", "Registration System", "MongoDB"],
     route: "#",
+    live: "https://societycisicmbnt2025.vercel.app/",
     current: false,
     type: "project"
   },
@@ -83,9 +85,10 @@ const internships = [
     company: "ICBMNT 2026 - Digital Conference Platform",
     duration: "Dec 2025 - Jan 2026",
     description: "Developed comprehensive digital conference management platform for ICBMNT 2026. Built fully automated system with paper submission, editor/reviewer assignment, automated plagiarism checking, registration management, payment verification, and admin dashboard. Implemented complete workflow automation for conference operations with role-based access control.",
-    image: "/com/icbmnt.png",
+    image: "/personal/Society.webp",
     skills: ["React", "Node.js", "Payment Integration", "Admin Dashboard", "Automation", "Role Management", "Paper Submission", "MongoDB"],
     route: "#",
+    live: "https://icmbnt2026.societycis.org/",
     current: false,
     type: "project"
   },
@@ -98,6 +101,7 @@ const internships = [
     image: "/personal/Luxor.webp",
     skills: ["WordPress", "React", "Node.js", "MongoDB", "Razorpay", "Cloudflare"],
     route: "/work/luxor-holiday",
+    live: "https://luxorholidayhomestays.com/",
     current: false,
     type: "freelance"
   },
@@ -110,6 +114,7 @@ const internships = [
     image: "/assets/cloud.webp",
     skills: ["Docker", "Kubernetes", "Jenkins", "Cloud Infrastructure", "Microservices", "Terraform", "Prometheus", "DevOps"],
     route: "#",
+    live: "Coming Soon",
     current: true,
     type: "project"
   }
@@ -212,6 +217,30 @@ const Works = () => {
                       <p className="text-zinc-400 text-xs sm:text-sm md:text-base leading-relaxed mb-4 md:mb-6 max-w-3xl">
                         {currentWork.description}
                       </p>
+
+                      {/* Live Link Button */}
+                      <div className="mb-6 flex items-center gap-4">
+                        {currentWork.live && currentWork.live !== "Coming Soon" ? (
+                          <a
+                            href={currentWork.live}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center gap-2 px-4 py-2 bg-white text-black hover:bg-zinc-200 transition-colors rounded-lg text-xs sm:text-sm font-bold shadow-lg"
+                          >
+                            View Live
+                            <svg className="w-3 h-3 sm:w-4 sm:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                            </svg>
+                          </a>
+                        ) : (
+                          <span className="inline-flex items-center gap-2 px-4 py-2 bg-zinc-800/50 border border-zinc-700 text-zinc-500 rounded-lg text-xs sm:text-sm font-bold cursor-not-allowed">
+                            Coming Soon
+                            <svg className="w-3 h-3 sm:w-4 sm:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                          </span>
+                        )}
+                      </div>
 
                       {/* Skills */}
                       <div className="flex flex-wrap gap-2">
