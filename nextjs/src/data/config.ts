@@ -1,0 +1,60 @@
+const config = {
+  title: "Ramji B | FullStack Developer | DevOps | AI Engineer",
+  description: {
+    long: "Explore the portfolio of Ramji B, a FullStack Developer, DevOps Engineer, and AI Engineer specializing in building scalable applications, automating infrastructure, and developing intelligent AI/ML solutions. Experienced in full-stack development, cloud deployments, CI/CD pipelines, and innovative AI applications.",
+    short:
+      "Discover the portfolio of Ramji B, a FullStack Developer, DevOps Engineer, and AI Engineer building cutting-edge applications and intelligent systems.",
+  },
+  keywords: [
+    "Ramji",
+    "Ramji B",
+    "ramji",
+    "Ramji B portfolio",
+    "portfolio",
+    "FullStack Developer",
+    "Full Stack Developer",
+    "DevOps Engineer",
+    "DevOps",
+    "AI Engineer",
+    "AIML",
+    "AI",
+    "Machine Learning",
+    "Artificial Intelligence",
+    "Web Development",
+    "Cloud Computing",
+    "CI/CD",
+    "Docker",
+    "Kubernetes",
+    "Agent Victor",
+    "Job Hunt Agent",
+    "AI-Based AWG",
+    "Medical Assistant",
+    "Automated Attendance",
+    "SQL Query Generator",
+    "AI Smartness",
+    "creative technologist",
+    "AI development",
+    "ML algorithms",
+    "Data Science",
+    "Python",
+    "TensorFlow",
+    "PyTorch",
+  ],
+  author: "Ramji B",
+  email: "ramjib2311@gmail.com",
+  site: "https://karthikeyen.com",
+
+  get ogImg() {
+    return this.site + "/assets/seo/og-image.png";
+  },
+  social: {
+    twitter: "https://x.com/ramjib/",
+    linkedin: "https://www.linkedin.com/in/ramji-b-613539308/",
+    instagram: "https://www.instagram.com/ramji_b/",
+    facebook: "https://www.facebook.com/ramji.b/",
+    github: "https://github.com/Ramjirv32",
+    leetcode: "https://leetcode.com/RAMJI____B",
+  },
+};
+export { config };
+
