@@ -91,7 +91,7 @@ const HeroSection = () => {
                   <Link href={"#contact"} className="w-fit">
                     <Button
                       variant={"outline"}
-                      className="block w-full md:w-auto overflow-hidden text-[10px] sm:text-xs md:text-sm px-3 sm:px-4 md:px-6 py-1.5 sm:py-2 text-white"
+                      className="block w-full md:w-auto overflow-hidden text-[10px] sm:text-xs md:text-sm px-3 sm:px-4 md:px-6 py-1.5 sm:py-2"
                     >
                       Reach Me
                     </Button>
@@ -104,7 +104,7 @@ const HeroSection = () => {
                 className="w-fit"
               >
                 <Button variant={"outline"} className="w-full md:w-auto px-3 sm:px-3 md:px-4 py-1.5 sm:py-2">
-                  <SiGithub size={14} className="sm:w-4 sm:h-4 md:w-6 md:h-6 text-white" />
+                  <SiGithub size={14} className="sm:w-4 sm:h-4 md:w-6 md:h-6" />
                 </Button>
               </Link>
               <Link
@@ -113,7 +113,7 @@ const HeroSection = () => {
                 className="w-fit"
               >
                 <Button variant={"outline"} className="w-full md:w-auto px-3 sm:px-3 md:px-4 py-1.5 sm:py-2">
-                  <SiLinkedin size={14} className="sm:w-4 sm:h-4 md:w-6 md:h-6 text-white" />
+                  <SiLinkedin size={14} className="sm:w-4 sm:h-4 md:w-6 md:h-6" />
                 </Button>
               </Link>
               <Link
@@ -122,7 +122,7 @@ const HeroSection = () => {
                 className="w-fit"
               >
                 <Button variant={"outline"} className="w-full md:w-auto px-3 sm:px-3 md:px-4 py-1.5 sm:py-2">
-                  <SiLeetcode size={14} className="sm:w-4 sm:h-4 md:w-6 md:h-6 text-white" />
+                  <SiLeetcode size={14} className="sm:w-4 sm:h-4 md:w-6 md:h-6" />
                 </Button>
               </Link>
             </div>
