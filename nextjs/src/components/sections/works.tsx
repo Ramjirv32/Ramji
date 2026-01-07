@@ -143,12 +143,12 @@ const Works = () => {
         animate={isLoaded ? "show" : "hidden"}
         className="text-center mb-8 md:mb-16 px-2"
       >
-        <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white">
+        <h2 className="text-3xl sm:text-4xl md:text-7xl lg:text-8xl font-thin text-white">
           My <span className="text-zinc-400">Experience & Work</span>
         </h2>
         <motion.p
           variants={textVariant(0.2)}
-          className="mt-2 md:mt-4 text-xs sm:text-sm md:text-lg text-zinc-500 max-w-3xl mx-auto px-2"
+          className="mt-2 md:mt-4 text-xs sm:text-sm md:text-base font-thin text-zinc-500 max-w-3xl mx-auto px-2"
         >
           Professional experience, internships, and freelance projects showcasing real-world application development
         </motion.p>
@@ -174,7 +174,7 @@ const Works = () => {
           </button>
 
           {/* Slider Content */}
-          <div className="relative h-[400px] sm:h-[450px] md:h-[500px] flex items-center justify-center px-6 sm:px-10 md:px-16">
+          <div className="relative h-[500px] sm:h-[450px] md:h-[500px] flex items-center justify-center px-12 sm:px-10 md:px-16">
             <AnimatePresence initial={false} custom={direction} mode="wait">
               <motion.div
                 key={page}
@@ -185,7 +185,7 @@ const Works = () => {
                 exit="exit"
                 className="absolute w-full"
               >
-                <div className="relative group">
+                <div className="relative group max-w-[300px] mx-auto sm:max-w-none">
                   <div className="relative bg-zinc-950/50 backdrop-blur-lg border border-zinc-800 rounded-xl sm:rounded-2xl md:rounded-3xl overflow-hidden hover:border-zinc-700 transition-all duration-300">
                     <div className="p-4 sm:p-6 md:p-8">
                       {/* Header with Image and Title */}
@@ -200,7 +200,7 @@ const Works = () => {
                           />
                         </div>
                         <div className="flex-1">
-                          <h3 className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold text-white mb-1 md:mb-2 group-hover:text-zinc-300 transition-colors">
+                          <h3 className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-thin text-white mb-1 md:mb-2 group-hover:text-zinc-300 transition-colors">
                             {currentWork.title}
                           </h3>
                           <p className="text-zinc-400 font-semibold text-xs sm:text-sm md:text-base">{currentWork.company}</p>

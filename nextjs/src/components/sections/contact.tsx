@@ -17,11 +17,11 @@ import { MapPin } from "lucide-react";
 
 const ContactSection = () => {
   return (
-    <section id="contact" className="min-h-screen w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 md:py-16">
+    <section id="contact" className="min-h-screen w-full max-w-7xl mx-auto px-12 sm:px-6 lg:px-8 py-10 md:py-16">
       <Link href={"#contact"}>
         <h2
           className={cn(
-            "bg-clip-text text-3xl sm:text-4xl text-center text-transparent md:text-6xl lg:text-7xl pt-8 md:pt-16 mb-8 md:mb-12",
+            "bg-clip-text text-3xl sm:text-4xl text-center text-transparent md:text-7xl lg:text-8xl pt-8 md:pt-16 mb-8 md:mb-12 font-thin",
             "bg-gradient-to-b from-black/80 to-black/50",
             "dark:bg-gradient-to-b dark:from-white/80 dark:to-white/20 dark:bg-opacity-50"
           )}
@@ -32,9 +32,9 @@ const ContactSection = () => {
       </Link>
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8 lg:gap-10">
         {/* Contact Form - Left Side */}
-        <Card className="bg-white/70 dark:bg-black/70 backdrop-blur-sm rounded-xl w-full">
+        <Card className="bg-white/70 dark:bg-black/70 backdrop-blur-sm rounded-xl w-full max-w-[320px] mx-auto lg:max-w-none">
           <CardHeader className="p-4 sm:p-6">
-            <CardTitle className="text-2xl sm:text-3xl md:text-4xl">Contact Form</CardTitle>
+            <CardTitle className="text-2xl sm:text-3xl md:text-4xl font-thin">Contact Form</CardTitle>
             <CardDescription className="text-sm sm:text-base">
               Please contact me directly at{" "}
               <a
@@ -53,7 +53,7 @@ const ContactSection = () => {
         </Card>
 
         {/* Earth Image with Location Pin - Right Side */}
-        <div className="flex items-center justify-center relative h-[300px] sm:h-[350px] md:h-[400px] lg:h-[500px] rounded-xl overflow-hidden w-full">
+        <div className="flex items-center justify-center relative h-[300px] sm:h-[350px] md:h-[400px] lg:h-[500px] rounded-xl overflow-hidden w-full max-w-[320px] mx-auto lg:max-w-none">
           <Image
             src="/com/earth.png"
             alt="Global Location"

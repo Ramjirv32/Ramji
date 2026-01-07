@@ -229,13 +229,13 @@ const SkillsSection = () => {
     <section id="skills" className="w-full py-0 md:py-20 relative px-4 sm:px-6">
       <div className="w-full flex flex-col items-center justify-center gap-6 md:gap-10 py-0 md:py-20">
         <div className="flex flex-col items-center justify-center">
-          <h4 className="text-zinc-400 text-center text-xs sm:text-sm tracking-widest uppercase mb-2 md:mb-4">
+          <h4 className="text-zinc-400 text-center text-xs sm:text-sm md:text-base font-thin tracking-widest uppercase mb-2 md:mb-4">
             I CONSTANTLY TRY TO IMPROVE
           </h4>
 
           <h2
             className={cn(
-              "text-center text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-bold mb-3 md:mb-4",
+              "text-center text-3xl sm:text-4xl md:text-7xl lg:text-8xl font-thin mb-3 md:mb-4",
               "bg-clip-text text-transparent",
               "bg-gradient-to-b from-zinc-100 to-zinc-400"
             )}
@@ -243,7 +243,7 @@ const SkillsSection = () => {
             My Tech Stack
           </h2>
 
-          <p className="text-zinc-400 text-center text-xs sm:text-sm md:text-base max-w-2xl px-2">
+          <p className="text-zinc-400 text-center text-xs sm:text-sm md:text-base font-thin max-w-2xl px-2">
             Technologies and tools I work with to bring ideas to life
           </p>
         </div>
