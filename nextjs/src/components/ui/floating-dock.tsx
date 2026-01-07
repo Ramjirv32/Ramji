@@ -73,7 +73,7 @@ const FloatingDockMobile = ({
               >
                 <div
                   key={item.title}
-                  className="h-10 w-10 rounded-full bg-gray-50 dark:bg-neutral-900 flex items-center justify-center"
+                  className="h-10 w-10 rounded-full bg-zinc-100 flex items-center justify-center border border-zinc-200"
                 >
                   <div className="h-4 w-4">{item.icon}</div>
                 </div>
@@ -136,7 +136,7 @@ const FloatingDockDesktop = ({
         className={cn(
           // "hidden md:flex",
           "flex gap-2 md:gap-4",
-          "mx-auto h-16 items-end  rounded-2xl bg-gray-50 dark:bg-neutral-900 px-4 pb-3",
+          "mx-auto h-16 items-end  rounded-2xl bg-zinc-100 px-4 pb-3 border border-zinc-200 shadow-sm",
           // "blur-sm brightness-50",
           className
         )}
@@ -158,7 +158,7 @@ const FloatingDockDesktop = ({
           >
             <motion.div
               className={cn(
-                "w-5 h-5 border-2 left-[50%] top-0 border-black dark:border-white rounded-full",
+                "w-5 h-5 border-2 left-[50%] top-0 border-zinc-900 rounded-full",
                 "translate-x-[-50px]"
               )}
               initial={{ opacity: 0, x: -50 }}
@@ -228,7 +228,7 @@ function IconContainer({
       style={{ width, height }}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
-      className="aspect-square rounded-full bg-gray-200 dark:bg-neutral-800 flex items-center justify-center relative"
+      className="aspect-square rounded-full bg-zinc-200 flex items-center justify-center relative border border-zinc-300 shadow-sm"
     >
       <AnimatePresence>
         {hovered && (
@@ -236,7 +236,7 @@ function IconContainer({
             initial={{ opacity: 0, y: 10, x: "-50%" }}
             animate={{ opacity: 1, y: 0, x: "-50%" }}
             exit={{ opacity: 0, y: 2, x: "-50%" }}
-            className="px-2 py-0.5 whitespace-pre rounded-md bg-gray-100 border dark:bg-neutral-800 dark:border-neutral-900 dark:text-white border-gray-200 text-neutral-700 absolute left-1/2 -translate-x-1/2 -top-8 w-fit text-xs"
+            className="px-2 py-0.5 whitespace-pre rounded-md bg-white border border-zinc-200 text-zinc-900 absolute left-1/2 -translate-x-1/2 -top-8 w-fit text-xs shadow-md"
           >
             {title}
           </motion.div>

@@ -32,15 +32,15 @@ const ContactSection = () => {
       </Link>
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8 lg:gap-10">
         {/* Contact Form - Left Side */}
-        <Card className="bg-white/70 dark:bg-black/70 backdrop-blur-sm rounded-xl w-full max-w-[320px] mx-auto lg:max-w-none">
+        <Card className="bg-zinc-50 border border-zinc-200 rounded-xl w-full max-w-[320px] mx-auto lg:max-w-none shadow-sm">
           <CardHeader className="p-4 sm:p-6">
             <CardTitle className="text-2xl sm:text-3xl md:text-4xl font-thin">Contact Form</CardTitle>
-            <CardDescription className="text-sm sm:text-base">
+            <CardDescription className="text-sm sm:text-base text-zinc-600">
               Please contact me directly at{" "}
               <a
                 target="_blank"
                 href={`mailto:${config.email}`}
-                className="text-gray-200 cursor-can-hover rounded-lg hover:underline"
+                className="text-zinc-900 font-bold cursor-can-hover rounded-lg hover:underline"
               >
                 {config.email.replace(/@/g, "(at)")}
               </a>{" "}
@@ -72,7 +72,7 @@ const ContactSection = () => {
           >
             <div className="relative animate-bounce group-hover:animate-none">
               <MapPin
-                className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 text-blue-400 drop-shadow-[0_0_10px_rgba(59,130,246,0.8)] group-hover:text-blue-300 transition-colors duration-300"
+                className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 text-blue-600 drop-shadow-[0_0_10px_rgba(37,99,235,0.4)] group-hover:text-blue-500 transition-colors duration-300"
                 fill="currentColor"
                 strokeWidth={1.5}
               />

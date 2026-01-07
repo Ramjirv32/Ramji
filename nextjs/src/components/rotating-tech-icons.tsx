@@ -9,7 +9,7 @@ import { TbBrandAzure } from 'react-icons/tb';
 const technologies = [
   { name: 'React', icon: <FaReact size={24} />, color: '#61DAFB' },
   { name: 'TypeScript', icon: <SiTypescript size={24} />, color: '#3178C6' },
-  { name: 'Next.js', icon: <SiNextdotjs size={24} />, color: '#FFFFFF' },
+  { name: 'Next.js', icon: <SiNextdotjs size={24} />, color: '#000000' },
   { name: 'Node.js', icon: <FaNodeJs size={24} />, color: '#339933' },
   { name: 'Python', icon: <FaPython size={24} />, color: '#3776AB' },
   { name: 'Docker', icon: <FaDocker size={24} />, color: '#2496ED' },
@@ -32,8 +32,8 @@ const RotatingTechIcons = () => {
         <div
           className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 rounded-full blur-3xl z-0 w-32 h-32 sm:w-48 sm:h-48 md:w-64 md:h-64 lg:w-80 lg:h-80 xl:w-96 xl:h-96"
           style={{
-            background: "rgba(255, 255, 255, 0.05)",
-            boxShadow: "0 0 60px rgba(255, 255, 255, 0.1)",
+            background: "rgba(0, 0, 0, 0.03)",
+            boxShadow: "0 0 60px rgba(0, 0, 0, 0.05)",
           }}
         />
 
@@ -42,7 +42,7 @@ const RotatingTechIcons = () => {
           {technologies.map((tech, index) => (
             <div
               key={tech.name}
-              className="absolute w-12 h-12 sm:w-10 sm:h-10 md:w-12 md:h-12 lg:w-14 lg:h-14 xl:w-20 xl:h-20 bg-zinc-900/80 backdrop-blur-sm rounded-lg flex items-center justify-center text-white transform -translate-x-1/2 -translate-y-1/2 transition-all duration-300 hover:scale-110 hover:bg-zinc-800 border border-zinc-700"
+              className="absolute w-12 h-12 sm:w-10 sm:h-10 md:w-12 md:h-12 lg:w-14 lg:h-14 xl:w-20 xl:h-20 bg-white/80 backdrop-blur-sm rounded-lg flex items-center justify-center text-zinc-900 transform -translate-x-1/2 -translate-y-1/2 transition-all duration-300 hover:scale-110 hover:bg-white border border-zinc-200 shadow-sm"
               style={{
                 left: '50%',
                 top: '50%',
@@ -60,12 +60,12 @@ const RotatingTechIcons = () => {
         </div>
 
         {/* Center icon display - Code symbol */}
-        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-24 h-24 sm:w-20 sm:h-20 md:w-28 md:h-28 lg:w-32 lg:h-32 xl:w-44 xl:h-44 rounded-full bg-zinc-900/50 backdrop-blur-md border-2 border-zinc-700 flex items-center justify-center z-20">
+        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-24 h-24 sm:w-20 sm:h-20 md:w-28 md:h-28 lg:w-32 lg:h-32 xl:w-44 xl:h-44 rounded-full bg-white/80 backdrop-blur-md border-2 border-zinc-100 flex items-center justify-center z-20 shadow-sm">
           <div className="text-center">
-            <div className="text-3xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-6xl mb-0.5 sm:mb-1 text-white font-mono">
+            <div className="text-3xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-6xl mb-0.5 sm:mb-1 text-zinc-950 font-mono">
               {"</>"}
             </div>
-            <div className="text-[12px] sm:text-[10px] md:text-xs lg:text-sm text-zinc-400 font-mono">
+            <div className="text-[12px] sm:text-[10px] md:text-xs lg:text-sm text-zinc-500 font-mono">
               DevOps & MLOps
             </div>
           </div>

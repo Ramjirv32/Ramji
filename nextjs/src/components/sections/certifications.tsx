@@ -193,7 +193,7 @@ const Certifications = () => {
                 My achievements
               </p>
             </div>
-            <h2 className="text-white font-thin md:text-7xl lg:text-8xl sm:text-[50px] xs:text-[40px] text-[30px]">
+            <h2 className="text-zinc-900 font-thin md:text-7xl lg:text-8xl sm:text-[50px] xs:text-[40px] text-[30px]">
               Certifications & <span className="text-zinc-400">Credentials</span>
             </h2>
           </motion.div>
@@ -211,12 +211,12 @@ const Certifications = () => {
                 key={category.id}
                 onClick={() => setActiveCategory(category.id)}
                 className={`px-4 md:px-6 py-2 md:py-3 rounded-full font-semibold transition-all duration-300 border-2 text-xs md:text-sm lg:text-base ${activeCategory === category.id
-                  ? "bg-white text-black border-white shadow-lg shadow-white/20"
-                  : "bg-zinc-950/50 text-zinc-400 border-zinc-800 hover:border-zinc-700 hover:text-white"
+                  ? "bg-zinc-900 text-white border-zinc-900 shadow-lg"
+                  : "bg-zinc-100 text-zinc-600 border-zinc-200 hover:border-zinc-300 hover:text-zinc-900"
                   }`}
               >
                 {category.label}
-                <span className={`ml-2 text-xs ${activeCategory === category.id ? "bg-black/30" : "bg-zinc-800"} px-2 py-0.5 rounded-full`}>
+                <span className={`ml-2 text-xs ${activeCategory === category.id ? "bg-white/20" : "bg-zinc-200"} px-2 py-0.5 rounded-full`}>
                   {category.count}
                 </span>
               </button>
@@ -230,7 +230,7 @@ const Certifications = () => {
                 {/* Navigation Buttons */}
                 <button
                   onClick={() => paginate(-1)}
-                  className="absolute left-0 top-1/2 -translate-y-1/2 z-20 w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 rounded-full bg-zinc-800/80 backdrop-blur-sm border border-zinc-700 text-white hover:bg-zinc-700 transition-all duration-300 flex items-center justify-center shadow-lg hover:scale-110 -translate-x-2 sm:-translate-x-4 md:-translate-x-6"
+                  className="absolute left-0 top-1/2 -translate-y-1/2 z-20 w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 rounded-full bg-white/80 backdrop-blur-sm border border-zinc-200 text-zinc-900 hover:bg-zinc-100 transition-all duration-300 flex items-center justify-center shadow-md hover:scale-110 -translate-x-2 sm:-translate-x-4 md:-translate-x-6"
                   aria-label="Previous certification"
                 >
                   <FaChevronLeft className="w-4 h-4 sm:w-5 sm:h-5" />
@@ -238,7 +238,7 @@ const Certifications = () => {
 
                 <button
                   onClick={() => paginate(1)}
-                  className="absolute right-0 top-1/2 -translate-y-1/2 z-20 w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 rounded-full bg-zinc-800/80 backdrop-blur-sm border border-zinc-700 text-white hover:bg-zinc-700 transition-all duration-300 flex items-center justify-center shadow-lg hover:scale-110 translate-x-2 sm:translate-x-4 md:translate-x-6"
+                  className="absolute right-0 top-1/2 -translate-y-1/2 z-20 w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 rounded-full bg-white/80 backdrop-blur-sm border border-zinc-200 text-zinc-900 hover:bg-zinc-100 transition-all duration-300 flex items-center justify-center shadow-md hover:scale-110 translate-x-2 sm:translate-x-4 md:translate-x-6"
                   aria-label="Next certification"
                 >
                   <FaChevronRight className="w-4 h-4 sm:w-5 sm:h-5" />
@@ -257,11 +257,11 @@ const Certifications = () => {
                       className="absolute w-full px-4"
                     >
                       <div className="relative group max-w-[320px] mx-auto sm:max-w-4xl md:max-w-none">
-                        <div className="relative bg-zinc-950/50 backdrop-blur-lg border border-zinc-800 rounded-xl sm:rounded-2xl md:rounded-3xl overflow-hidden hover:border-zinc-700 transition-all duration-300 shadow-2xl">
+                        <div className="relative bg-zinc-50/80 backdrop-blur-lg border border-zinc-100 rounded-xl sm:rounded-2xl md:rounded-3xl overflow-hidden hover:border-zinc-200 transition-all duration-300 shadow-sm">
                           <div className="p-4 sm:p-6 md:p-8 lg:p-10 flex flex-col md:flex-row gap-6 md:gap-10">
                             {/* Certificate Image Container */}
                             <div
-                              className="relative w-full h-[200px] sm:h-[220px] md:w-[350px] md:h-[240px] lg:w-[450px] lg:h-[300px] rounded-lg sm:rounded-xl overflow-hidden border-2 border-zinc-800 flex-shrink-0 shadow-lg group/img cursor-pointer"
+                              className="relative w-full h-[200px] sm:h-[220px] md:w-[350px] md:h-[240px] lg:w-[450px] lg:h-[300px] rounded-lg sm:rounded-xl overflow-hidden border border-zinc-200 flex-shrink-0 shadow-md group/img cursor-pointer"
                               onClick={() => setSelectedCert(currentCert)}
                             >
                               <Image
@@ -283,17 +283,17 @@ const Certifications = () => {
                             {/* Certificate Info */}
                             <div className="flex-1 flex flex-col justify-center py-2">
                               <div className="mb-4">
-                                <h3 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-thin text-white mb-2 group-hover:text-zinc-300 transition-colors leading-tight">
+                                <h3 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-thin text-zinc-900 mb-2 group-hover:text-zinc-600 transition-colors leading-tight">
                                   {currentCert.name}
                                 </h3>
                                 <div className="flex items-center gap-3">
-                                  <p className="text-zinc-400 font-semibold text-sm sm:text-base">{currentCert.issuer}</p>
+                                  <p className="text-zinc-600 font-semibold text-sm sm:text-base">{currentCert.issuer}</p>
                                   <span className="w-1 h-1 bg-zinc-700 rounded-full hidden sm:block"></span>
                                   <p className="text-zinc-500 text-sm sm:text-base font-medium">{currentCert.date}</p>
                                 </div>
                               </div>
 
-                              <p className="text-zinc-400 text-sm md:text-base leading-relaxed mb-6 max-w-2xl line-clamp-3 md:line-clamp-none">
+                              <p className="text-zinc-600 text-sm md:text-base leading-relaxed mb-6 max-w-2xl line-clamp-3 md:line-clamp-none">
                                 {currentCert.description}
                               </p>
 
@@ -301,7 +301,7 @@ const Certifications = () => {
                                 {currentCert.tags.map((tag: any) => (
                                   <span
                                     key={tag.name}
-                                    className={`px-3 py-1 bg-zinc-900 border border-zinc-800 rounded-full text-xs font-semibold ${tag.color}`}
+                                    className={`px-3 py-1 bg-zinc-100 border border-zinc-200 rounded-full text-xs font-semibold ${tag.color}`}
                                   >
                                     #{tag.name}
                                   </span>
@@ -311,7 +311,7 @@ const Certifications = () => {
                               <div className="flex flex-wrap items-center gap-4">
                                 <button
                                   onClick={() => setSelectedCert(currentCert)}
-                                  className="w-full sm:w-auto py-3 px-6 bg-white text-black rounded-lg text-sm md:text-base font-bold hover:bg-zinc-200 transition-all duration-300 flex items-center justify-center gap-2 shadow-lg"
+                                  className="w-full sm:w-auto py-3 px-6 bg-zinc-900 text-white rounded-lg text-sm md:text-base font-bold hover:bg-zinc-800 transition-all duration-300 flex items-center justify-center gap-2 shadow-md"
                                 >
                                   <FaAward />
                                   View Certificate
@@ -321,7 +321,7 @@ const Certifications = () => {
                                     href={currentCert.source_code_link}
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="w-full sm:w-auto py-3 px-6 bg-zinc-800 text-white rounded-lg text-sm md:text-base font-bold hover:bg-zinc-700 transition-all duration-300 flex items-center justify-center gap-2 border border-zinc-700 shadow-lg"
+                                    className="w-full sm:w-auto py-3 px-6 bg-zinc-100 text-zinc-900 rounded-lg text-sm md:text-base font-bold hover:bg-zinc-200 transition-all duration-300 flex items-center justify-center gap-2 border border-zinc-200 shadow-sm"
                                   >
                                     <FaFilePdf />
                                     Download PDF
@@ -343,8 +343,8 @@ const Certifications = () => {
                       key={index}
                       onClick={() => setPage([index, index > currentIndex ? 1 : -1])}
                       className={`transition-all duration-300 rounded-full ${index === currentIndex
-                        ? "w-10 h-2.5 bg-white"
-                        : "w-2.5 h-2.5 bg-zinc-800 hover:bg-zinc-700"
+                        ? "w-10 h-2.5 bg-zinc-900"
+                        : "w-2.5 h-2.5 bg-zinc-200 hover:bg-zinc-300"
                         }`}
                       aria-label={`Go to certification ${index + 1}`}
                     />
@@ -362,7 +362,7 @@ const Certifications = () => {
                 <p className="text-zinc-500 text-xl font-medium">No certifications found in this category.</p>
                 <button
                   onClick={() => setActiveCategory("all")}
-                  className="px-6 py-2 bg-zinc-800 hover:bg-zinc-700 text-white rounded-lg transition-colors border border-zinc-700"
+                  className="px-6 py-2 bg-zinc-100 hover:bg-zinc-200 text-zinc-900 rounded-lg transition-colors border border-zinc-200"
                 >
                   Clear Filters
                 </button>
@@ -378,16 +378,16 @@ const Certifications = () => {
             viewport={{ once: true }}
             className="mt-20 grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto"
           >
-            <div className="bg-zinc-950/50 border border-zinc-800 rounded-3xl p-8 text-center hover:border-zinc-700 transition-all duration-300 group">
-              <div className="text-4xl lg:text-5xl font-black text-white mb-3 group-hover:scale-110 transition-transform duration-300">{certifications.length}</div>
+            <div className="bg-zinc-50/80 border border-zinc-100 rounded-3xl p-8 text-center hover:border-zinc-200 transition-all duration-300 group shadow-sm">
+              <div className="text-4xl lg:text-5xl font-black text-zinc-900 mb-3 group-hover:scale-110 transition-transform duration-300">{certifications.length}</div>
               <p className="text-zinc-500 font-bold uppercase tracking-[0.2em] text-xs">Total Credentials</p>
             </div>
-            <div className="bg-zinc-950/50 border border-zinc-800 rounded-3xl p-8 text-center hover:border-zinc-700 transition-all duration-300 group">
-              <div className="text-4xl lg:text-5xl font-black text-white mb-3 group-hover:scale-110 transition-transform duration-300">5+</div>
+            <div className="bg-zinc-50/80 border border-zinc-100 rounded-3xl p-8 text-center hover:border-zinc-200 transition-all duration-300 group shadow-sm">
+              <div className="text-4xl lg:text-5xl font-black text-zinc-900 mb-3 group-hover:scale-110 transition-transform duration-300">5+</div>
               <p className="text-zinc-500 font-bold uppercase tracking-[0.2em] text-xs">Technology Domains</p>
             </div>
-            <div className="bg-zinc-950/50 border border-zinc-800 rounded-3xl p-8 text-center hover:border-zinc-700 transition-all duration-300 group">
-              <div className="text-4xl lg:text-5xl font-black text-white mb-3 group-hover:scale-110 transition-transform duration-300">2024-26</div>
+            <div className="bg-zinc-50/80 border border-zinc-100 rounded-3xl p-8 text-center hover:border-zinc-200 transition-all duration-300 group shadow-sm">
+              <div className="text-4xl lg:text-5xl font-black text-zinc-900 mb-3 group-hover:scale-110 transition-transform duration-300">2024-26</div>
               <p className="text-zinc-500 font-bold uppercase tracking-[0.2em] text-xs">Achievement Span</p>
             </div>
           </motion.div>
@@ -405,7 +405,7 @@ const Certifications = () => {
               initial={{ opacity: 0, scale: 0.9, y: 20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.9, y: 20 }}
-              className="relative bg-zinc-950 border border-zinc-800 rounded-2xl max-w-5xl w-full max-h-[90vh] shadow-2xl overflow-hidden flex flex-col md:flex-row"
+              className="relative bg-white border border-zinc-200 rounded-2xl max-w-5xl w-full max-h-[90vh] shadow-2xl overflow-hidden flex flex-col md:flex-row"
               onClick={(e) => e.stopPropagation()}
             >
               <button
@@ -428,20 +428,20 @@ const Certifications = () => {
                 </div>
               </div>
 
-              <div className="w-full md:w-[350px] p-8 border-l border-zinc-800 flex flex-col overflow-y-auto">
-                <h3 className="text-white text-2xl font-bold mb-4">{selectedCert.name}</h3>
+              <div className="w-full md:w-[350px] p-8 border-l border-zinc-200 flex flex-col overflow-y-auto">
+                <h3 className="text-zinc-900 text-2xl font-bold mb-4">{selectedCert.name}</h3>
                 <div className="space-y-4 mb-8">
                   <div>
                     <p className="text-zinc-500 text-xs uppercase tracking-widest font-bold mb-1">Issuer</p>
-                    <p className="text-white font-semibold">{selectedCert.issuer}</p>
+                    <p className="text-zinc-900 font-semibold">{selectedCert.issuer}</p>
                   </div>
                   <div>
                     <p className="text-zinc-500 text-xs uppercase tracking-widest font-bold mb-1">Date Assigned</p>
-                    <p className="text-white font-semibold">{selectedCert.date}</p>
+                    <p className="text-zinc-900 font-semibold">{selectedCert.date}</p>
                   </div>
                 </div>
 
-                <p className="text-zinc-400 text-sm leading-relaxed mb-8 flex-grow">
+                <p className="text-zinc-600 text-sm leading-relaxed mb-8 flex-grow">
                   {selectedCert.description}
                 </p>
 
@@ -451,7 +451,7 @@ const Certifications = () => {
                       href={selectedCert.source_code_link}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-white text-black rounded-xl font-bold hover:bg-zinc-200 transition-all duration-300 w-full"
+                      className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-zinc-900 text-white rounded-xl font-bold hover:bg-zinc-800 transition-all duration-300 w-full"
                     >
                       <FaFilePdf />
                       Download Certificate
@@ -459,7 +459,7 @@ const Certifications = () => {
                   )}
                   <button
                     onClick={closeCertModal}
-                    className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-zinc-900 text-white rounded-xl font-bold hover:bg-zinc-800 transition-all duration-300 w-full border border-zinc-800"
+                    className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-zinc-100 text-zinc-900 rounded-xl font-bold hover:bg-zinc-200 transition-all duration-300 w-full border border-zinc-200"
                   >
                     Close Preview
                   </button>

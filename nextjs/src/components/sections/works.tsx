@@ -143,12 +143,12 @@ const Works = () => {
         animate={isLoaded ? "show" : "hidden"}
         className="text-center mb-8 md:mb-16 px-2"
       >
-        <h2 className="text-3xl sm:text-4xl md:text-7xl lg:text-8xl font-thin text-white">
+        <h2 className="text-3xl sm:text-4xl md:text-7xl lg:text-8xl font-thin text-zinc-900">
           My <span className="text-zinc-400">Experience & Work</span>
         </h2>
         <motion.p
           variants={textVariant(0.2)}
-          className="mt-2 md:mt-4 text-xs sm:text-sm md:text-base font-thin text-zinc-500 max-w-3xl mx-auto px-2"
+          className="mt-2 md:mt-4 text-xs sm:text-sm md:text-base font-thin text-zinc-600 max-w-3xl mx-auto px-2"
         >
           Professional experience, internships, and freelance projects showcasing real-world application development
         </motion.p>
@@ -159,7 +159,7 @@ const Works = () => {
           {/* Navigation Buttons */}
           <button
             onClick={() => paginate(-1)}
-            className="absolute left-0 top-1/2 -translate-y-1/2 z-10 w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 rounded-full bg-zinc-800/80 backdrop-blur-sm border border-zinc-700 text-white hover:bg-zinc-700 transition-all duration-300 flex items-center justify-center shadow-lg hover:scale-110 -translate-x-2 sm:-translate-x-4"
+            className="absolute left-0 top-1/2 -translate-y-1/2 z-10 w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 rounded-full bg-white/80 backdrop-blur-sm border border-zinc-200 text-zinc-900 hover:bg-zinc-100 transition-all duration-300 flex items-center justify-center shadow-md hover:scale-110 -translate-x-2 sm:-translate-x-4"
             aria-label="Previous work"
           >
             <FaChevronLeft className="w-4 h-4 sm:w-5 sm:h-5" />
@@ -167,7 +167,7 @@ const Works = () => {
 
           <button
             onClick={() => paginate(1)}
-            className="absolute right-0 top-1/2 -translate-y-1/2 z-10 w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 rounded-full bg-zinc-800/80 backdrop-blur-sm border border-zinc-700 text-white hover:bg-zinc-700 transition-all duration-300 flex items-center justify-center shadow-lg hover:scale-110 translate-x-2 sm:translate-x-4"
+            className="absolute right-0 top-1/2 -translate-y-1/2 z-10 w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 rounded-full bg-white/80 backdrop-blur-sm border border-zinc-200 text-zinc-900 hover:bg-zinc-100 transition-all duration-300 flex items-center justify-center shadow-md hover:scale-110 translate-x-2 sm:translate-x-4"
             aria-label="Next work"
           >
             <FaChevronRight className="w-4 h-4 sm:w-5 sm:h-5" />
@@ -186,11 +186,11 @@ const Works = () => {
                 className="absolute w-full"
               >
                 <div className="relative group max-w-[300px] mx-auto sm:max-w-none">
-                  <div className="relative bg-zinc-950/50 backdrop-blur-lg border border-zinc-800 rounded-xl sm:rounded-2xl md:rounded-3xl overflow-hidden hover:border-zinc-700 transition-all duration-300">
+                  <div className="relative bg-zinc-50/80 backdrop-blur-lg border border-zinc-100 rounded-xl sm:rounded-2xl md:rounded-3xl overflow-hidden hover:border-zinc-200 transition-all duration-300 shadow-sm">
                     <div className="p-4 sm:p-6 md:p-8">
                       {/* Header with Image and Title */}
                       <div className="flex flex-col sm:flex-row items-start gap-3 sm:gap-4 md:gap-6 mb-4 md:mb-6">
-                        <div className="relative w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 rounded-lg sm:rounded-xl md:rounded-2xl overflow-hidden border-2 border-zinc-800 flex-shrink-0 shadow-lg">
+                        <div className="relative w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 rounded-lg sm:rounded-xl md:rounded-2xl overflow-hidden border border-zinc-200 flex-shrink-0 shadow-md">
                           <Image
                             src={currentWork.image}
                             alt={currentWork.company}
@@ -200,13 +200,13 @@ const Works = () => {
                           />
                         </div>
                         <div className="flex-1">
-                          <h3 className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-thin text-white mb-1 md:mb-2 group-hover:text-zinc-300 transition-colors">
+                          <h3 className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-thin text-zinc-900 mb-1 md:mb-2 group-hover:text-zinc-600 transition-colors">
                             {currentWork.title}
                           </h3>
-                          <p className="text-zinc-400 font-semibold text-xs sm:text-sm md:text-base">{currentWork.company}</p>
+                          <p className="text-zinc-600 font-semibold text-xs sm:text-sm md:text-base">{currentWork.company}</p>
                           <p className="text-zinc-500 text-xs sm:text-sm mt-0.5 md:mt-1">{currentWork.duration}</p>
                           {currentWork.current && (
-                            <span className="inline-block mt-2 px-2 sm:px-3 py-1 bg-white/10 border border-white/20 text-white text-xs rounded-full font-medium">
+                            <span className="inline-block mt-2 px-2 sm:px-3 py-1 bg-zinc-900 text-white text-xs rounded-full font-medium">
                               ⭐ Current Position
                             </span>
                           )}
@@ -214,7 +214,7 @@ const Works = () => {
                       </div>
 
                       {/* Description */}
-                      <p className="text-zinc-400 text-xs sm:text-sm md:text-base leading-relaxed mb-4 md:mb-6 max-w-3xl">
+                      <p className="text-zinc-600 text-xs sm:text-sm md:text-base leading-relaxed mb-4 md:mb-6 max-w-3xl">
                         {currentWork.description}
                       </p>
 
@@ -225,7 +225,7 @@ const Works = () => {
                             href={currentWork.live}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="inline-flex items-center gap-2 px-4 py-2 bg-white text-black hover:bg-zinc-200 transition-colors rounded-lg text-xs sm:text-sm font-bold shadow-lg"
+                            className="inline-flex items-center gap-2 px-4 py-2 bg-zinc-900 text-white hover:bg-zinc-800 transition-colors rounded-lg text-xs sm:text-sm font-bold shadow-md"
                           >
                             View Live
                             <svg className="w-3 h-3 sm:w-4 sm:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -233,7 +233,7 @@ const Works = () => {
                             </svg>
                           </a>
                         ) : (
-                          <span className="inline-flex items-center gap-2 px-4 py-2 bg-zinc-800/50 border border-zinc-700 text-zinc-500 rounded-lg text-xs sm:text-sm font-bold cursor-not-allowed">
+                          <span className="inline-flex items-center gap-2 px-4 py-2 bg-zinc-100 border border-zinc-200 text-zinc-400 rounded-lg text-xs sm:text-sm font-bold cursor-not-allowed">
                             Coming Soon
                             <svg className="w-3 h-3 sm:w-4 sm:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -247,7 +247,7 @@ const Works = () => {
                         {currentWork.skills.map((skill: string) => (
                           <span
                             key={skill}
-                            className="px-2 sm:px-3 py-1 md:py-2 bg-zinc-800/50 border border-zinc-700 text-zinc-300 text-xs sm:text-sm md:text-base rounded-full hover:border-zinc-600 hover:bg-zinc-800 transition-all duration-300 font-medium"
+                            className="px-2 sm:px-3 py-1 md:py-2 bg-zinc-100 border border-zinc-200 text-zinc-700 text-xs sm:text-sm md:text-base rounded-full hover:border-zinc-300 hover:bg-zinc-200 transition-all duration-300 font-medium"
                           >
                             {skill}
                           </span>
@@ -267,8 +267,8 @@ const Works = () => {
                 key={index}
                 onClick={() => setPage([index, index > currentIndex ? 1 : -1])}
                 className={`transition-all duration-300 rounded-full ${index === currentIndex
-                  ? "w-8 h-2 bg-white"
-                  : "w-2 h-2 bg-zinc-700 hover:bg-zinc-600"
+                  ? "w-8 h-2 bg-zinc-900"
+                  : "w-2 h-2 bg-zinc-200 hover:bg-zinc-300"
                   }`}
                 aria-label={`Go to work ${index + 1}`}
               />

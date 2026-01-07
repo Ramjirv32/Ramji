@@ -30,7 +30,7 @@ const HeroSection = () => {
             <BlurIn delay={0.7} as="div">
               <p
                 className={cn(
-                  "md:self-start mt-2 sm:mt-4 font-thin text-xs sm:text-sm md:text-base text-slate-500 dark:text-zinc-400 ml-2 sm:ml-3",
+                  "md:self-start mt-2 sm:mt-4 font-thin text-xs sm:text-sm md:text-base text-zinc-600 dark:text-zinc-600 ml-2 sm:ml-3",
                   "cursor-default font-display bg-clip-text"
                 )}
               >
@@ -43,8 +43,8 @@ const HeroSection = () => {
                 <TooltipTrigger asChild>
                   <h1
                     className={cn(
-                      "font-thin text-3xl sm:text-4xl md:text-7xl lg:text-8xl xl:text-9xl text-transparent text-slate-800 ml-1 text-left whitespace-nowrap",
-                      "cursor-default text-edge-outline font-display"
+                      "font-thin text-3xl sm:text-4xl md:text-7xl lg:text-8xl xl:text-9xl text-zinc-900 ml-1 text-left whitespace-nowrap",
+                      "cursor-default font-display"
                     )}
                   >
                     {config.author}
@@ -62,7 +62,7 @@ const HeroSection = () => {
             <BlurIn delay={1.2} as="div">
               <p
                 className={cn(
-                  "md:self-start mt-1.5 sm:mt-3 font-thin text-xs sm:text-sm md:text-base text-slate-500 dark:text-zinc-400 ml-2 sm:ml-3",
+                  "md:self-start mt-1.5 sm:mt-3 font-thin text-xs sm:text-sm md:text-base text-zinc-600 dark:text-zinc-600 ml-2 sm:ml-3",
                   "cursor-default font-display bg-clip-text"
                 )}
               >

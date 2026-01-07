@@ -76,9 +76,9 @@ const Header = () => {
     <>
       <nav
         className={cn(
-          "fixed top-0 left-0 w-full z-50 text-white transition-all duration-300",
+          "fixed top-0 left-0 w-full z-50 text-zinc-950 transition-all duration-300",
           scrolled
-            ? "bg-zinc-900/80 dark:bg-black/80 backdrop-blur-md shadow-lg"
+            ? "bg-white/80 backdrop-blur-md shadow-sm border-b border-zinc-100"
             : "bg-transparent"
         )}
       >
@@ -91,7 +91,7 @@ const Header = () => {
 
             {/* Desktop Navigation - Centered */}
             <div className="hidden lg:block absolute left-1/2 transform -translate-x-1/2">
-              <div className="relative bg-zinc-200/20 dark:bg-white/10 border border-zinc-300/30 dark:border-white/20 backdrop-blur-md rounded-full px-2 py-1.5 flex items-center space-x-1 shadow-[0_0_20px_rgba(0,0,0,0.1)] dark:shadow-[0_0_20px_rgba(255,255,255,0.1)]">
+              <div className="relative bg-zinc-100/80 border border-zinc-200 backdrop-blur-md rounded-full px-2 py-1.5 flex items-center space-x-1 shadow-sm">
                 {navItems.map((item) => (
                   <button
                     key={item.name}
@@ -99,8 +99,8 @@ const Header = () => {
                     className={cn(
                       "relative px-4 py-2 text-sm font-medium rounded-full transition-all duration-300 whitespace-nowrap",
                       active === item.name
-                        ? "bg-zinc-800 dark:bg-white text-white dark:text-black shadow-lg scale-105"
-                        : "text-zinc-700 dark:text-gray-300 hover:text-zinc-900 dark:hover:text-white hover:bg-zinc-300/20 dark:hover:bg-white/10"
+                        ? "bg-zinc-900 text-white shadow-md scale-105"
+                        : "text-zinc-600 hover:text-zinc-900 hover:bg-zinc-200/50"
                     )}
                   >
                     {item.name}
@@ -118,7 +118,7 @@ const Header = () => {
                 href="/com/Ramji.pdf"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="hidden sm:inline-flex px-3 md:px-4 py-2 bg-transparent border-2 border-white text-white rounded-lg text-xs md:text-sm font-medium hover:bg-white/10 transition-all duration-300"
+                className="hidden sm:inline-flex px-3 md:px-4 py-2 bg-transparent border-2 border-zinc-900 text-zinc-900 rounded-lg text-xs md:text-sm font-medium hover:bg-zinc-900 hover:text-white transition-all duration-300"
               >
                 Resume
               </a>
@@ -127,26 +127,26 @@ const Header = () => {
               <div className="flex lg:hidden">
                 <button
                   onClick={() => setIsMenuOpen(!isMenuOpen)}
-                  className="inline-flex items-center justify-center p-2 rounded-md text-zinc-800 dark:text-white hover:text-zinc-600 dark:hover:text-gray-300 focus:outline-none"
+                  className="inline-flex items-center justify-center p-2 rounded-md text-zinc-900 hover:text-zinc-600 focus:outline-none"
                   aria-expanded={isMenuOpen}
                 >
                   <span className="sr-only">Open main menu</span>
                   <div className="w-6 h-5 flex flex-col justify-between">
                     <span
                       className={cn(
-                        "bg-zinc-800 dark:bg-white h-0.5 w-full transform transition duration-300",
+                        "bg-zinc-900 h-0.5 w-full transform transition duration-300",
                         isMenuOpen ? "rotate-45 translate-y-2" : ""
                       )}
                     ></span>
                     <span
                       className={cn(
-                        "bg-zinc-800 dark:bg-white h-0.5 w-full transition duration-300",
+                        "bg-zinc-900 h-0.5 w-full transition duration-300",
                         isMenuOpen ? "opacity-0" : ""
                       )}
                     ></span>
                     <span
                       className={cn(
-                        "bg-zinc-800 dark:bg-white h-0.5 w-full transform transition duration-300",
+                        "bg-zinc-900 h-0.5 w-full transform transition duration-300",
                         isMenuOpen ? "-rotate-45 -translate-y-2" : ""
                       )}
                     ></span>
@@ -164,8 +164,8 @@ const Header = () => {
             isMenuOpen ? "translate-x-0 opacity-100" : "translate-x-full opacity-0"
           )}
         >
-          <div className="flex items-center justify-between px-4 py-4 border-b border-zinc-300 dark:border-gray-800">
-            <div className="text-xs font-medium bg-gradient-to-r from-white via-gray-200 to-white bg-clip-text text-transparent animate-pulse drop-shadow-[0_0_8px_rgba(255,255,255,0.8)]">
+          <div className="flex items-center justify-between px-4 py-4 border-b border-zinc-200">
+            <div className="text-xs font-medium bg-gradient-to-r from-zinc-900 via-zinc-500 to-zinc-900 bg-clip-text text-transparent animate-pulse drop-shadow-sm">
               Learning again is learning deeper.
             </div>
             <div className="flex items-center space-x-3">
@@ -175,7 +175,7 @@ const Header = () => {
               >
                 <span className="sr-only">Close menu</span>
                 <svg
-                  className="h-6 w-6"
+                  className="h-6 w-6 text-zinc-900"
                   fill="none"
                   viewBox="0 0 24 24"
                   strokeWidth="1.5"
@@ -194,8 +194,8 @@ const Header = () => {
                 className={cn(
                   "block w-full text-left px-4 py-4 rounded-md text-base font-medium border-b border-zinc-300/50 dark:border-gray-800/50",
                   active === item.name
-                    ? "text-zinc-900 dark:text-white bg-purple-500/20 border-purple-500/30"
-                    : "text-zinc-700 dark:text-gray-300 hover:bg-purple-500/10 hover:text-zinc-900 dark:hover:text-white"
+                    ? "text-zinc-900 bg-zinc-100 border-zinc-900"
+                    : "text-zinc-600 hover:bg-zinc-50 hover:text-zinc-900"
                 )}
               >
                 {item.name}
@@ -205,7 +205,7 @@ const Header = () => {
               href="/com/Ramji.pdf"
               target="_blank"
               rel="noopener noreferrer"
-              className="block w-full text-left px-4 py-4 rounded-md text-base font-medium border-b-2 border-white text-white bg-transparent hover:bg-white/10 transition-all duration-300"
+              className="block w-full text-left px-4 py-4 rounded-md text-base font-medium border-b-2 border-zinc-900 text-zinc-900 bg-transparent hover:bg-zinc-100 transition-all duration-300"
             >
               📄 View Resume
             </a>

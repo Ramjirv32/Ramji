@@ -63,7 +63,7 @@ export default function RootLayout({
       <body suppressHydrationWarning>
         <ThemeProvider
           attribute="class"
-          defaultTheme="dark"
+          defaultTheme="light"
           disableTransitionOnChange
         >
           <TooltipProvider>

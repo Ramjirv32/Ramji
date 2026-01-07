@@ -229,7 +229,7 @@ const SkillsSection = () => {
     <section id="skills" className="w-full py-0 md:py-20 relative px-4 sm:px-6">
       <div className="w-full flex flex-col items-center justify-center gap-6 md:gap-10 py-0 md:py-20">
         <div className="flex flex-col items-center justify-center">
-          <h4 className="text-zinc-400 text-center text-xs sm:text-sm md:text-base font-thin tracking-widest uppercase mb-2 md:mb-4">
+          <h4 className="text-zinc-500 text-center text-xs sm:text-sm md:text-base font-thin tracking-widest uppercase mb-2 md:mb-4">
             I CONSTANTLY TRY TO IMPROVE
           </h4>
 
@@ -237,13 +237,13 @@ const SkillsSection = () => {
             className={cn(
               "text-center text-3xl sm:text-4xl md:text-7xl lg:text-8xl font-thin mb-3 md:mb-4",
               "bg-clip-text text-transparent",
-              "bg-gradient-to-b from-zinc-100 to-zinc-400"
+              "bg-gradient-to-b from-zinc-900 to-zinc-600"
             )}
           >
             My Tech Stack
           </h2>
 
-          <p className="text-zinc-400 text-center text-xs sm:text-sm md:text-base font-thin max-w-2xl px-2">
+          <p className="text-zinc-600 text-center text-xs sm:text-sm md:text-base font-thin max-w-2xl px-2">
             Technologies and tools I work with to bring ideas to life
           </p>
         </div>
@@ -254,8 +254,8 @@ const SkillsSection = () => {
             className={cn(
               "px-6 py-2 rounded-full border transition-all duration-300",
               isGridView
-                ? "bg-purple-500/20 border-purple-500 text-white shadow-lg shadow-purple-500/20"
-                : "bg-zinc-800/50 border-zinc-600 text-zinc-300 hover:border-zinc-500"
+                ? "bg-purple-500/10 border-purple-500 text-purple-700 shadow-lg shadow-purple-500/10"
+                : "bg-zinc-100 border-zinc-200 text-zinc-600 hover:border-zinc-300"
             )}
           >
             Grid View
@@ -265,8 +265,8 @@ const SkillsSection = () => {
             className={cn(
               "px-6 py-2 rounded-full border transition-all duration-300",
               !isGridView
-                ? "bg-purple-500/20 border-purple-500 text-white shadow-lg shadow-purple-500/20"
-                : "bg-zinc-800/50 border-zinc-600 text-zinc-300 hover:border-zinc-500"
+                ? "bg-purple-500/10 border-purple-500 text-purple-700 shadow-lg shadow-purple-500/10"
+                : "bg-zinc-100 border-zinc-200 text-zinc-600 hover:border-zinc-300"
             )}
           >
             Category View
@@ -293,7 +293,7 @@ const SkillsSection = () => {
                         viewport={{ once: true }}
                         whileHover={{ y: -5, scale: 1.05 }}
                         style={{ "--skill-color": skillInfo.color } as React.CSSProperties}
-                        className="relative group flex items-center justify-center gap-2 px-4 py-2 rounded-full bg-zinc-900 border border-zinc-700 text-white transition-all duration-300 hover:border-[var(--skill-color)] hover:shadow-[0_0_15px_var(--skill-color)]"
+                        className="relative group flex items-center justify-center gap-2 px-4 py-2 rounded-full bg-white border border-zinc-200 text-zinc-900 transition-all duration-300 hover:border-[var(--skill-color)] hover:shadow-[0_0_15px_var(--skill-color)] shadow-sm"
                       >
                         <span
                           className="group-hover:scale-110 transition-transform"
@@ -301,7 +301,7 @@ const SkillsSection = () => {
                         >
                           {skillInfo.icon}
                         </span>
-                        <span className="text-sm text-zinc-300 group-hover:text-white transition-colors">
+                        <span className="text-sm text-zinc-600 group-hover:text-zinc-900 transition-colors">
                           {skill.name}
                         </span>
                       </motion.div>
@@ -315,11 +315,11 @@ const SkillsSection = () => {
                   {Object.entries(categorizedSkills).map(([category, categorySkills]) => (
                     <div key={category} className="flex flex-col">
                       <div className="relative mb-4">
-                        <div className="relative bg-zinc-900/50 backdrop-blur-sm border border-zinc-700/50 rounded-lg p-3">
-                          <h3 className="text-white text-lg font-bold text-center bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
+                        <div className="relative bg-zinc-50/80 backdrop-blur-sm border border-zinc-200 rounded-lg p-3 shadow-sm">
+                          <h3 className="text-zinc-900 text-lg font-bold text-center bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
                             {category}
                           </h3>
-                          <div className="h-0.5 w-8 bg-gradient-to-r from-purple-500 to-pink-500 mt-2 rounded-full mx-auto"></div>
+                          <div className="h-0.5 w-8 bg-gradient-to-r from-purple-600/50 to-pink-600/50 mt-2 rounded-full mx-auto"></div>
                         </div>
                       </div>
                       <div className="flex flex-wrap gap-2 justify-center">
@@ -338,7 +338,7 @@ const SkillsSection = () => {
                               viewport={{ once: true }}
                               whileHover={{ y: -5, scale: 1.05 }}
                               style={{ "--skill-color": skillInfo.color } as React.CSSProperties}
-                              className="relative group flex items-center justify-center gap-2 px-3 py-1.5 rounded-full bg-zinc-900 border border-zinc-700 text-white transition-all duration-300 hover:border-[var(--skill-color)] hover:shadow-[0_0_15px_var(--skill-color)]"
+                              className="relative group flex items-center justify-center gap-2 px-3 py-1.5 rounded-full bg-white border border-zinc-200 text-zinc-900 transition-all duration-300 hover:border-[var(--skill-color)] hover:shadow-[0_0_15px_var(--skill-color)] shadow-sm"
                             >
                               <span
                                 className="group-hover:scale-110 transition-transform"
@@ -346,7 +346,7 @@ const SkillsSection = () => {
                               >
                                 {skillInfo.icon}
                               </span>
-                              <span className="text-xs text-zinc-300 group-hover:text-white transition-colors">
+                              <span className="text-xs text-zinc-600 group-hover:text-zinc-900 transition-colors">
                                 {skill.name}
                               </span>
                             </motion.div>

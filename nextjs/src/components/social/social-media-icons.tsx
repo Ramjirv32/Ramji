@@ -12,17 +12,17 @@ const BUTTONS = [
   {
     name: "Github",
     href: config.social.github,
-    icon: <SiGithub size={"24"} color={"#fff"} />,
+    icon: <SiGithub size={"24"} className="text-zinc-900" />,
   },
   {
     name: "LinkedIn",
     href: config.social.linkedin,
-    icon: <SiLinkedin size={"24"} color={"#fff"} />,
+    icon: <SiLinkedin size={"24"} className="text-zinc-900" />,
   },
   {
     name: "LeetCode",
     href: config.social.leetcode,
-    icon: <SiLeetcode size={"24"} color={"#fff"} />,
+    icon: <SiLeetcode size={"24"} className="text-zinc-900" />,
   },
 ];
 
