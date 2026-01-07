@@ -143,12 +143,12 @@ const Works = () => {
         animate={isLoaded ? "show" : "hidden"}
         className="text-center mb-8 md:mb-16 px-2"
       >
-        <h2 className="text-3xl sm:text-4xl md:text-7xl lg:text-8xl font-thin text-zinc-900">
+        <h2 className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-thin text-zinc-900 leading-tight">
           My <span className="text-zinc-400">Experience & Work</span>
         </h2>
         <motion.p
           variants={textVariant(0.2)}
-          className="mt-2 md:mt-4 text-xs sm:text-sm md:text-base font-thin text-zinc-600 max-w-3xl mx-auto px-2"
+          className="mt-4 md:mt-6 text-sm sm:text-base md:text-lg font-thin text-zinc-600 max-w-3xl mx-auto px-2"
         >
           Professional experience, internships, and freelance projects showcasing real-world application development
         </motion.p>
@@ -174,7 +174,7 @@ const Works = () => {
           </button>
 
           {/* Slider Content */}
-          <div className="relative h-[500px] sm:h-[450px] md:h-[500px] flex items-center justify-center px-12 sm:px-10 md:px-16">
+          <div className="relative h-[600px] sm:h-[500px] md:h-[550px] flex items-center justify-center px-12 sm:px-10 md:px-16">
             <AnimatePresence initial={false} custom={direction} mode="wait">
               <motion.div
                 key={page}

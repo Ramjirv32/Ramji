@@ -245,7 +245,7 @@ const Certifications = () => {
                 </button>
 
                 {/* Slider Content */}
-                <div className="relative h-[550px] sm:h-[450px] md:h-[500px] flex items-center justify-center px-6 sm:px-10 md:px-16 overflow-visible">
+                <div className="relative h-[700px] sm:h-[550px] md:h-[550px] flex items-center justify-center px-6 sm:px-10 md:px-16 overflow-visible">
                   <AnimatePresence initial={false} custom={direction} mode="wait">
                     <motion.div
                       key={page}
@@ -261,7 +261,7 @@ const Certifications = () => {
                           <div className="p-4 sm:p-6 md:p-8 lg:p-10 flex flex-col md:flex-row gap-6 md:gap-10">
                             {/* Certificate Image Container */}
                             <div
-                              className="relative w-full h-[200px] sm:h-[220px] md:w-[350px] md:h-[240px] lg:w-[450px] lg:h-[300px] rounded-lg sm:rounded-xl overflow-hidden border border-zinc-200 flex-shrink-0 shadow-md group/img cursor-pointer"
+                              className="relative w-full h-[220px] sm:h-[240px] md:w-[350px] md:h-[240px] lg:w-[450px] lg:h-[300px] rounded-lg sm:rounded-xl overflow-hidden border border-zinc-200 flex-shrink-0 shadow-md group/img cursor-pointer"
                               onClick={() => setSelectedCert(currentCert)}
                             >
                               <Image
@@ -293,11 +293,11 @@ const Certifications = () => {
                                 </div>
                               </div>
 
-                              <p className="text-zinc-600 text-sm md:text-base leading-relaxed mb-6 max-w-2xl line-clamp-3 md:line-clamp-none">
+                              <p className="text-zinc-600 text-sm md:text-base leading-relaxed mb-4 md:mb-6 max-w-2xl line-clamp-3 md:line-clamp-none">
                                 {currentCert.description}
                               </p>
 
-                              <div className="flex flex-wrap gap-2 mb-8">
+                              <div className="flex flex-wrap gap-2 mb-4 md:mb-6">
                                 {currentCert.tags.map((tag: any) => (
                                   <span
                                     key={tag.name}
