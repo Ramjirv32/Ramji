@@ -115,7 +115,7 @@ const Header = () => {
 
               {/* Resume Button */}
               <a
-                href="/com/Ramji.pdf"
+                href="/com/ramji.pdf"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="hidden sm:inline-flex px-3 md:px-4 py-2 bg-transparent border-2 border-zinc-900 text-zinc-900 rounded-lg text-xs md:text-sm font-medium hover:bg-zinc-900 hover:text-white transition-all duration-300"
@@ -202,7 +202,7 @@ const Header = () => {
               </button>
             ))}
             <a
-              href="/com/Ramji.pdf"
+              href="/com/ramji.pdf"
               target="_blank"
               rel="noopener noreferrer"
               className="block w-full text-left px-4 py-4 rounded-md text-base font-medium border-b-2 border-zinc-900 text-zinc-900 bg-transparent hover:bg-zinc-100 transition-all duration-300"

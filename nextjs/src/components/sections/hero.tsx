@@ -73,7 +73,7 @@ const HeroSection = () => {
           <div className="mt-4 sm:mt-6 md:ml-2 flex flex-col items-center md:items-start gap-1.5 sm:gap-2 md:gap-3 w-full sm:w-auto">
             <Link
               href={
-                "/com/Ramji.pdf"
+                "/com/ramji.pdf"
               }
               target="_blank"
               className="w-fit"
