@@ -561,43 +561,37 @@ const projects: Project[] = [
       );
     },
   },
-  { // Full DevOps Automation
-    id: "devops-automation",
+  { // CloudShell Lab
+    id: "cloudshell-lab",
     category: "DevOps & Cloud",
-    title: "Full DevOps Automation with Kubernetes",
-    date: "2025 - Current",
+    title: "CloudShell Lab",
+    date: "2025",
     src: "/assets/cloud.webp",
     screenshots: [],
-    live: "#",
-    github: "#",
+    live: "https://www.linkedin.com/posts/ramji-b-613539308_aws-cloudcomputing-awscertified-activity-7437358626337533953-k2Dv?utm_source=share&utm_medium=member_desktop&rcm=ACoAAE5jry8BHksmUcTmvZInbeJPbRfc93ss_5Y",
+    github: "https://www.linkedin.com/posts/ramji-b-613539308_aws-cloudcomputing-awscertified-activity-7437358626337533953-k2Dv?utm_source=share&utm_medium=member_desktop&rcm=ACoAAE5jry8BHksmUcTmvZInbeJPbRfc93ss_5Y",
     skills: {
       frontend: [PROJECT_SKILLS.react],
-      backend: [PROJECT_SKILLS.microservices, PROJECT_SKILLS.kubernetes, PROJECT_SKILLS.docker, PROJECT_SKILLS.aws, PROJECT_SKILLS.jenkins],
+      backend: [PROJECT_SKILLS.docker, PROJECT_SKILLS.kubernetes, PROJECT_SKILLS.aws, PROJECT_SKILLS.microservices],
     },
     get content() {
       return (
         <div>
           <TypographyP className="font-mono">
-            <span className="text-purple-500 font-bold">🚀 Coming Soon!</span> Complete DevOps automation
-            solution featuring Kubernetes auto-scaling, microservices architecture, and full CI/CD pipeline
-            integration. This project will demonstrate enterprise-level infrastructure automation with
-            monitoring, logging, and security best practices.
+            Designed and built a custom cloud-native lab environment for practitioners to provision on-demand,
+            browser-based cloud shells. The platform leverages Docker and Kubernetes to orchestrate pods for
+            popular databases and tools like Redis, MongoDB, and MySQL, with integrated auto-scaling and
+            robust session management.
           </TypographyP>
-          <TypographyH3 className="my-4 mt-8">Planned Features</TypographyH3>
+          <ProjectsLinks live={this.live} repo={this.github} />
+          <TypographyH3 className="my-4 mt-8">Key Achievements</TypographyH3>
           <ul className="list-disc ml-6 font-mono">
-            <li>Kubernetes auto-scaling and load balancing</li>
-            <li>Microservices architecture with service mesh</li>
-            <li>Complete CI/CD pipeline with Jenkins</li>
-            <li>AWS cloud infrastructure with Terraform</li>
-            <li>Monitoring with Prometheus and Grafana</li>
-            <li>Centralized logging with ELK stack</li>
-            <li>Security scanning and compliance automation</li>
+            <li>Built a private cloud lab for on-demand practice environments</li>
+            <li>Orchestrated Redis, MongoDB, and MySQL instances using Kubernetes pods</li>
+            <li>Implemented dynamic auto-scaling to handle concurrent practice sessions</li>
+            <li>Integrated session management for persistent state across browser-based terminals</li>
+            <li>Reduced environment setup time for developers by 90%</li>
           </ul>
-          <div className="mt-8 p-4 bg-purple-900/20 border border-purple-500/30 rounded-lg">
-            <p className="text-purple-400 font-mono text-sm">
-              ⚡ Status: In Development | Expected Completion: Q2 2026
-            </p>
-          </div>
         </div>
       );
     },

@@ -25,24 +25,7 @@ const certifications = [
     gradient: "linear-gradient(145deg, #EE0000, #151030)"
   },
   {
-    name: "Web Development Bootcamp",
-    description:
-      "Comprehensive certification that validates proficiency in modern web development technologies, frameworks, and best practices. Covers front-end and back-end development.",
-    tags: [
-      { name: "HTML/CSS", color: "text-orange-400" },
-      { name: "JavaScript", color: "text-yellow-400" },
-      { name: "React", color: "text-[#00BFFF]" },
-    ],
-    image: "/assets/UdemyWeb.webp",
-    source_code_link: "/assets/UdemyWeb.pdf",
-    live_demo_link: "https://udemy.com",
-    issuer: "Udemy",
-    date: "July 2024",
-    borderColor: "#FF6600",
-    gradient: "linear-gradient(165deg, #FF6600, #151030)"
-  },
-  {
-    name: "AWS Cloud Practitioner",
+    name: "AWS Certified Cloud Practitioner",
     description:
       "Foundational certification that validates understanding of AWS Cloud concepts, services, security, architecture, pricing, and support. Demonstrates knowledge of core AWS services and use cases.",
     tags: [
@@ -50,30 +33,13 @@ const certifications = [
       { name: "Cloud", color: "text-[#00BFFF]" },
       { name: "Infrastructure", color: "text-[#1E90FF]" },
     ],
-    image: "/assets/aws.webp",
-    source_code_link: "/assets/aws.pdf",
-    live_demo_link: "https://aws.amazon.com/certification/",
+    image: "/com/aws.png",
+    source_code_link: "/com/AWS Certified Cloud Practitioner certificate.pdf",
+    live_demo_link: "https://aws.amazon.com/verification",
     issuer: "Amazon Web Services",
-    date: "Dec 2024",
+    date: "March 10, 2026",
     borderColor: "#FF9900",
     gradient: "linear-gradient(195deg, #FF9900, #151030)"
-  },
-  {
-    name: "MongoDB Certification",
-    description:
-      "Professional certification that validates expertise in MongoDB database administration, data modeling, querying, indexing, and application development with MongoDB.",
-    tags: [
-      { name: "MongoDB", color: "text-green-500" },
-      { name: "Database", color: "text-[#00BFFF]" },
-      { name: "NoSQL", color: "text-[#1E90FF]" },
-    ],
-    image: "/assets/MONGO.webp",
-    source_code_link: "/assets/MONGO.pdf",
-    live_demo_link: "https://www.mongodb.com/certification",
-    issuer: "MongoDB",
-    date: "Jan 2025",
-    borderColor: "#13AA52",
-    gradient: "linear-gradient(210deg, #13AA52, #151030)"
   },
   {
     name: "GitHub Foundations",
@@ -84,7 +50,7 @@ const certifications = [
       { name: "GitHub", color: "text-purple-400" },
       { name: "Version Control", color: "text-pink-400" },
     ],
-    image: "/assets/github.webp",
+    image: "/com/github.webp",
     source_code_link: "/assets/github.pdf",
     live_demo_link: "https://github.com/certifications",
     issuer: "GitHub",
@@ -108,6 +74,23 @@ const certifications = [
     date: "2026",
     borderColor: "#4285F4",
     gradient: "linear-gradient(240deg, #4285F4, #151030)"
+  },
+  {
+    name: "MongoDB Certification",
+    description:
+      "Professional certification that validates expertise in MongoDB database administration, data modeling, querying, indexing, and application development with MongoDB.",
+    tags: [
+      { name: "MongoDB", color: "text-green-500" },
+      { name: "Database", color: "text-[#00BFFF]" },
+      { name: "NoSQL", color: "text-[#1E90FF]" },
+    ],
+    image: "/com/MONGO.webp",
+    source_code_link: "/assets/MONGO.pdf",
+    live_demo_link: "https://www.mongodb.com/certification",
+    issuer: "MongoDB",
+    date: "Jan 2025",
+    borderColor: "#13AA52",
+    gradient: "linear-gradient(210deg, #13AA52, #151030)"
   }
 ]
 
@@ -146,7 +129,7 @@ const Certifications = () => {
 
   const categories = [
     { id: "cloud", label: "Cloud & Infrastructure", count: certifications.filter(p => p.issuer.includes("Amazon Web Services") || p.issuer.includes("Red Hat") || p.issuer.includes("Google Cloud")).length },
-    { id: "development", label: "Development", count: certifications.filter(p => p.issuer.includes("Udemy") || p.issuer.includes("GitHub")).length },
+    { id: "development", label: "Development", count: certifications.filter(p => p.issuer.includes("GitHub")).length },
     { id: "database", label: "Database & Tools", count: certifications.filter(p => p.issuer.includes("MongoDB")).length },
     { id: "all", label: "All Certifications", count: certifications.length }
   ];
@@ -156,7 +139,7 @@ const Certifications = () => {
     : activeCategory === "cloud"
       ? certifications.filter(p => p.issuer.includes("Amazon Web Services") || p.issuer.includes("Red Hat") || p.issuer.includes("Google Cloud"))
       : activeCategory === "development"
-        ? certifications.filter(p => p.issuer.includes("Udemy") || p.issuer.includes("GitHub"))
+        ? certifications.filter(p => p.issuer.includes("GitHub"))
         : certifications.filter(p => p.issuer.includes("MongoDB"));
 
   const currentIndex = ((page % filteredCerts.length) + filteredCerts.length) % filteredCerts.length;
