@@ -53,12 +53,32 @@ export default function RootLayout({
   return (
     <html lang="en" className={[archivoBlack.className].join(" ")} suppressHydrationWarning>
       <head>
+        {/* Existing Umami Script */}
         <Script
           defer
           src={process.env.UMAMI_DOMAIN}
           data-website-id={process.env.UMAMI_SITE_ID}
         ></Script>
-        {/* <Analytics /> */}
+
+        {/* Google Analytics Global Site Tag */}
+        <Script
+          strategy="afterInteractive"
+          src={`https://www.googletagmanager.com/gtag/js?id=G-290KGB7TP0`}
+        />
+        
+        {/* Google Analytics Initialization */}
+        <Script
+          id="google-analytics"
+          strategy="afterInteractive"
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+              gtag('config', 'G-290KGB7TP0');
+            `,
+          }}
+        />
       </head>
       <body suppressHydrationWarning>
         <ThemeProvider
